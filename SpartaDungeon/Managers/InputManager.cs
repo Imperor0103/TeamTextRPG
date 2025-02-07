@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpartaDungeon.Managers
 {
-    public class InputManager: Singleton<ItemManager>
+    public class InputManager: Singleton<InputManager>
     {
     // 생성자 만들지 않아도 됨
     

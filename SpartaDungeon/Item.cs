@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace SpartaDungeon
     public interface ItemData
     {
         string name { get; }
-        int itemType { get; }                                                                                                                              // ALL: 모두 장착가능
+        int itemType { get; }
         float attack { get; }
         float defence { get; }
         float hp { get; }
@@ -23,13 +24,26 @@ namespace SpartaDungeon
     public abstract class Equipment : ItemData
     {
         public string name { get; set; }
-        public int itemType { get; set; }                                                                                                                              // ALL: 모두 장착가능
+        public int itemType { get; set; }
         public float attack { get; set; }
         public float defence { get; set; }
         public float hp { get; set; }
         public float mp { get; set; }
         public string description { get; set; }
         public int price { get; set; }
+    }
+
+    public class Armor : Equipment
+    {
+        public Armor()
+        {
+            name = "존나 쌘 갑옷";
+            itemType = 1;
+            defence = 9999;
+            description = "날 아무도 막을수 없으셈 ㅋㅋ";
+            price = 9999;
+        }
+
     }
 
     public class Armor : Equipment
@@ -54,12 +68,9 @@ namespace SpartaDungeon
     public class Item
     {
         public ItemData itemData;
-
         public Item()
         {
-
         }
-
         public void SetData(string name, eItemType itemType, eClassType classType, float att, float def, float h, float m, string des, int pr)
         {
             itemData.name = name;
@@ -73,5 +84,4 @@ namespace SpartaDungeon
             itemData.price = pr;
         }
     }
-    */
 }

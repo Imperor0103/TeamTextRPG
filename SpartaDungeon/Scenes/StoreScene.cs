@@ -18,15 +18,15 @@ namespace SpartaDungeon.Scenes
         public override void Awake()
         {
             Equipment item = new Armor();
-            ItemManager.Instance.equimentList.Add(item);
+            ItemManager.Instance.equpimentList.Add(item);
         }
         public override void Start()
         {
-            for (int i = 0; i < ItemManager.Instance.equimentList.Count; i++)
+            for (int i = 0; i < ItemManager.Instance.equpimentList.Count; i++)
             {
-                Console.Write($"{i + 1} ");
-                Console.Write(ItemManager.Instance.equimentList[i].name + " | ");
-                Console.Write(ItemManager.Instance.equimentList[i].defence);
+                Console.Write($"{i + 1}");
+                Console.Write(ItemManager.Instance.equpimentList[i].name + " | ");
+                Console.Write(ItemManager.Instance.equpimentList[i].defence);
             }
         }
         public override void Update()
