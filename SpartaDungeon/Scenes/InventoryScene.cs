@@ -26,10 +26,13 @@ namespace SpartaDungeon.Scenes
         }
         public override void Update()
         {
-            
+            // 화면출력
+            ItemManager.Instance.PrintItem();
+            // 입력받기
+
+            // 장착하기
+
+            // 화면전환
         }
-
-        // 나중에 ItemManager로 가져갈듯?
-
     }
 }
