@@ -16,15 +16,20 @@ namespace SpartaDungeon.Scenes
         //
         public override void Awake()
         {
-
+            // 인벤토리의 멤버 초기화
         }
         public override void Start()
         {
-
+            // 인벤토리의 멤버 초기화
         }
         public override void Update()
         {
-
+            // 화면출력
+            // 입력받기
+            // 화면전환
         }
+
+
+
     }
 }
