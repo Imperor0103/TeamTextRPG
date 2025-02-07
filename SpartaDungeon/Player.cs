@@ -30,20 +30,6 @@ namespace SpartaDungeon
 
     public class Player
     {
-        // Properties
-
-        // 뫄
-
-        // 배고프다
-
-        // 구렁이
-
-        //코끼리
-
-        int Lion = 14;
-        public void Test1()
-        {
-            Console.WriteLine("Merge Test");
-        }
+        
     }
 }
