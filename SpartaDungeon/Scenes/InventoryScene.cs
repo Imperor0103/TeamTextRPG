@@ -27,27 +27,12 @@ namespace SpartaDungeon.Scenes
         public override void Update()
         {
             // 화면출력
-            PrintItem();
+            ItemManager.Instance.PrintItem();
             // 입력받기
 
             // 장착하기
 
             // 화면전환
         }
-
-        // 나중에 ItemManager로 가져갈듯?
-        public void PrintItem()
-        {
-            Console.WriteLine($"[{SceneManager.Instance.GetCurrentScene().GetName()}]\n보유 중인 아이템을 관리할 수 있습니다.\n");
-            Console.WriteLine("[아이템 목록]\n");
-            for (int i = 0; i < ItemManager.Instance.itemList.Count; i++)
-            {
-                Console.Write($"- {ItemManager.Instance.itemList[i].itemData.name} | ");
-
-            }
-        }
-        public void 
-
-
     }
 }
