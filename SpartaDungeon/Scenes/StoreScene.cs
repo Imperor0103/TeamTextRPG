@@ -1,9 +1,4 @@
 ﻿using SpartaDungeon.Managers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpartaDungeon.Scenes
 {
@@ -16,49 +11,69 @@ namespace SpartaDungeon.Scenes
         //
         public override void Awake()
         {
+            Player player = new Player(new PlayerData() //디버깅용
+            {
+                name = "",
+                classType = eClassType.NONE,
+                level = 1,
+                attack = 10f,
+                defence = 5f,
+                maxHp = 100f,
+                hp = 100f,
+                maxMp = 100f,
+                mp = 0f,
+                exp = 0,
+                gold = 800
+            });
+            DataManager.Instance.player = player;
             Equipment item = new Armor();
             ItemManager.Instance.equimentList.Add(item);
         }
         public override void Start()
         {
-            Console.Clear();
-            Console.WriteLine("상점에 들어왔습니다!");
-            Console.WriteLine("[보유 골드]");
-            Console.WriteLine($"Gold: 800G\n"); // {player.Gold} ?
-            Console.WriteLine("구매할 아이템을 선택하세요!");
-            for (int i = 0; i < ItemManager.Instance.equimentList.Count; i++)
-            {
-                Console.Write($"{i + 1}" + " . ");
-                Console.Write(ItemManager.Instance.equimentList[i].name + " | ");
-                Console.Write("방어력: " + ItemManager.Instance.equimentList[i].defence + " | ");
-                Console.Write(ItemManager.Instance.equimentList[i].description + " | ");
-                Console.Write(ItemManager.Instance.equimentList[i].price + "G");
-                Console.WriteLine();
-                Console.WriteLine("\n1. 아이템 구매하기\n2. 아이템 판매하기\n3. 상점 나가기");
-            }
+
         }
         public override void Update()
         {
+            Console.Clear();
             while (true)
             {
-                Console.Write("원하는 아이템 번호를 입력해주세요!");
+                Console.WriteLine("상점에 들어왔습니다!");
+                Console.WriteLine("[보유 골드]");
+                Console.WriteLine($"Gold: 800G\n"); // {player.Gold} ?
+                Console.WriteLine("구매할 아이템을 선택하세요!");
+                for (int i = 0; i < ItemManager.Instance.equimentList.Count; i++)
+                {
+                    Console.Write($"{i + 1}" + " . ");
+                    Console.Write(ItemManager.Instance.equimentList[i].name + " | ");
+                    Console.Write("방어력: " + ItemManager.Instance.equimentList[i].defence + " | ");
+                    Console.Write(ItemManager.Instance.equimentList[i].description + " | ");
+                    Console.Write(ItemManager.Instance.equimentList[i].price + "G");                   
+                }
+                Console.WriteLine();
+                Console.WriteLine("\n1. 아이템 구매하기\n2. 아이템 판매하기\n3. 상점 나가기");
+
+               
                 if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= ItemManager.Instance.equimentList.Count) // 
                 {
-                   /* var item = ItemManager.Instance.equimentList[choice - 1]; // itemManager
+                    var item = ItemManager.Instance.equimentList[choice - 1]; // itemManager
                     {
-                        if(!ItemManager.Instance.IsOwned(item)&& 800 >= item.price) 
+                        if (!ItemManager.Instance.IsOwned(item) && 800 >= item.price)
+                        {
                             Console.WriteLine($"{item.name}을 구매하였습니다!");
-                            item.ItemManager.Instance.IsOwned(item) = true;
                             // player.Gold -= item.price;
                             Console.WriteLine($"Gold: 800G\n"); // {player.Gold} ?
+                            break;
                         }
-                        else if (item.ItemManager.Instance.IsOwned(item))
+                        else if (ItemManager.Instance.IsOwned(item))
                         {
                             Console.WriteLine("이미 구매한 아이템입니다!");
+                            break;
                         }
                         else if (800 < item.price)
                         {
                             Console.WriteLine("골드가 부족합니다!");
+                            break;
                         }
                         else if (choice == 2)
                         {
@@ -72,15 +87,17 @@ namespace SpartaDungeon.Scenes
                         else
                         {
                             Console.WriteLine("잘못된 입력입니다.");
+                            break;
                         }
                         Console.ReadKey();
-                        */    
+
                     }
                 }
-
-
-            
             }
+
+
+
         }
     }
+}
 
