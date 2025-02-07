@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpartaDungeon.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,11 +16,17 @@ namespace SpartaDungeon.Scenes
         //
         public override void Awake()
         {
-
+            Equipment item = new Armor();
+            ItemManager.Instance.equpimentList.Add(item);
         }
         public override void Start()
         {
-
+            for (int i = 0; i < ItemManager.Instance.equpimentList.Count; i++)
+            {
+                Console.Write($"{i + 1}");
+                Console.Write(ItemManager.Instance.equpimentList[i].name + " | ");
+                Console.Write(ItemManager.Instance.equpimentList[i].defence);
+            }
         }
         public override void Update()
         {
