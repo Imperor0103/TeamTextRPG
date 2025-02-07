@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SpartaDungeon.Managers;
-using System.ComponentModel;
-
-namespace SpartaDungeon
+﻿namespace SpartaDungeon
 {
     public interface ItemData
     {
         string name { get; }
-        int itemType { get; }
+        int itemType { get; }   // ALL: 모두 장착가
         float attack { get; }
         float defence { get; }
         float hp { get; }
@@ -42,46 +33,7 @@ namespace SpartaDungeon
             defence = 9999;
             description = "날 아무도 막을수 없으셈 ㅋㅋ";
             price = 9999;
-        }
 
-    }
-
-    public class Armor : Equipment
-    {
-        public Armor()
-        {
-            name = "존나 쌘 갑옷";
-            itemType = 1;
-            defence = 9999;
-            description = "날 아무도 막을수 없으셈 ㅋㅋ";
-            price = 9999;
-        }
-    }
-
-    
-    /* public enum eItemType
-    {
-        WEAPON = 1,
-        ARMOR = 2,
-    }
-
-    public class Item
-    {
-        public ItemData itemData;
-        public Item()
-        {
-        }
-        public void SetData(string name, eItemType itemType, eClassType classType, float att, float def, float h, float m, string des, int pr)
-        {
-            itemData.name = name;
-            itemData.itemType = itemType;
-            itemData.classType = classType;
-            itemData.attack = att;
-            itemData.defence = def;
-            itemData.hp = h;
-            itemData.mp = m;
-            itemData.description = des;
-            itemData.price = pr;
         }
     }
 }
