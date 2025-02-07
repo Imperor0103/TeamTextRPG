@@ -23,13 +23,17 @@ namespace SpartaDungeon
 
     public enum eClassType
     {
-        WARRIOR = 1,
-        MAGE,
-        ARCHER
+        NONE = -1,
+        WARRIOR = 1 << 0,   // 0001
+        MAGE = 1 << 1,      // 0010
+        ARCHER = 1 << 2,    // 0100
+        // ALL은 할당 후, and연산 처리 -> 결과가 1개 나오면 그 타입을 출력함
+        ALL = WARRIOR | MAGE | ARCHER  // 0111
     }
 
     public class Player
     {
+<<<<<<< Updated upstream
         // Properties
 
         // 뫄
@@ -45,5 +49,10 @@ namespace SpartaDungeon
         {
             Console.WriteLine("Merge Test");
         }
+=======
+        
+
+
+>>>>>>> Stashed changes
     }
 }
