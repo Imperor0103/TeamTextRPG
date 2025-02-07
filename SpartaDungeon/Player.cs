@@ -6,7 +6,29 @@ using System.Threading.Tasks;
 
 namespace SpartaDungeon
 {
-   public class Player
+    public struct PlayerData
+    {
+        public string name;
+        public eClassType classType;
+        public int level;
+        public float attack;
+        public float defence;
+        public float maxHp;
+        public float hp;
+        public float maxMp;
+        public float mp;
+        public int exp;
+        public int gold;
+    }
+
+    public enum eClassType
+    {
+        WARRIOR = 1,
+        MAGE,
+        ARCHER
+    }
+
+    public class Player
     {
 
     }
