@@ -41,5 +41,9 @@ namespace SpartaDungeon
         //코끼리
 
         int Lion = 14;
+        public void Test1()
+        {
+            Console.WriteLine("Merge Test");
+        }
     }
 }
