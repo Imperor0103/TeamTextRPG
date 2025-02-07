@@ -43,6 +43,7 @@ namespace SpartaDungeon.Managers
         public void InitFirstScene()
         {
             currentScene.Awake();
+            currentScene.Start();
         }
         public void Update()
         {
