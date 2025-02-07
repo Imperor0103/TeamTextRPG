@@ -35,5 +35,11 @@ namespace SpartaDungeon
         // 뫄
 
         // 배고프다
+
+        // 구렁이
+
+        //코끼리
+
+        int Lion = 14;
     }
 }
