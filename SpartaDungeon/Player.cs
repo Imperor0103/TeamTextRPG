@@ -35,5 +35,8 @@ namespace SpartaDungeon
         // 뫄
 
         // 배고프다
+
+        // 샤워하고 싶다
+        public int id;
     }
 }
