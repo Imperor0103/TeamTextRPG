@@ -15,7 +15,7 @@ namespace SpartaDungeon.Scenes
         //테스트
         public override void Awake()
         {
-
+            Console.Write("마을 도착!");
         }
         public override void Start()
         {

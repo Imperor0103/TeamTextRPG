@@ -20,13 +20,27 @@ namespace SpartaDungeon.Scenes
         //
         public override void Awake()
         {
-            player = new Player();
+            player = new Player(new PlayerData()
+            {
+                name = "",
+                classType = eClassType.NONE,
+                level = 1,
+                attack = 10f,
+                defence = 5f,
+                maxHp = 100f,
+                hp = 100f,
+                maxMp = 100f,
+                mp = 0f,
+                exp = 0,
+                gold = 1500
+            });
         }
 
         public override void Start()
         {
-
+            
         }
+
         public override void Update()
         {
             Console.WriteLine("게임 시작 화면\n");
@@ -36,9 +50,8 @@ namespace SpartaDungeon.Scenes
             Console.WriteLine("3. 종료");
 
             Console.Write("\n선택을 입력하세요: ");
-            string choice = Console.ReadLine();
 
-            switch (choice)
+            switch (Console.ReadLine())
             {
                 case "1":
                     CreateNewGame();
@@ -63,10 +76,9 @@ namespace SpartaDungeon.Scenes
             {
                 Console.Write("원하시는 이름을 설정해주세요: ");
 
-                // 플레이어 클래스에 Name 프로퍼티가 없음
-                // player.Name = Console.ReadLine();
+                player.data.name = Console.ReadLine();
 
-                // Console.WriteLine($"\n입력하신 이름은 {player.Name} 입니다.\n");
+                Console.WriteLine($"\n입력하신 이름은 '{player.data.name}'입니다.\n");
 
                 // 올바른 입력이 들어올 때까지 반복
                 while (true)
@@ -79,8 +91,9 @@ namespace SpartaDungeon.Scenes
 
                     if (choice == "Y")
                     {
-                        Console.WriteLine("이름을 저장합니다.");
+                        Console.WriteLine("\n이름을 저장합니다.");
                         isNameSaved = true;
+                        SelectClass();
                         break;
                     }
                     else if (choice == "N")
@@ -92,6 +105,39 @@ namespace SpartaDungeon.Scenes
                     {
                         Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.");
                     }
+                }
+            }
+        }
+
+        private void SelectClass()
+        {
+            // 올바른 입력이 들어올 때까지 반복
+            while (true)
+            {
+                Console.WriteLine("\n1. 전사 / 2. 마법사 / 3. 궁수: ");
+
+                Console.Write("\n직업을 선택하세요: ");
+
+                switch (Console.ReadLine())
+                {
+                    case "1":
+                        player.data.classType = eClassType.WARRIOR;
+                        Console.WriteLine("전사를 선택했습니다.\n");
+                        SceneManager.Instance.LoadScene("town");
+                        return;
+                    case "2":
+                        player.data.classType = eClassType.MAGE;
+                        Console.WriteLine("마법사를 선택했습니다.\n");
+                        SceneManager.Instance.LoadScene("town");
+                        return;
+                    case "3":
+                        player.data.classType = eClassType.ARCHER;
+                        Console.WriteLine("궁수를 선택했습니다.\n");
+                        SceneManager.Instance.LoadScene("town");
+                        return;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.\n");
+                        break;
                 }
             }
         }

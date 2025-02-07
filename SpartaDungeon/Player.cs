@@ -33,7 +33,11 @@ namespace SpartaDungeon
 
     public class Player
     {
+        public PlayerData data;
 
-
+        public Player(PlayerData playerData)
+        {
+            data = playerData;
+        }
     }
 }
