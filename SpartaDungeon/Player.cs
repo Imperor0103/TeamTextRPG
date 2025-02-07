@@ -8,6 +8,6 @@ namespace SpartaDungeon
 {
    public class Player
     {
-
+        // Properties
     }
 }
