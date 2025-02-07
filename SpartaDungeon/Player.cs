@@ -9,5 +9,9 @@ namespace SpartaDungeon
    public class Player
     {
         // Properties
+
+        // 뫄
+
+        // 배고프다
     }
 }
