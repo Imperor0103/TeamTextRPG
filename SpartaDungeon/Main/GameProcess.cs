@@ -13,6 +13,7 @@ namespace SpartaDungeon.Main
         SceneManager sceneManager;
         ItemManager itemManager;
         DataManager dataManager;
+        InputManager inputManager;
 
         public static bool isPlaying;   // 종료하는 곳에서 false로 바꾼다
 
@@ -36,6 +37,10 @@ namespace SpartaDungeon.Main
             if (dataManager == null)
             {
                 dataManager = DataManager.Instance;
+            }
+            if (inputManager == null)
+            {
+                inputManager = InputManager.Instance;
             }
         }
         // 1번만 호출되는 메서드
