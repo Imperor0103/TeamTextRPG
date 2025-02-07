@@ -22,17 +22,20 @@
         public float mp { get; set; }
         public string description { get; set; }
         public int price { get; set; }
-    }
+        public bool IsEquipable { get; set; }
 
-    public class Armor : Equipment
-    {
-        public Armor()
+
+    }
+        public class Armor : Equipment
         {
-            name = "존나 쌘 갑옷";
-            itemType = 1;
-            defence = 9999;
-            description = "날 아무도 막을수 없으셈 ㅋㅋ";
-            price = 9999;
+            public Armor()
+            {
+                name = "존나 쌘 갑옷";
+                itemType = 1;
+                defence = 9999;
+                description = "날 아무도 막을수 없으셈 ㅋㅋ";
+                price = 9999;
+            }
         }
     }
-}
+
