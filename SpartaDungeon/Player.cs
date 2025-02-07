@@ -30,6 +30,14 @@ namespace SpartaDungeon
 
     public class Player
     {
+        // 뫄
 
+        // 배고프다
+
+        // 충돌 테스트
+        public void Test1()
+        {
+            Console.WriteLine("Merge Test");
+        }
     }
 }
