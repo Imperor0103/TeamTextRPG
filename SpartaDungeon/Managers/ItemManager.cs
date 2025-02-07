@@ -32,5 +32,6 @@ namespace SpartaDungeon.Managers
         public List<Equipment> equimentList = new List<Equipment>();
 
 
+
     }
 }

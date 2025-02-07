@@ -33,7 +33,6 @@
             defence = 9999;
             description = "날 아무도 막을수 없으셈 ㅋㅋ";
             price = 9999;
-
         }
     }
 }
