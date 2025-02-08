@@ -34,9 +34,10 @@ namespace SpartaDungeon
     public class Player
     {
         public PlayerData data;
-
+        public List<Equipment> ownedList;
         public Player(PlayerData playerData)
         {
+            ownedList = new List<Equipment>();
             data = playerData;
         }
     }

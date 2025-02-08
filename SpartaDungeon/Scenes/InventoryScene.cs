@@ -9,6 +9,8 @@ namespace SpartaDungeon.Scenes
 {
     public class InventoryScene : BaseScene
     {
+        // 초기 멤버
+
         #region 새로운 생성자 만들기 금지
         // 생성자에서는 현재 씬의 이름만 설정한다. 씬에 있는 멤버들의 초기화는 Awake나 Start에서 한다
         public InventoryScene(string name) : base(name) { }
@@ -25,11 +27,12 @@ namespace SpartaDungeon.Scenes
         public override void Update()
         {
             // 화면출력
+            ItemManager.Instance.PrintItem();
             // 입력받기
+
+            // 장착하기
+
             // 화면전환
         }
-
-
-
     }
 }

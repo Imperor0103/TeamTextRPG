@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace SpartaDungeon.Managers
 {
-    // 모든 씬을 관리한다
+    // 모든 씬을 관리한다 
     public class SceneManager : Singleton<SceneManager>
     {
-        BaseScene prevScene;    // 이전에 열렸던 씬
+        BaseScene prevScene;    // 이전에 열렸던 씬 
         BaseScene currentScene; // 현재 열려있는 씬
 
-        public Dictionary<string, BaseScene> sceneDictionary;
+        public Dictionary<string, BaseScene> sceneDictionary; 
 
-        // Scene을 생성해 sceneDictionary에 저장한다
-        public void Init()
+        // Scene을 생성해 sceneDictionary에 저장한다  
+        public void Init() 
         {
             // 멤버의 초기화
             if (sceneDictionary == null)
@@ -37,7 +37,7 @@ namespace SpartaDungeon.Managers
             BaseScene dungeonScene = new DungeonScene("dungeon");
             sceneDictionary["dungeon"] = dungeonScene;
             // 처음 시작은 entry
-            currentScene = entryScene;
+            currentScene = storeScene;
         }
         // 1번만 호출되는 메서드
         public void InitFirstScene()
