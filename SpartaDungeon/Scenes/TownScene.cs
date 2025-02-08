@@ -12,13 +12,54 @@ namespace SpartaDungeon.Scenes
         // 생성자에서는 현재 씬의 이름만 설정한다. 씬에 있는 멤버들의 초기화는 Awake나 Start에서 한다
         public TownScene(string name) : base(name) { }        
         #endregion
-        //테스트
+        
         public override void Awake()
         {
             Console.Write("마을 도착!");
         }
         public override void Start()
         {
+            while (true)
+            {
+                Console.WriteLine();
+                Console.WriteLine("행동을 선택하세요.");
+                Console.WriteLine();
+                Console.WriteLine("1.상태보기");
+                Console.WriteLine("2.인벤토리");
+                Console.WriteLine("3.상점");
+                Console.WriteLine("4.던전입장");
+                Console.WriteLine("5.사우나");
+                Console.WriteLine("6.저장 / 불러오기");
+                Console.WriteLine();
+                switch (Console.ReadLine())
+                {
+                    case "1":
+                        Console.WriteLine("상태보기를 선택했습니다.\n");
+                        return;
+                    case "2":
+                        Console.WriteLine("인벤토리를 선택했습니다.\n");
+                        return;
+                    case "3":
+                        Console.WriteLine("상점을 선택했습니다.\n");
+                        return;
+                    case "4":
+                        Console.WriteLine("던전입장를 선택했습니다.\n");
+                        return;
+                    case "5":
+                        Console.WriteLine("사우나를 선택했습니다.\n");
+                        return;
+                    case "6":
+                        Console.WriteLine("저장 / 불러오기를 선택했습니다.\n");
+                        return;
+                    default:
+                        Console.WriteLine();
+                        Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.\n");
+                        break;
+                }
+            }
+           
+               
+
 
         }
         public override void Update()
