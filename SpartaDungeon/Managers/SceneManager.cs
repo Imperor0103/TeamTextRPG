@@ -36,8 +36,10 @@ namespace SpartaDungeon.Managers
             sceneDictionary["saveLoad"] = saveLoadScene;
             BaseScene dungeonScene = new DungeonScene("dungeon");
             sceneDictionary["dungeon"] = dungeonScene;
+            BaseScene saunaScene = new SaunaScene("sauna");
+            sceneDictionary["sauna"] = saunaScene;
             // 처음 시작은 entry
-            currentScene = storeScene;
+            currentScene = entryScene;
         }
         // 1번만 호출되는 메서드
         public void InitFirstScene()

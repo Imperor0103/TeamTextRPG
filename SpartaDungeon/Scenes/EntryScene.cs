@@ -20,7 +20,7 @@ namespace SpartaDungeon.Scenes
         //
         public override void Awake()
         {
-            player = new Player(new PlayerData()
+            PlayerData data = new PlayerData()
             {
                 name = "",
                 classType = eClassType.NONE,
@@ -33,7 +33,11 @@ namespace SpartaDungeon.Scenes
                 mp = 0f,
                 exp = 0,
                 gold = 1500
-            });
+            };
+            
+            player = new Player(data);
+
+            DataManager.Instance.player = player;
         }
 
         public override void Start()
@@ -67,7 +71,7 @@ namespace SpartaDungeon.Scenes
 
         private void CreateNewGame()
         {
-            Console.WriteLine("\n[ 새로생성 ]\n");
+            Console.WriteLine("\n\n[ 새로생성 ]\n");
 
             bool isNameSaved = false; 
 
@@ -89,21 +93,21 @@ namespace SpartaDungeon.Scenes
 
                     string choice = Console.ReadLine();
 
-                    if (choice == "Y")
+                    if (choice == "Y" || choice == "y")
                     {
-                        Console.WriteLine("\n이름을 저장합니다.");
+                        Console.WriteLine("\n이름을 저장합니다.\n");
                         isNameSaved = true;
                         SelectClass();
                         break;
                     }
-                    else if (choice == "N")
+                    else if (choice == "N" || choice == "n")
                     {
-                        Console.WriteLine("이름 설정을 취소합니다. 다시 입력해주세요.");
+                        Console.WriteLine("이름 설정을 취소합니다. 다시 입력해주세요.\n");
                         break;
                     }
                     else
                     {
-                        Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.");
+                        Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.\n");
                     }
                 }
             }
