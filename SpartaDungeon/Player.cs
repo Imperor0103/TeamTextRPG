@@ -155,6 +155,29 @@ namespace SpartaDungeon
             }
         }
 
+        // 무기, 갑옷 장착에 의한 공격력, 방어력 갱신
+        public float PlayerAttack()
+        {
+            if (DataManager.Instance.player.weapon != null)
+            {
+                return data.attack + DataManager.Instance.player.weapon.attack;
+            }
+            else
+            {
+                return data.attack;
+            }
+        }
+        public float PlayerDefence()
+        {
+            if (DataManager.Instance.player.armor != null)
+            {
+                return data.defence + DataManager.Instance.player.armor.defence;
+            }
+            else
+            {
+                return data.defence;
+            }
+        }
 
 
         // 전투와 관련된 로직

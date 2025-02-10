@@ -44,12 +44,20 @@ namespace SpartaDungeon.Scenes
         {
             // 화면출력
             ItemManager.Instance.PrintInventory();
+            // 출력메뉴를 보여준다
+            Console.WriteLine("1.장착 관리\n0.나가기\n"); // 
             // 입력받기
-            // 
-
             string input = InputManager.Instance.GetValidString("원하시는 행동을 입력해주세요");
-            // 장착하기
-
+            switch (int.Parse(input))
+            {
+                case 1:
+                    // 장착하기 씬으로 이동
+                    SceneManager.Instance.LoadScene("equip");
+                    break;
+                case 0:
+                    SceneManager.Instance.LoadScene("town");
+                    break;
+            }
             // 화면전환
         }
     }

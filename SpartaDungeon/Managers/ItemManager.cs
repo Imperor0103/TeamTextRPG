@@ -11,31 +11,41 @@ namespace SpartaDungeon.Managers
     public class ItemManager : Singleton<ItemManager>
     {
         // 생성자 만들지 않아도 됨
-        public List<Equipment> equimentList = new List<Equipment>();    // 아이템 저장
+        public List<Equipment> equipmentList = new List<Equipment>();    // 아이템 저장
 
-        // 인벤토리의 아이템
+        // 인벤토리, 장착관리의 아이템
         public void PrintInventory()
         {
             Console.Clear();
             Console.WriteLine($"[{SceneManager.Instance.GetCurrentScene().GetName()}]\n보유 중인 아이템을 관리할 수 있습니다.\n");
             Console.WriteLine("[아이템 목록]\n");
-            for (int i = 0; i < equimentList.Count; i++)
+            for (int i = 0; i < DataManager.Instance.player.ownedList.Count; i++)
             {
-                // 인벤토리씬 한정해서 장착한 아이템은 [E] 출력
-                if (IsEquiped(equimentList[i]))
+                // 장착관리씬 한정해서 장착한 아이템은 [E] 출력
+                if (SceneManager.Instance.GetCurrentScene().GetName() == "equip"
+                    && IsEquiped(DataManager.Instance.player.ownedList[i]))
                 {
+                    // 글씨 색 바꾸어보자
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    // 배경색 바꾸기: Console.BackgroundColor
                     Console.Write($"[E]");
                 }
+                else
+                {
+                    Console.ResetColor();   // 색깔 원래대로
+                }
                 Console.Write($"{i + 1} ");
-                Console.Write($"이름: {equimentList[i].name} | ");
-                Console.Write($"종류: {equimentList[i].itemType} | ");
-                Console.Write($"공격력: {equimentList[i].attack} | ");
-                Console.Write($"방어력: {equimentList[i].defence} | ");
-                Console.Write($"hp추가: {equimentList[i].hp} | ");
-                Console.Write($"mp추가: {equimentList[i].mp} | ");
-                Console.Write($"{equimentList[i].description} | ");
+                Console.Write($"이름: {DataManager.Instance.player.ownedList[i].name} | ");
+                Console.Write($"종류: {DataManager.Instance.player.ownedList[i].itemType} | ");
+                Console.Write($"공격력: {DataManager.Instance.player.ownedList[i].attack} | ");
+                Console.Write($"방어력: {DataManager.Instance.player.ownedList[i].defence} | ");
+                Console.Write($"hp추가: {DataManager.Instance.player.ownedList[i].hp} | ");
+                Console.Write($"mp추가: {DataManager.Instance.player.ownedList[i].mp} | ");
+                Console.Write($"{DataManager.Instance.player.ownedList[i].description} | ");
             }
+            Console.WriteLine();
         }
+
         // 해당 아이템을 장착하고 있는지 여부
         public bool IsEquiped(Equipment item)
         {
@@ -74,14 +84,14 @@ namespace SpartaDungeon.Managers
             {
                 Weapon weapon = new Weapon(n, t, c, a, d, h, m, des, p);
                 SceneManager.Instance.GetCurrentScene().objectList.Add(weapon);
-                ItemManager.Instance.equimentList.Add(weapon);
+                ItemManager.Instance.equipmentList.Add(weapon);
                 return weapon;
             }
             else if (t == 2) // 갑옷
             {
                 Armor armor = new Armor(n, t, c, a, d, h, m, des, p);
                 SceneManager.Instance.GetCurrentScene().objectList.Add(armor);
-                equimentList.Add(armor);
+                equipmentList.Add(armor);
                 return armor;
             }
             else // 포션
@@ -89,7 +99,7 @@ namespace SpartaDungeon.Managers
                 // 포션 추가해보기
                 Potion potion = new Potion(n, t, c, a, d, h, m, des, p);
                 SceneManager.Instance.GetCurrentScene().objectList.Add(potion);
-                equimentList.Add(potion);
+                equipmentList.Add(potion);
                 return potion;
             }
         }
