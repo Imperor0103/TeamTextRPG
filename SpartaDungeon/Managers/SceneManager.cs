@@ -38,6 +38,8 @@ namespace SpartaDungeon.Managers
             sceneDictionary["dungeon"] = dungeonScene;
             BaseScene saunaScene = new SaunaScene("sauna");
             sceneDictionary["sauna"] = saunaScene;
+            BaseScene equipScene = new EquipScene("equip");
+            sceneDictionary["equip"] = equipScene;
             // 처음 시작은 entry
             currentScene = entryScene;
         }
