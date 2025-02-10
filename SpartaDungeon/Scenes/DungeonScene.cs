@@ -19,10 +19,11 @@ namespace SpartaDungeon.Scenes
         // 
         public override void Awake()
         {
-            
+            player = DataManager.Instance.player;
         }
         public override void Start()
         {
+            Console.Clear();
             Console.WriteLine();
             Thread.Sleep(500);
             Console.WriteLine("──────▄██▀▀▀▀▄");
@@ -69,6 +70,7 @@ namespace SpartaDungeon.Scenes
         }
         public bool Battle()
         {
+            Console.Clear();
             Console.WriteLine();
             Console.WriteLine($"{monster.data.name}과(와)의 전투 시작!");
             Console.WriteLine($"[체력: {monster.data.maxHp}][공격력: {monster.data.attack}]");
@@ -82,30 +84,34 @@ namespace SpartaDungeon.Scenes
                 MonsterTurn();
                 if (player.data.hp <= 0) break; // 플레이어가 죽으면 루프 종료
 
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
             }
 
             // 전투 결과 출력
             if (player.data.hp <= 0)
             {
                 Console.WriteLine("⚔️ 당신은 전투에서 패배했습니다... 마을로 돌아갑니다.");
+                SceneManager.Instance.LoadScene("town");
                 return false;
             }
             
             Console.WriteLine($"🎉 {monster.data.name}을(를) 처치했습니다! 보상을 획득합니다.");
             // 보상 로직 추가
+            VictoryMessages.PrintRandomVictoryMessage();
+            SceneManager.Instance.LoadScene("town");
             return true;
 
         }
         private void PlayerTurn()
         {
             Console.WriteLine();
+            Console.WriteLine($"체력: {player.data.hp}");
             Console.WriteLine($"{player.data.name}의 턴 (공격하려면 Enter)");
             Console.ReadLine();
             float damage = Math.Max(player.data.attack - monster.data.defence, 1); // 1은 최소 대미지
             monster.data.hp -= damage;
             Console.WriteLine($"{monster.data.name}에게 {player.data.attack} 피해");
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
         }
         private void MonsterTurn()
         {
@@ -114,7 +120,41 @@ namespace SpartaDungeon.Scenes
             float damage = Math.Max(monster.data.attack - player.data.defence, 1);
             player.data.hp -= damage;
             Console.WriteLine($"{player.data.name}에게 {monster.data.attack} 피해");
-            Thread.Sleep(1000);
+        }
+
+        // 보상
+        private void GrantRewards(Monster monster)
+        {
+
+        }
+
+        public class VictoryMessages
+        {
+            private static readonly List<string> victoryArts = new()
+            {
+                "  ✨🏆 VICTORY 🏆✨\n     ___________\n    '._==_==_=_.'\n    .-\\:      /-.\n   | (|:.     |) |\n    '-|:.     |-'\n      \\::.    /\n       '::. .'\n         ) (\n       _.' '._",
+                
+                "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🔥 🎉 VICTORY! 🎉 🔥\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n    \\\n        /\\  🏆  /\n      (🔥🔥)\n       (🔥)\n        \\/",
+                
+                "      ✨🌟✨\n  🌟 VICTORY! 🌟\n      ✨🌟✨",
+                
+                "  ⚡⚡⚡⚡⚡⚡\n ⚡  🎉 WIN 🎉  ⚡\n  ⚡⚡⚡⚡⚡⚡",
+                
+                " 🏆 Victory! 🏆\n  🛡️   ⚔️   🛡️",
+                
+                "  🏆 VICTORY! 🏆\n   🚩        🚩\n   | WINNER |\n   |________|",
+                
+                "  💰💰💰💰💰💰💰\n  💰 YOU WIN! 💰\n  💰💰💰💰💰💰💰",
+                
+                "      👑🏆👑\n  🎉 VICTORY! 🎉\n      👑🏆👑"
+            };
+
+            public static void PrintRandomVictoryMessage()
+            {
+                Random random = new Random();
+                int index = random.Next(victoryArts.Count);
+                Console.WriteLine(victoryArts[index]);
+            }
         }
     }
 }

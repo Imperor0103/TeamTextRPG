@@ -44,7 +44,7 @@ namespace SpartaDungeon
             // gold = 10
         }) { }
     }
-        public class Oak : Monster
+    public class Oak : Monster
     {
         public Oak() : base(new MonsterData
         {
@@ -59,7 +59,7 @@ namespace SpartaDungeon
             // gold = 10
         }) { }
     }
-        public class Dragon : Monster
+    public class Dragon : Monster
     {
         public Dragon() : base(new MonsterData
         {
