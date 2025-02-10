@@ -59,6 +59,7 @@ namespace SpartaDungeon.Scenes
             if (monster != null)
             {
                 Console.WriteLine($"{monster.data.name}과(와)의 전투를 시작합니다!");
+                Battle();
             }
             else
             {
