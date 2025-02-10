@@ -59,5 +59,19 @@
         }
     }
     // 포션 클래스가 필요함
-
+    public class Potion : Equipment
+    {
+        public Potion(string n, int t, int c, float a, float d, float h, float m, string des, int p)
+        {
+            name = n;
+            itemType = t;
+            classType = c;
+            attack = a;
+            defence = d;
+            hp = h;
+            mp = m;
+            description = des;
+            price = p;
+        }
+    }
 }

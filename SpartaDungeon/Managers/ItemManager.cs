@@ -13,17 +13,21 @@ namespace SpartaDungeon.Managers
         // 생성자 만들지 않아도 됨
         public List<Equipment> equimentList = new List<Equipment>();    // 아이템 저장
 
+        // 상점의 아이템
         public void PrintItem()
         {
+            Console.Clear();
             Console.WriteLine($"[{SceneManager.Instance.GetCurrentScene().GetName()}]\n보유 중인 아이템을 관리할 수 있습니다.\n");
             Console.WriteLine("[아이템 목록]\n");
             for (int i = 0; i < equimentList.Count; i++)
             {
-                // 장착했다면 [E] 출력
-                if (IsEquiped(equimentList[i]))
+                // 인벤토리씬 한정해서 장착한 아이템은 [E] 출력
+                if (SceneManager.Instance.GetCurrentScene() == SceneManager.Instance.sceneDictionary["inventory"]
+                    && IsEquiped(equimentList[i]))
                 {
                     Console.Write($"[E]");
                 }
+                Console.Write($"{i + 1} ");
                 Console.Write($"이름: {equimentList[i].name} | ");
                 Console.Write($"종류: {equimentList[i].itemType} | ");
                 Console.Write($"공격력: {equimentList[i].attack} | ");
@@ -31,8 +35,11 @@ namespace SpartaDungeon.Managers
                 Console.Write($"hp추가: {equimentList[i].hp} | ");
                 Console.Write($"mp추가: {equimentList[i].mp} | ");
                 Console.Write($"{equimentList[i].description} | ");
-                // 아래의 메세지만 따로 출력하는 메서드 만든다
-                PrintPrice(equimentList[i]);
+                // 상점씬 한정해서 아래의 메세지만 따로 출력하는 메서드 만든다
+                if (SceneManager.Instance.GetCurrentScene() == SceneManager.Instance.sceneDictionary["store"])
+                {
+                    PrintPrice(equimentList[i]);
+                }
             }
         }
         // 해당 아이템을 장착하고 있는지 여부
@@ -86,7 +93,10 @@ namespace SpartaDungeon.Managers
             else // 포션
             {
                 // 포션 추가해보기
-                return null;    // 임시
+                Potion potion = new Potion(n, t, c, a, d, h, m, des, p);
+                SceneManager.Instance.GetCurrentScene().objectList.Add(potion);
+                equimentList.Add(potion);
+                return potion;
             }
         }
     }

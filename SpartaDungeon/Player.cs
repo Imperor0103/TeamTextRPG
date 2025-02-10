@@ -55,6 +55,60 @@ namespace SpartaDungeon
             data = playerData;
         }
         // 플레이어 함수들
+        // 플레이어 상태보기
+        public void ShowStatus()
+        {
+            Console.Clear();
+            Console.Write($"[상태 보기]\n캐릭터의 정보가 표시됩니다.\n\n");
+            Console.Write($"Lv. {DataManager.Instance.player.data.level} \n");
+            Console.Write($"{DataManager.Instance.player.data.name} ({DataManager.Instance.player.playerData.charaClass}) \n");
+            //
+            Console.Write($"공격력 : {DataManager.Instance.player.data.attack} ");
+            /// 아이템 공격력 추가
+            if (DataManager.Instance.player.data.weapon != null)
+            {
+                Console.Write($"(+{DataManager.Instance.inventory.weapon.itemData.attack}) ");
+            }
+            Console.Write("\n");
+            //
+            Console.Write($"방어력 : {DataManager.Instance.player.playerData.defence} ");
+            /// 아이템 방어력 추가
+            if (DataManager.Instance.inventory.armor != null)
+            {
+                Console.Write($"(+{DataManager.Instance.inventory.armor.itemData.defence}) ");
+            }
+            Console.Write("\n");
+            //
+            Console.Write($"체 력 : {DataManager.Instance.player.playerData.hp} / {DataManager.Instance.player.playerData.maxHp} \n");
+            Console.Write($"exp : {DataManager.Instance.player.playerData.exp} / 다음레벨까지 남은 경험치: {10 * DataManager.Instance.player.playerData.level - DataManager.Instance.player.playerData.exp} \n");
+            Console.Write($"Gold : {DataManager.Instance.player.playerData.gold} G\n\n");
+            Console.Write($"0. 나가기 \n\n");
+            Console.Write($"원하시는 행동을 입력해주세요. \n>>");
+            bool isValid = false;
+            int num;
+            while (!isValid)
+            {
+                string input = Console.ReadLine();
+                if (int.TryParse(input, out num))
+                {
+                    switch (num)
+                    {
+                        case 0:
+                            isValid = true;
+                            break;
+                        default:
+                            Console.WriteLine("잘못된 입력입니다.계속하려면 enter.");
+                            Console.ReadLine();
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다.계속하려면 enter.");
+                    Console.ReadLine();
+                }
+            }
+        }
 
         // 무기장착은 플레이어에서 한다
         public void EquipItem(Equipment item)
@@ -100,6 +154,9 @@ namespace SpartaDungeon
                 Console.WriteLine("아이템이 null입니다");  // 디버그
             }
         }
+
+
+
         // 전투와 관련된 로직
 
     }
