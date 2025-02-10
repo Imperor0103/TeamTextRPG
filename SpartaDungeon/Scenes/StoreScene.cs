@@ -16,8 +16,14 @@ namespace SpartaDungeon.Scenes
         //
         public override void Awake()
         {
-            Equipment item = new Armor();
-            ItemManager.Instance.equimentList.Add(item);
+            //Equipment item = new Armor();
+            Equipment item = ItemManager.Instance.CreateItem("존나 쌘 갑옷", 2, 1, 0f, 9999f, 0f, 0f, "날 아무도 막을수 없으셈", 9999);
+            Equipment item2 = ItemManager.Instance.CreateItem("존나 쌘 검", 1, 1, 9999f, 0f, 0f, 0f, "날 아무도 막을수 없으셈", 9999);
+            Equipment item3 = ItemManager.Instance.CreateItem("존나 쌘 갑옷22", 2, 1, 0f, 9999f, 0f, 0f, "날 아무도 막을수 없으셈", 9999);
+            Equipment item4 = ItemManager.Instance.CreateItem("존나 쌘 검22", 1, 1, 9999f, 0f, 0f, 0f, "날 아무도 막을수 없으셈", 9999);
+            Equipment item5 = ItemManager.Instance.CreateItem("존나 쌘 갑옷333", 2, 1, 0f, 9999f, 0f, 0f, "날 아무도 막을수 없으셈", 9999);
+            Equipment item6 = ItemManager.Instance.CreateItem("존나 쌘 검333", 1, 1, 9999f, 0f, 0f, 0f, "날 아무도 막을수 없으셈", 9999);
+
         }
         public override void Start()
         {
@@ -30,7 +36,23 @@ namespace SpartaDungeon.Scenes
         }
         public override void Update()
         {
-          
+            Console.WriteLine("1. 새로시작");
+            Console.WriteLine("2. 불러오기");
+            Console.WriteLine("3. 종료");
+
+            Console.Write("\n선택을 입력하세요: ");
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    break;
+                case "2":
+                    SceneManager.Instance.LoadScene("saveLoad");
+                    break;
+                case "3":
+                    break;
+            }
+
         }
     }
 }

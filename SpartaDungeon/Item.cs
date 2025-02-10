@@ -3,7 +3,8 @@
     public interface ItemData
     {
         string name { get; }
-        int itemType { get; }   // ALL: 모두 장착가
+        int itemType { get; }   // 1: 무기 2: 갑옷, 3: 포션, 
+        int classType { get; }   // 1: 전사 2: 마법사 3: 궁수 4: ALL
         float attack { get; }
         float defence { get; }
         float hp { get; }
@@ -16,6 +17,7 @@
     {
         public string name { get; set; }
         public int itemType { get; set; }
+        public int classType { get; set; }
         public float attack { get; set; }
         public float defence { get; set; }
         public float hp { get; set; }
@@ -26,13 +28,50 @@
 
     public class Armor : Equipment
     {
-        public Armor()
+        // 
+        public Armor(string n, int t, int c, float a, float d, float h, float m, string des, int p)
         {
-            name = "존나 쌘 갑옷";
-            itemType = 1;
-            defence = 9999;
-            description = "날 아무도 막을수 없으셈 ㅋㅋ";
-            price = 9999;
+            name = n;
+            itemType = t;
+            classType = c;
+            attack = a;
+            defence = d;
+            hp = h;
+            mp = m;
+            description = des;
+            price = p;
+        }
+    }
+
+    public class Weapon : Equipment
+    {
+        public Weapon(string n, int t, int c, float a, float d, float h, float m, string des, int p)
+        {
+            name = n;
+            itemType = t;
+            classType = c;
+            attack = a;
+            defence = d;
+            hp = h;
+            mp = m;
+            description = des;
+            price = p;
+        }
+    }
+    // 포션 클래스가 필요함
+    public class Potion : Equipment
+    {
+        public Potion(string n, int t, int c, float a, float d, float h, float m, string des, int p)
+        {
+            name = n;
+            itemType = t;
+            classType = c;
+            attack = a;
+            defence = d;
+            hp = h;
+            mp = m;
+            description = des;
+            price = p;
         }
     }
 }

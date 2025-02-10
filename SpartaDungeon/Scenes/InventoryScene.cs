@@ -19,17 +19,33 @@ namespace SpartaDungeon.Scenes
         public override void Awake()
         {
             // 인벤토리의 멤버 초기화
+            // 딱히 없다. 플레이어의 아이템을 보여주는데, 플레이어의 아이템은 DataManager가 가지고 있어서 안전하다
+
+            // 디버그
+            DataManager.Instance.player = new Player(new PlayerData()
+            {
+                name = "",
+                classType = eClassType.NONE,
+                level = 1,
+                attack = 10f,
+                defence = 5f,
+                maxHp = 100f,
+                hp = 100f,
+                maxMp = 100f,
+                mp = 0f,
+                exp = 0,
+                gold = 1500
+            });
         }
         public override void Start()
         {
-            // 인벤토리의 멤버 초기화
         }
         public override void Update()
         {
             // 화면출력
             ItemManager.Instance.PrintItem();
             // 입력받기
-
+            string input = InputManager.Instance.GetValidString("");
             // 장착하기
 
             // 화면전환
