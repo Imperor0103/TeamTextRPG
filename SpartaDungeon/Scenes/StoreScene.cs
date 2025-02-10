@@ -11,23 +11,7 @@ namespace SpartaDungeon.Scenes
         //
         public override void Awake()
         {
-            Player player = new Player(new PlayerData() //디버깅용
-            {
-                name = "",
-                classType = eClassType.NONE,
-                level = 1,
-                attack = 10f,
-                defence = 5f,
-                maxHp = 100f,
-                hp = 100f,
-                maxMp = 100f,
-                mp = 0f,
-                exp = 0,
-                gold = 800
-            });
-            DataManager.Instance.player = player;
-            Equipment item = new Armor();
-            ItemManager.Instance.equimentList.Add(item);
+           
         }
         public override void Start()
         {
