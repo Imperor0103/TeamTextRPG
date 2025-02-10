@@ -43,9 +43,11 @@ namespace SpartaDungeon.Scenes
         public override void Update()
         {
             // 화면출력
-            ItemManager.Instance.PrintItem();
+            ItemManager.Instance.PrintInventory();
             // 입력받기
-            string input = InputManager.Instance.GetValidString("");
+            // 
+
+            string input = InputManager.Instance.GetValidString("원하시는 행동을 입력해주세요");
             // 장착하기
 
             // 화면전환

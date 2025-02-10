@@ -13,8 +13,8 @@ namespace SpartaDungeon.Managers
         // 생성자 만들지 않아도 됨
         public List<Equipment> equimentList = new List<Equipment>();    // 아이템 저장
 
-        // 상점의 아이템
-        public void PrintItem()
+        // 인벤토리의 아이템
+        public void PrintInventory()
         {
             Console.Clear();
             Console.WriteLine($"[{SceneManager.Instance.GetCurrentScene().GetName()}]\n보유 중인 아이템을 관리할 수 있습니다.\n");
@@ -22,8 +22,7 @@ namespace SpartaDungeon.Managers
             for (int i = 0; i < equimentList.Count; i++)
             {
                 // 인벤토리씬 한정해서 장착한 아이템은 [E] 출력
-                if (SceneManager.Instance.GetCurrentScene() == SceneManager.Instance.sceneDictionary["inventory"]
-                    && IsEquiped(equimentList[i]))
+                if (IsEquiped(equimentList[i]))
                 {
                     Console.Write($"[E]");
                 }
@@ -35,11 +34,6 @@ namespace SpartaDungeon.Managers
                 Console.Write($"hp추가: {equimentList[i].hp} | ");
                 Console.Write($"mp추가: {equimentList[i].mp} | ");
                 Console.Write($"{equimentList[i].description} | ");
-                // 상점씬 한정해서 아래의 메세지만 따로 출력하는 메서드 만든다
-                if (SceneManager.Instance.GetCurrentScene() == SceneManager.Instance.sceneDictionary["store"])
-                {
-                    PrintPrice(equimentList[i]);
-                }
             }
         }
         // 해당 아이템을 장착하고 있는지 여부
