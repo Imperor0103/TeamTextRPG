@@ -19,21 +19,28 @@ namespace SpartaDungeon.Managers
             Console.Clear();
             Console.WriteLine($"[{SceneManager.Instance.GetCurrentScene().GetName()}]\n보유 중인 아이템을 관리할 수 있습니다.\n");
             Console.WriteLine("[아이템 목록]\n");
-            for (int i = 0; i < equimentList.Count; i++)
+            for (int i = 0; i < DataManager.Instance.player.ownedList.Count; i++)
             {
                 // 인벤토리씬 한정해서 장착한 아이템은 [E] 출력
-                if (IsEquiped(equimentList[i]))
+                if (IsEquiped(DataManager.Instance.player.ownedList[i]))
                 {
+                    // 글씨 색 바꾸어보자
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    // 배경색 바꾸기: Console.BackgroundColor
                     Console.Write($"[E]");
                 }
+                else
+                {
+                    Console.ResetColor();   // 색깔 원래대로
+                }
                 Console.Write($"{i + 1} ");
-                Console.Write($"이름: {equimentList[i].name} | ");
-                Console.Write($"종류: {equimentList[i].itemType} | ");
-                Console.Write($"공격력: {equimentList[i].attack} | ");
-                Console.Write($"방어력: {equimentList[i].defence} | ");
-                Console.Write($"hp추가: {equimentList[i].hp} | ");
-                Console.Write($"mp추가: {equimentList[i].mp} | ");
-                Console.Write($"{equimentList[i].description} | ");
+                Console.Write($"이름: {DataManager.Instance.player.ownedList[i].name} | ");
+                Console.Write($"종류: {DataManager.Instance.player.ownedList[i].itemType} | ");
+                Console.Write($"공격력: {DataManager.Instance.player.ownedList[i].attack} | ");
+                Console.Write($"방어력: {DataManager.Instance.player.ownedList[i].defence} | ");
+                Console.Write($"hp추가: {DataManager.Instance.player.ownedList[i].hp} | ");
+                Console.Write($"mp추가: {DataManager.Instance.player.ownedList[i].mp} | ");
+                Console.Write($"{DataManager.Instance.player.ownedList[i].description} | ");
             }
         }
         // 해당 아이템을 장착하고 있는지 여부
