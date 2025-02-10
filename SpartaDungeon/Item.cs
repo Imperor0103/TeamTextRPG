@@ -30,15 +30,15 @@
     }
         public class Armor : Equipment
         {
-            public Armor(string n, int t, int c, float a, float d, float m, string des, int p) 
+            public Armor(string n, int t, int c, float a, float d, float h,float m, string des, int p) 
             {
             name = n;
             itemType = t;
             classType = c;
             attack = a;
             defence = d;
-            hp = m;
-            mp = p;
+            hp = h;
+            mp = m;
             description = des;
             price = p;
             }
