@@ -19,7 +19,7 @@ namespace SpartaDungeon.Scenes
         // 
         public override void Awake()
         {
-
+            
         }
         public override void Start()
         {
@@ -104,7 +104,7 @@ namespace SpartaDungeon.Scenes
             Console.ReadLine();
             float damage = Math.Max(player.data.attack - monster.data.defence, 1); // 1은 최소 대미지
             monster.data.hp -= damage;
-            Console.WriteLine($"{monster.data.name}에게 {player.data.attack} 데미지!");
+            Console.WriteLine($"{monster.data.name}에게 {player.data.attack} 피해");
             Thread.Sleep(1000);
         }
         private void MonsterTurn()
