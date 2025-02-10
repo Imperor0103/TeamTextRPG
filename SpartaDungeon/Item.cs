@@ -30,14 +30,50 @@
     }
         public class Armor : Equipment
         {
-            public Armor()
+            public Armor(string n, int t, int c, float a, float d, float m, string des, int p) 
             {
-                name = "존나 쌘 갑옷";
-                itemType = 1;
-                defence = 9999;
-                description = "날 아무도 막을수 없으셈 ㅋㅋ";
-                price = 9999;
+            name = n;
+            itemType = t;
+            classType = c;
+            attack = a;
+            defence = d;
+            hp = m;
+            mp = p;
+            description = des;
+            price = p;
             }
         }
+
+        public class Weapon : Equipment
+    {
+        public Weapon(string n, int t, int c, float a, float d, float h, float m, string des, int p)
+        {
+            name = n;
+            itemType = t;
+            classType = c;
+            attack = a;
+            defence = d;
+            hp = h;
+            mp = m;
+            description = des;
+            price = p;
+        }
+    }
+
+        public class Potion : Equipment
+    {
+        public Potion(string n, int t, int c, float a, float d, float h, float m, string des, int p)
+        {
+            name = n;
+            itemType = t;
+            classType = c;
+            attack = a;
+            defence = d;
+            hp = h;
+            mp = m;
+            description = des;
+            price = p;
+        }
+    }
     }
 
