@@ -11,7 +11,7 @@ namespace SpartaDungeon.Managers
     public class ItemManager : Singleton<ItemManager>
     {
         // 생성자 만들지 않아도 됨
-        public List<Equipment> equimentList = new List<Equipment>();    // 아이템 저장
+        public List<Equipment> equipmentList = new List<Equipment>();    // 아이템 저장
 
         // 인벤토리의 아이템
         public void PrintInventory()
@@ -81,14 +81,14 @@ namespace SpartaDungeon.Managers
             {
                 Weapon weapon = new Weapon(n, t, c, a, d, h, m, des, p);
                 SceneManager.Instance.GetCurrentScene().objectList.Add(weapon);
-                ItemManager.Instance.equimentList.Add(weapon);
+                ItemManager.Instance.equipmentList.Add(weapon);
                 return weapon;
             }
             else if (t == 2) // 갑옷
             {
                 Armor armor = new Armor(n, t, c, a, d, h, m, des, p);
                 SceneManager.Instance.GetCurrentScene().objectList.Add(armor);
-                equimentList.Add(armor);
+                equipmentList.Add(armor);
                 return armor;
             }
             else // 포션
@@ -96,7 +96,7 @@ namespace SpartaDungeon.Managers
                 // 포션 추가해보기
                 Potion potion = new Potion(n, t, c, a, d, h, m, des, p);
                 SceneManager.Instance.GetCurrentScene().objectList.Add(potion);
-                equimentList.Add(potion);
+                equipmentList.Add(potion);
                 return potion;
             }
         }
