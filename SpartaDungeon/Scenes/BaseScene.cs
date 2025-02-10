@@ -10,10 +10,17 @@ namespace SpartaDungeon.Scenes
     public abstract class BaseScene
     {
         string sceneName;
+        public List<object> objectList;
         public BaseScene(string name)
         {
             sceneName = name;
+            if (objectList == null)
+            {
+                objectList = new List<object>();
+            }
         }
+
+
         // 재정의하지 않았으므로 부모의 메서드를 재활용해서 사용
         public string GetName()
         {
