@@ -3,7 +3,8 @@
     public interface ItemData
     {
         string name { get; }
-        int itemType { get; }   // ALL: 모두 장착가
+        int itemType { get; }   // 1: 무기 2: 갑옷, 3: 포션, 
+        int classType { get; }   // 1: 전사 2: 마법사 3: 궁수 4: ALL
         float attack { get; }
         float defence { get; }
         float hp { get; }
@@ -16,6 +17,7 @@
     {
         public string name { get; set; }
         public int itemType { get; set; }
+        public int classType { get; set; }
         public float attack { get; set; }
         public float defence { get; set; }
         public float hp { get; set; }
