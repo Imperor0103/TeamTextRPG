@@ -24,13 +24,14 @@
         public float mp { get; set; }
         public string description { get; set; }
         public int price { get; set; }
-    }
+        public bool IsEquipable { get; set; }
 
-    public class Armor : Equipment
-    {
-        // 
-        public Armor(string n, int t, int c, float a, float d, float h, float m, string des, int p)
+
+    }
+        public class Armor : Equipment
         {
+            public Armor(string n, int t, int c, float a, float d, float h,float m, string des, int p) 
+            {
             name = n;
             itemType = t;
             classType = c;
@@ -40,10 +41,10 @@
             mp = m;
             description = des;
             price = p;
+            }
         }
-    }
 
-    public class Weapon : Equipment
+        public class Weapon : Equipment
     {
         public Weapon(string n, int t, int c, float a, float d, float h, float m, string des, int p)
         {
@@ -58,8 +59,8 @@
             price = p;
         }
     }
-    // 포션 클래스가 필요함
-    public class Potion : Equipment
+
+        public class Potion : Equipment
     {
         public Potion(string n, int t, int c, float a, float d, float h, float m, string des, int p)
         {
@@ -74,4 +75,5 @@
             price = p;
         }
     }
-}
+    }
+
