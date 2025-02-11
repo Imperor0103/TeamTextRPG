@@ -72,6 +72,7 @@ namespace SpartaDungeon.Scenes
         {
             Console.Clear();
             Console.WriteLine();
+            Console.WriteLine($"{monster.data.ascii}");
             Console.WriteLine($"{monster.data.name}과(와)의 전투 시작!");
             Console.WriteLine($"[체력: {monster.data.maxHp}][공격력: {monster.data.attack}]");
             Console.WriteLine();
@@ -97,7 +98,7 @@ namespace SpartaDungeon.Scenes
             
             Console.WriteLine($"🎉 {monster.data.name}을(를) 처치했습니다! 보상을 획득합니다.");
             // 보상 로직 추가
-            VictoryMessages.PrintRandomVictoryMessage();
+            VictoryMessages.RandomVictoryMessage();
             SceneManager.Instance.LoadScene("town");
             return true;
 
@@ -123,10 +124,6 @@ namespace SpartaDungeon.Scenes
         }
 
         // 보상
-        private void GrantRewards(Monster monster)
-        {
-
-        }
 
         public class VictoryMessages
         {
@@ -134,7 +131,7 @@ namespace SpartaDungeon.Scenes
             {
                 "  ✨🏆 VICTORY 🏆✨\n     ___________\n    '._==_==_=_.'\n    .-\\:      /-.\n   | (|:.     |) |\n    '-|:.     |-'\n      \\::.    /\n       '::. .'\n         ) (\n       _.' '._",
                 
-                "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🔥 🎉 VICTORY! 🎉 🔥\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n    \\\n        /\\  🏆  /\n      (🔥🔥)\n       (🔥)\n        \\/",
+                "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🔥 🎉 VICTORY! 🎉 🔥\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n    \\        /\n     \\  🏆  /\n      (🔥🔥)\n       (🔥)\n        \\/",
                 
                 "      ✨🌟✨\n  🌟 VICTORY! 🌟\n      ✨🌟✨",
                 
@@ -149,7 +146,7 @@ namespace SpartaDungeon.Scenes
                 "      👑🏆👑\n  🎉 VICTORY! 🎉\n      👑🏆👑"
             };
 
-            public static void PrintRandomVictoryMessage()
+            public static void RandomVictoryMessage()
             {
                 Random random = new Random();
                 int index = random.Next(victoryArts.Count);

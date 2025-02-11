@@ -17,6 +17,7 @@ namespace SpartaDungeon
         public float maxMp;
         public float mp;
         public int gold;
+        public string ascii;
     }
 
     public class Monster
@@ -42,6 +43,7 @@ namespace SpartaDungeon
             // maxMp = 0,
             // mp = 0,
             // gold = 10
+            ascii = "",
         }) { }
     }
     public class Oak : Monster
@@ -57,6 +59,7 @@ namespace SpartaDungeon
             // maxMp = 0,
             // mp = 0,
             // gold = 10
+            ascii = "",
         }) { }
     }
     public class Dragon : Monster
@@ -72,6 +75,26 @@ namespace SpartaDungeon
             // maxMp = 0,
             // mp = 0,
             // gold = 10
+            ascii = 
+@"
+                       ^\    ^
+                      / \\  / \
+                     /.  \\/   \      |\___/|
+  *----*           / / |  \\    \  __/  O  O\
+  |   /          /  /  |   \\    \_\/  \     \
+ / /\/         /   /   |    \\   _\/    '@___@
+/  /         /    /    |     \\ _\/       |U
+|  |       /     /     |      \\\/        |
+\  |     /_     /      |       \\  )   \ _|_
+\   \       ~-./_ _    |    .- ; (  \_ _ _,\'
+~    ~.           .-~-.|.-*      _        {-,
+ \      ~-. _ .-~                 \      /\'
+  \                   }            {   .*
+   ~.                 '-/        /.-~----.
+     ~- _             /        >..----.\\\
+         ~ - - - - ^}_ _ _ _ _ _ _.-\\\
+",
+
         }) { }
     }
 }
