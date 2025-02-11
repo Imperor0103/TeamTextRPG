@@ -38,7 +38,8 @@ namespace SpartaDungeon.Scenes
             {
                 var item = storeItems[i];
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Thread.Sleep(1000);
+                Console.WriteLine();
+                Thread.Sleep(100);
                 Console.WriteLine($"{i + 1}. {item.Name} | 종류: {item.ItemText} | 직업: {item.ClassText} | 공격력: {item.Attack} | 방어력: {item.Defence} | {item.Description} | {item.Price}G");
                 Console.ResetColor();
             }
@@ -76,6 +77,8 @@ namespace SpartaDungeon.Scenes
         }
 
 
+
+
         private void BuyItem()
         {
             Console.Write("\n구매할 아이템 번호를 입력하세요: ");
@@ -104,6 +107,8 @@ namespace SpartaDungeon.Scenes
             {
                 Console.WriteLine("골드가 부족합니다!");
             }
+
+            Console.ReadLine();
         }
 
         private void SellItem()
@@ -135,9 +140,14 @@ namespace SpartaDungeon.Scenes
 
             Console.WriteLine($"{item.Name}을 {item.Price / 2}G에 판매하였습니다!");
             Console.WriteLine($"현재 골드: {player.data.gold}G");
-
-
+            Console.ReadLine();
         }
+
     }
+    
 }
+
+
+
+
 

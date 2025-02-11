@@ -62,6 +62,7 @@
             ItemType = itemtype;
             ItemText = itemtext;
             ClassType = classtype;
+            ClassText = classtext;
             Attack = attack;
             Defence = defense;
             Hp = hp;
