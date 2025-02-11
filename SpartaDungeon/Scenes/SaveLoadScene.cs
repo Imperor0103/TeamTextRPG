@@ -36,7 +36,8 @@ namespace SpartaDungeon.Scenes
             int input = InputManager.Instance.GetValidNumber("저장하고 싶은 슬롯의 번호를 입력해주세요.", 1, saveSlots.Count());
             if (input == 0)
             {
-                SceneManager.Instance.LoadScene("town");
+                string prevSceneName = SceneManager.Instance.GetPrevScene().GetName();
+                SceneManager.Instance.LoadScene(prevSceneName);
             }
             else
             {
