@@ -78,28 +78,28 @@ namespace SpartaDungeon
         {
             Console.Clear();
             Console.Write($"[상태 보기]\n캐릭터의 정보가 표시됩니다.\n\n");
-            Console.Write($"Lv. {DataManager.Instance.player.data.level} \n");
-            Console.Write($"{DataManager.Instance.player.data.name} ({DataManager.Instance.player.data.classType}) \n");
+            Console.Write($"Lv. {data.level} \n");
+            Console.Write($"{data.name} ({data.classType}) \n");
             //
-            Console.Write($"공격력 : {DataManager.Instance.player.data.attack} ");
+            Console.Write($"공격력 : {data.attack} ");
             /// 아이템 공격력 추가
-            if (DataManager.Instance.player.weapon != null)
+            if (weapon != null)
             {
-                Console.Write($"(+{DataManager.Instance.player.weapon.attack}) ");
+                Console.Write($"(+{weapon.attack}) ");
             }
             Console.Write("\n");
             //
-            Console.Write($"방어력 : {DataManager.Instance.player.data.defence} ");
+            Console.Write($"방어력 : {data.defence} ");
             /// 아이템 방어력 추가
-            if (DataManager.Instance.player.armor != null)
+            if (armor != null)
             {
-                Console.Write($"(+{DataManager.Instance.player.armor.defence}) ");
+                Console.Write($"(+{armor.defence}) ");
             }
             Console.Write("\n");
             //
-            Console.Write($"체 력 : {DataManager.Instance.player.data.hp} / {DataManager.Instance.player.data.maxHp} \n");
-            Console.Write($"exp : {DataManager.Instance.player.data.exp} / 다음레벨까지 남은 경험치: {10 * DataManager.Instance.player.data.level - DataManager.Instance.player.data.exp} \n");
-            Console.Write($"Gold : {DataManager.Instance.player.data.gold} G\n\n");
+            Console.Write($"체 력 : {data.hp} / {data.maxHp} \n");
+            Console.Write($"exp : {data.exp} / 다음레벨까지 남은 경험치: {10 * data.level - data.exp} \n");
+            Console.Write($"Gold : {data.gold} G\n\n");
         }
 
         // 무기장착은 플레이어에서 한다

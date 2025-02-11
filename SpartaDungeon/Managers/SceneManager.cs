@@ -40,6 +40,8 @@ namespace SpartaDungeon.Managers
             sceneDictionary["sauna"] = saunaScene;
             BaseScene equipScene = new EquipScene("equip");
             sceneDictionary["equip"] = equipScene;
+            BaseScene statusScene = new StatusScene("status");
+            sceneDictionary["status"] = statusScene;
             // 처음 시작은 entry
             currentScene = entryScene;
         }
@@ -95,7 +97,13 @@ namespace SpartaDungeon.Managers
                 // null이 된다고 해서 반드시 삭제되는건 아니다.
                 // 다른 곳에서 참조하고 있으면 GC가 수거하지 않는다
                 // 예: 아이템을 플레이어가 소유하면, 해당 아이템은 플레이어가 참조하니까 사라지지않지
+            }            
+            for (int i = 0; i < ItemManager.Instance.equipmentList.Count; i++)
+            {
+                ItemManager.Instance.equipmentList[i] = null;
             }
+            currentScene.objectList.Clear();
+            ItemManager.Instance.equipmentList.Clear();
         }
     }
 }
