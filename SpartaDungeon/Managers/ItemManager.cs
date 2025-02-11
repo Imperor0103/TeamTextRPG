@@ -13,7 +13,7 @@ namespace SpartaDungeon.Managers
         // 생성자 만들지 않아도 됨
         public List<Equipment> equipmentList = new List<Equipment>();    // 아이템 저장
 
-        // 인벤토리의 아이템
+        // 인벤토리, 장착관리의 아이템
         public void PrintInventory()
         {
             Console.Clear();
@@ -21,8 +21,9 @@ namespace SpartaDungeon.Managers
             Console.WriteLine("[아이템 목록]\n");
             for (int i = 0; i < DataManager.Instance.player.ownedList.Count; i++)
             {
-                // 인벤토리씬 한정해서 장착한 아이템은 [E] 출력
-                if (IsEquiped(DataManager.Instance.player.ownedList[i]))
+                // 장착관리씬 한정해서 장착한 아이템은 [E] 출력
+                if (SceneManager.Instance.GetCurrentScene().GetName() == "equip"
+                    && IsEquiped(DataManager.Instance.player.ownedList[i]))
                 {
                     // 글씨 색 바꾸어보자
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -43,7 +44,9 @@ namespace SpartaDungeon.Managers
                 Console.Write($"mp추가: {item.mp} | ");
                 Console.Write($"{item.description} | ");
             }
+            Console.WriteLine();
         }
+
         // 해당 아이템을 장착하고 있는지 여부
         public bool IsEquiped(Equipment item)
         {
@@ -101,5 +104,11 @@ namespace SpartaDungeon.Managers
                 return potion;
             }
         }
+        // 포션 사용 메서드(화면에 표시된 아이템 번호(실제 인덱스는 아이템 번호 -1)를 누르면 사용
+        public void UsePotion(int scrNum)
+        {
+
+        }
+        
     }
 }

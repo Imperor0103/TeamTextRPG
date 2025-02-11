@@ -19,10 +19,11 @@ namespace SpartaDungeon.Scenes
         // 
         public override void Awake()
         {
-
+            player = DataManager.Instance.player;
         }
         public override void Start()
         {
+            Console.Clear();
             Console.WriteLine();
             Thread.Sleep(500);
             Console.WriteLine("──────▄██▀▀▀▀▄");
@@ -59,6 +60,7 @@ namespace SpartaDungeon.Scenes
             if (monster != null)
             {
                 Console.WriteLine($"{monster.data.name}과(와)의 전투를 시작합니다!");
+                Battle();
             }
             else
             {
@@ -68,9 +70,11 @@ namespace SpartaDungeon.Scenes
         }
         public bool Battle()
         {
+            Console.Clear();
             Console.WriteLine();
+            Console.WriteLine($"{monster.data.ascii}");
             Console.WriteLine($"{monster.data.name}과(와)의 전투 시작!");
-            Console.WriteLine($"[체력: {monster.data.maxHp}][공격력: {monster.data.attack}]");
+            Console.WriteLine($"[체력: {monster.data.maxHp}][공격력: {monster.data.attack}][방어력: {monster.data.defence}]");
             Console.WriteLine();
             Thread.Sleep(1000);
             while (player.data.hp > 0 && monster.data.hp > 0)
@@ -80,40 +84,76 @@ namespace SpartaDungeon.Scenes
 
                 MonsterTurn();
                 if (player.data.hp <= 0) break; // 플레이어가 죽으면 루프 종료
-
-                Thread.Sleep(1000);
             }
 
             // 전투 결과 출력
-            if (player.data.hp <= 0)
+            if (monster.data.hp <= 0)
+            {
+                Console.WriteLine($"🎉 {monster.data.name}을(를) 처치했습니다! 보상을 획득합니다.");
+                player.data.exp += monster.data.level;
+                Console.WriteLine($"경험치: {monster.data.level}+");
+                VictoryMessages.RandomVictoryMessage();
+                Thread.Sleep(3000);
+            }
+            else
             {
                 Console.WriteLine("⚔️ 당신은 전투에서 패배했습니다... 마을로 돌아갑니다.");
-                return false;
             }
-            
-            Console.WriteLine($"🎉 {monster.data.name}을(를) 처치했습니다! 보상을 획득합니다.");
-            // 보상 로직 추가
-            return true;
 
+            // 장면 전환
+            SceneManager.Instance.LoadScene("town");
+            return player.data.hp > 0;
         }
         private void PlayerTurn()
         {
             Console.WriteLine();
+            Console.WriteLine($"플레이어 체력: {player.data.hp}");
             Console.WriteLine($"{player.data.name}의 턴 (공격하려면 Enter)");
             Console.ReadLine();
             float damage = Math.Max(player.data.attack - monster.data.defence, 1); // 1은 최소 대미지
             monster.data.hp -= damage;
-            Console.WriteLine($"{monster.data.name}에게 {player.data.attack} 데미지!");
-            Thread.Sleep(1000);
+            Console.WriteLine($"{monster.data.name}에게 {player.data.attack} 피해");
+            Thread.Sleep(500);
         }
         private void MonsterTurn()
         {
             Console.WriteLine();
+            Console.WriteLine($"{monster.data.name} 체력: {monster.data.hp}");
             Console.WriteLine($"{monster.data.name}의 턴");
             float damage = Math.Max(monster.data.attack - player.data.defence, 1);
             player.data.hp -= damage;
             Console.WriteLine($"{player.data.name}에게 {monster.data.attack} 피해");
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
+        }
+
+        // 축하
+        public class VictoryMessages
+        {
+            private static readonly List<string> victoryArts = new()
+            {
+                "  ✨🏆 VICTORY 🏆✨\n     ___________\n    '._==_==_=_.'\n    .-\\:      /-.\n   | (|:.     |) |\n    '-|:.     |-'\n      \\::.    /\n       '::. .'\n         ) (\n       _.' '._",
+                
+                "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🔥 🎉 VICTORY! 🎉 🔥\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n    \\        /\n     \\  🏆  /\n      (🔥🔥)\n       (🔥)\n        \\/",
+                
+                "      ✨🌟✨\n  🌟 VICTORY! 🌟\n      ✨🌟✨",
+                
+                "  ⚡⚡⚡⚡⚡⚡\n ⚡ 🎉 WIN 🎉 ⚡\n  ⚡⚡⚡⚡⚡⚡",
+                
+                " 🏆 Victory! 🏆\n   🛡️   ⚔️   🛡️",
+                
+                " 🏆 VICTORY!! 🏆\n   🚩        🚩\n   | WINNER |\n   |________|",
+                
+                "  💰💰💰💰💰💰💰\n  💰 YOU WIN! 💰\n  💰💰💰💰💰💰💰",
+                
+                "      👑🏆👑\n  🎉 VICTORY! 🎉\n      👑🏆👑"
+            };
+
+            public static void RandomVictoryMessage()
+            {
+                Random random = new Random();
+                int index = random.Next(victoryArts.Count);
+                Console.WriteLine(victoryArts[index]);
+            }
         }
     }
 }

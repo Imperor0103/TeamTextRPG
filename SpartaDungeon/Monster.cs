@@ -17,6 +17,7 @@ namespace SpartaDungeon
         public float maxMp;
         public float mp;
         public int gold;
+        public string ascii;
     }
 
     public class Monster
@@ -34,7 +35,7 @@ namespace SpartaDungeon
         public Goblin() : base(new MonsterData
         {
             name = "고블린",
-            // level = 1,
+            level = 1,
             attack = 5,
             defence = 2,
             maxHp = 20,
@@ -42,14 +43,15 @@ namespace SpartaDungeon
             // maxMp = 0,
             // mp = 0,
             // gold = 10
+            ascii = "",
         }) { }
     }
-        public class Oak : Monster
+    public class Oak : Monster
     {
         public Oak() : base(new MonsterData
         {
             name = "오크",
-            // level = 1,
+            level = 5,
             attack = 10,
             defence = 5,
             maxHp = 50,
@@ -57,14 +59,15 @@ namespace SpartaDungeon
             // maxMp = 0,
             // mp = 0,
             // gold = 10
+            ascii = "",
         }) { }
     }
-        public class Dragon : Monster
+    public class Dragon : Monster
     {
         public Dragon() : base(new MonsterData
         {
             name = "드래곤",
-            // level = 1,
+            level = 10,
             attack = 50,
             defence = 20,
             maxHp = 100,
@@ -72,6 +75,26 @@ namespace SpartaDungeon
             // maxMp = 0,
             // mp = 0,
             // gold = 10
+            ascii = 
+@"
+                       ^\    ^
+                      / \\  / \
+                     /.  \\/   \      |\___/|
+  *----*           / / |  \\    \  __/  O  O\
+  |   /          /  /  |   \\    \_\/  \     \
+ / /\/         /   /   |    \\   _\/    '@___@
+/  /         /    /    |     \\ _\/       |U
+|  |       /     /     |      \\\/        |
+\  |     /_     /      |       \\  )   \ _|_
+\   \       ~-./_ _    |    .- ; (  \_ _ _,\'
+~    ~.           .-~-.|.-*      _        {-,
+ \      ~-. _ .-~                 \      /\'
+  \                   }            {   .*
+   ~.                 '-/        /.-~----.
+     ~- _             /        >..----.\\\
+         ~ - - - - ^}_ _ _ _ _ _ _.-\\\
+",
+
         }) { }
     }
 }
