@@ -1,10 +1,4 @@
 ﻿using Newtonsoft.Json;
-using SpartaDungeon.Scenes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpartaDungeon.Managers
 {
@@ -46,7 +40,7 @@ namespace SpartaDungeon.Managers
                     Console.Write($"이름:{slots[i].player.data.name} | " + $"레벨:{slots[i].player.data.level} | ");
                     if (slots[i].player.weapon != null)
                     {
-                        Console.Write($"무기:{slots[i].player.weapon.name} | ");
+                        Console.Write($"무기:{slots[i].player.weapon.Name} | ");
                     }
                     else
                     {
@@ -54,7 +48,7 @@ namespace SpartaDungeon.Managers
                     }
                     if (slots[i].player.armor != null)
                     {
-                        Console.Write($"갑옷:{slots[i].player.armor.name} | ");
+                        Console.Write($"갑옷:{slots[i].player.armor.Name} | ");
                     }
                     else
                     {

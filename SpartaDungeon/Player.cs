@@ -85,7 +85,7 @@ namespace SpartaDungeon
             /// 아이템 공격력 추가
             if (DataManager.Instance.player.weapon != null)
             {
-                Console.Write($"(+{DataManager.Instance.player.weapon.attack}) ");
+                Console.Write($"(+{DataManager.Instance.player.weapon.Attack}) ");
             }
             Console.Write("\n");
             //
@@ -93,7 +93,7 @@ namespace SpartaDungeon
             /// 아이템 방어력 추가
             if (DataManager.Instance.player.armor != null)
             {
-                Console.Write($"(+{DataManager.Instance.player.armor.defence}) ");
+                Console.Write($"(+{DataManager.Instance.player.armor.Defence}) ");
             }
             Console.Write("\n");
             //
@@ -115,18 +115,18 @@ namespace SpartaDungeon
                     if (item is Weapon)
                     {
                         weapon = null;
-                        Console.WriteLine($"{item.name}을 해제했습니다.");
+                        Console.WriteLine($"{item.Name}을 해제했습니다.");
                     }
                     else if (item is Armor)
                     {
                         armor = null;
-                        Console.WriteLine($"{item.name}을 해제했습니다.");
+                        Console.WriteLine($"{item.Name}을 해제했습니다.");
                     }
                 }
                 // 장비하고 있는 아이템과 다르다면
                 else
                 {
-                    if (item.itemType == 1) // 무기
+                    if (item.ItemType == 1) // 무기
                     {
                         if (weapon == null)
                         {
@@ -141,7 +141,7 @@ namespace SpartaDungeon
                             armedList.Add(weapon);      // 새 장비 추가
                         }
                     }
-                    else if (item.itemType == 2)    // 갑옷
+                    else if (item.ItemType == 2)    // 갑옷
                     {
                         // 있다면 착용, 없다면 안한다
                         if (armor == null)
@@ -174,7 +174,7 @@ namespace SpartaDungeon
         {
             if (DataManager.Instance.player.weapon != null)
             {
-                return data.attack + DataManager.Instance.player.weapon.attack;
+                return data.attack + DataManager.Instance.player.weapon.Attack;
             }
             else
             {
@@ -185,7 +185,7 @@ namespace SpartaDungeon
         {
             if (DataManager.Instance.player.armor != null)
             {
-                return data.defence + DataManager.Instance.player.armor.defence;
+                return data.defence + DataManager.Instance.player.armor.Defence;
             }
             else
             {
