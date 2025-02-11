@@ -35,7 +35,7 @@ namespace SpartaDungeon
         public Goblin() : base(new MonsterData
         {
             name = "고블린",
-            // level = 1,
+            level = 1,
             attack = 5,
             defence = 2,
             maxHp = 20,
@@ -51,7 +51,7 @@ namespace SpartaDungeon
         public Oak() : base(new MonsterData
         {
             name = "오크",
-            // level = 1,
+            level = 5,
             attack = 10,
             defence = 5,
             maxHp = 50,
@@ -67,7 +67,7 @@ namespace SpartaDungeon
         public Dragon() : base(new MonsterData
         {
             name = "드래곤",
-            // level = 1,
+            level = 10,
             attack = 50,
             defence = 20,
             maxHp = 100,
