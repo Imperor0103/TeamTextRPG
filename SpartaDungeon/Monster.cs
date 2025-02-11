@@ -40,7 +40,7 @@ namespace SpartaDungeon
         public Goblin() : base(new MonsterData
         {
             name = "고블린",
-            level = 1,
+            level = 5,
             attack = 5,
             defence = 2,
             maxHp = 20,
@@ -56,15 +56,31 @@ namespace SpartaDungeon
         public Oak() : base(new MonsterData
         {
             name = "오크",
-            level = 5,
-            attack = 10,
-            defence = 5,
+            level = 10,
+            attack = 20,
+            defence = 10,
             maxHp = 50,
             hp = 50,
-            gold = 10,
+            gold = 50,
             // maxMp = 0,
             // mp = 0,
-            ascii = "(｀_´メ)"
+            ascii = "\\(｀_´メ)"
+        }) { }
+    }
+    public class Troll : Monster
+    {
+        public Troll() : base(new MonsterData
+        {
+            name = "트롤",
+            level = 20,
+            attack = 50,
+            defence = 25,
+            maxHp = 100,
+            hp = 100,
+            gold = 100,
+            // maxMp = 0,
+            // mp = 0,
+            ascii = "(｀ㅠ´メ)"
         }) { }
     }
     public class Dragon : Monster
