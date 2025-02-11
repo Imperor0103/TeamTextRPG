@@ -103,5 +103,11 @@ namespace SpartaDungeon.Managers
                 return potion;
             }
         }
+        // 포션 사용 메서드(화면에 표시된 아이템 번호(실제 인덱스는 아이템 번호 -1)를 누르면 사용
+        public void UsePotion(int scrNum)
+        {
+
+        }
+        
     }
 }

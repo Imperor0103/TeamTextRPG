@@ -40,7 +40,7 @@ namespace SpartaDungeon
         public List<Equipment> armedList;   // 해당 무기 장착여부를 검색하기 위해 사용
         public Armor? armor;
         public Weapon? weapon;
-
+        // 캐릭터 새로 생성
         public Player(PlayerData playerData)
         {
             if (ownedList == null)
@@ -54,6 +54,24 @@ namespace SpartaDungeon
             }
             data = playerData;
         }
+        // 캐릭터 불러오기
+        public Player()
+        {
+            if (ownedList == null)
+            {
+                if (ownedList == null)
+                {
+                    ownedList = new List<Equipment>();
+
+                }
+                if (armedList == null)
+                {
+                    armedList = new List<Equipment>();
+                }
+                // PlayerData는 불러올 때 생성해서 플레이어의 data에 대입한다
+            }
+        }
+
         // 플레이어 함수들
         // 플레이어 상태보기
         public void ShowStatus()
@@ -85,44 +103,64 @@ namespace SpartaDungeon
         }
 
         // 무기장착은 플레이어에서 한다
-        public void EquipItem(Equipment item)
+        public void EquipItem(Equipment item) // 입력받은건 가지고 있는 아이템
         {
             if (item != null)
             {
-                if (item.itemType == 1) // 무기
+                // 장비하고 있는 아이템과 "같은" 것이면 해제, 다르면 장착
+                if (armedList.Contains(item))   // 장비한 아이템은 armedList이 참조를 가지고 있다
                 {
-                    if (weapon == null)
+                    // 해당 아이템이 weapon인지 armor인지 판단 후 해제
+                    armedList.Remove(item); // 리스트에서 제거하기전에 item을 null로 만들면 null참조 오류
+                    if (item is Weapon)
                     {
-                        weapon = item as Weapon;
-                        armedList.Add(weapon);      // 새 장비 추가
+                        weapon = null;
+                        Console.WriteLine($"{item.name}을 해제했습니다.");
                     }
-                    else
+                    else if (item is Armor)
                     {
-                        // 기존의 장비 해제 후 착용
-                        armedList.Remove(weapon);   // 기존 장비 제거
-                        weapon = item as Weapon;
-                        armedList.Add(weapon);      // 새 장비 추가
+                        armor = null;
+                        Console.WriteLine($"{item.name}을 해제했습니다.");
                     }
                 }
-                else if (item.itemType == 2)    // 갑옷
-                {
-                    // 있다면 착용, 없다면 안한다
-                    if (armor == null)
-                    {
-                        armor = item as Armor;
-                        armedList.Add(armor);       // 새 장비 추가
-                    }
-                    else
-                    {
-                        // 기존의 장비 해제 후 착용
-                        armedList.Remove(armor);    // 기존 장비 제거
-                        armor = item as Armor;
-                        armedList.Add(armor);       // 새 장비 추가
-                    }
-                }
+                // 장비하고 있는 아이템과 다르다면
                 else
                 {
-                    Console.WriteLine("장비할 수 없는 아이템입니다");
+                    if (item.itemType == 1) // 무기
+                    {
+                        if (weapon == null)
+                        {
+                            weapon = item as Weapon;
+                            armedList.Add(weapon);      // 새 장비 추가
+                        }
+                        else
+                        {
+                            // 기존의 장비 해제 후 착용
+                            armedList.Remove(weapon);   // 기존 장비 제거
+                            weapon = item as Weapon;
+                            armedList.Add(weapon);      // 새 장비 추가
+                        }
+                    }
+                    else if (item.itemType == 2)    // 갑옷
+                    {
+                        // 있다면 착용, 없다면 안한다
+                        if (armor == null)
+                        {
+                            armor = item as Armor;
+                            armedList.Add(armor);       // 새 장비 추가
+                        }
+                        else
+                        {
+                            // 기존의 장비 해제 후 착용
+                            armedList.Remove(armor);    // 기존 장비 제거
+                            armor = item as Armor;
+                            armedList.Add(armor);       // 새 장비 추가
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("장비할 수 없는 아이템입니다");
+                    }
                 }
             }
             else
@@ -157,6 +195,10 @@ namespace SpartaDungeon
 
 
         // 전투와 관련된 로직
+        // 경험치 체크와 레벨업
+        public void CheckLevelUp()
+        {
 
+        }
     }
 }
