@@ -111,7 +111,7 @@ namespace SpartaDungeon.Scenes
                 player.data.gold += monster.data.gold;
                 Console.WriteLine($"경험치: {monster.data.level}+");
                 Console.WriteLine($"Gold: {monster.data.gold}+");
-                VictoryMessages.RandomVictoryMessage();
+                VictoryAscii.RandomVictory();
                 Console.WriteLine();
                 Thread.Sleep(3000);
                 Console.WriteLine("Enter...");
@@ -159,34 +159,34 @@ namespace SpartaDungeon.Scenes
         }
 
         // 축하
-        public class VictoryMessages
+        public class VictoryAscii
         {
-            private static readonly List<string> victoryArts = new()
+            private static readonly List<string> victoryascii = new()
             {
-                // "  ✨🏆 VICTORY 🏆✨\n     ___________\n    '._==_==_=_.'\n    .-\\:      /-.\n   | (|:.     |) |\n    '-|:.     |-'\n      \\::.    /\n       '::. .'\n         ) (\n       _.' '._",
+                "  ✨🏆 VICTORY 🏆✨\n     ___________\n    '._==_==_=_.'\n    .-\\:      /-.\n   | (|:.     |) |\n    '-|:.     |-'\n      \\::.    /\n       '::. .'\n         ) (\n       _.' '._",
                 
-                // "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🔥 🎉 VICTORY! 🎉 🔥\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n    \\        /\n     \\  🏆  /\n      (🔥🔥)\n       (🔥)\n        \\/",
+                "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🔥 🎉 VICTORY! 🎉 🔥\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n    \\        /\n     \\  🏆  /\n      (🔥🔥)\n       (🔥)\n        \\/",
                 
-                // "      ✨🌟✨\n  🌟 VICTORY! 🌟\n      ✨🌟✨",
+                "      ✨🌟✨\n  🌟 VICTORY! 🌟\n      ✨🌟✨",
                 
-                // "  ⚡⚡⚡⚡⚡⚡\n ⚡ 🎉 WIN 🎉 ⚡\n  ⚡⚡⚡⚡⚡⚡",
+                "  ⚡⚡⚡⚡⚡⚡\n ⚡ 🎉 WIN 🎉 ⚡\n  ⚡⚡⚡⚡⚡⚡",
                 
-                // " 🏆 Victory! 🏆\n   🛡️   ⚔️   🛡️",
+                " 🏆 Victory! 🏆\n   🛡️   ⚔️   🛡️",
                 
-                // " 🏆 VICTORY!! 🏆\n   🚩        🚩\n   | WINNER |\n   |________|",
+                " 🏆 VICTORY!! 🏆\n   🚩        🚩\n   | WINNER |\n   |________|",
                 
-                // "  💰💰💰💰💰💰💰\n  💰 YOU WIN! 💰\n  💰💰💰💰💰💰💰",
+                "  💰💰💰💰💰💰💰\n  💰 YOU WIN! 💰\n  💰💰💰💰💰💰💰",
                 
-                // "      👑🏆👑\n  🎉 VICTORY! 🎉\n      👑🏆👑",
+                "      👑🏆👑\n  🎉 VICTORY! 🎉\n      👑🏆👑",
 
                 "\x1b[38;2;255;255;255m  ██╗    ██╗██╗████████╗ ██████╗ ██████╗ ██╗   ██╗\n\x1b[38;2;255;200;200m  ██║    ██║██║╚══██╔══╝██╔═══██╗██╔══██╗╚██║ ██╔╝\n\x1b[38;2;255;150;150m  ╚██╗  ██╔╝██║   ██║   ██║   ██║██████╔╝ ╚████╔╝\n\x1b[38;2;255;100;100m   ╚██╗██╔╝ ██║   ██║   ██║   ██║██╔██╔╝   ╚██╔╝\n\x1b[38;2;255;50;50m    ╚███╔╝  ██║   ██║   ╚██████╔╝██║ ███╗   ██║\n\x1b[38;2;255;0;0m      ╚═╝   ╚═╝   ╚═╝    ╚═════╝ ╚═╝ ╚══╝   ╚═╝\x1b[0m"
             };
 
-            public static void RandomVictoryMessage()
+            public static void RandomVictory()
             {
                 Random random = new Random();
-                int index = random.Next(victoryArts.Count);
-                Console.WriteLine(victoryArts[index]);
+                int index = random.Next(victoryascii.Count);
+                Console.WriteLine(victoryascii[index]);
             }
         }
     }
