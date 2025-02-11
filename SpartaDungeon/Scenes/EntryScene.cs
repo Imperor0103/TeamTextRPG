@@ -21,7 +21,7 @@ namespace SpartaDungeon.Scenes
         //
         public override void Awake()
         {
-            
+            Console.Clear();
         }
 
         public override void Start()
