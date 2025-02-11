@@ -41,7 +41,7 @@ namespace SpartaDungeon.Scenes
         }
         public override void Update()
         {
-        int choice = InputManager.GetValidNumber("-입력-", 1, 9);
+        int choice = InputManager.Instance.GetValidNumber("-입력-", 1, 9);
             if (choice == 9)
             {
                 Console.WriteLine("마을로 돌아갑니다.");
