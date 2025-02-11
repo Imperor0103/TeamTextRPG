@@ -82,32 +82,6 @@ namespace SpartaDungeon
             Console.Write($"체 력 : {DataManager.Instance.player.data.hp} / {DataManager.Instance.player.data.maxHp} \n");
             Console.Write($"exp : {DataManager.Instance.player.data.exp} / 다음레벨까지 남은 경험치: {10 * DataManager.Instance.player.data.level - DataManager.Instance.player.data.exp} \n");
             Console.Write($"Gold : {DataManager.Instance.player.data.gold} G\n\n");
-            Console.Write($"0. 나가기 \n\n");
-            Console.Write($"원하시는 행동을 입력해주세요. \n>>");
-            bool isValid = false;
-            int num;
-            while (!isValid)
-            {
-                string input = Console.ReadLine();
-                if (int.TryParse(input, out num))
-                {
-                    switch (num)
-                    {
-                        case 0:
-                            isValid = true;
-                            break;
-                        default:
-                            Console.WriteLine("잘못된 입력입니다.계속하려면 enter.");
-                            Console.ReadLine();
-                            break;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("잘못된 입력입니다.계속하려면 enter.");
-                    Console.ReadLine();
-                }
-            }
         }
 
         // 무기장착은 플레이어에서 한다
@@ -120,6 +94,7 @@ namespace SpartaDungeon
                     if (weapon == null)
                     {
                         weapon = item as Weapon;
+                        armedList.Add(weapon);      // 새 장비 추가
                     }
                     else
                     {
@@ -135,6 +110,7 @@ namespace SpartaDungeon
                     if (armor == null)
                     {
                         armor = item as Armor;
+                        armedList.Add(armor);       // 새 장비 추가
                     }
                     else
                     {
