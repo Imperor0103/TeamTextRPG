@@ -28,6 +28,11 @@ namespace SpartaDungeon
         {
             data = monsterData;
         }
+
+        public virtual void Ascii()
+        {
+            Console.WriteLine(data.ascii);
+        }
     }
 
     public class Goblin : Monster
@@ -40,10 +45,10 @@ namespace SpartaDungeon
             defence = 2,
             maxHp = 20,
             hp = 20,
+            gold = 10,
             // maxMp = 0,
             // mp = 0,
-            // gold = 10
-            ascii = "",
+            ascii = "(*｀ω´*)"
         }) { }
     }
     public class Oak : Monster
@@ -56,45 +61,57 @@ namespace SpartaDungeon
             defence = 5,
             maxHp = 50,
             hp = 50,
+            gold = 10,
             // maxMp = 0,
             // mp = 0,
-            // gold = 10
-            ascii = "",
+            ascii = "(｀_´メ)"
         }) { }
     }
     public class Dragon : Monster
     {
+        private List<(string line, ConsoleColor color)> asciiColors;
         public Dragon() : base(new MonsterData
         {
             name = "드래곤",
-            level = 10,
-            attack = 50,
-            defence = 20,
-            maxHp = 100,
-            hp = 100,
+            level = 50,
+            attack = 100,
+            defence = 50,
+            maxHp = 1000,
+            hp = 1000,
+            gold = 10
             // maxMp = 0,
             // mp = 0,
-            // gold = 10
-            ascii = 
-@"
-                       ^\    ^
-                      / \\  / \
-                     /.  \\/   \      |\___/|
-  *----*           / / |  \\    \  __/  O  O\
-  |   /          /  /  |   \\    \_\/  \     \
- / /\/         /   /   |    \\   _\/    '@___@
-/  /         /    /    |     \\ _\/       |U
-|  |       /     /     |      \\\/        |
-\  |     /_     /      |       \\  )   \ _|_
-\   \       ~-./_ _    |    .- ; (  \_ _ _,\'
-~    ~.           .-~-.|.-*      _        {-,
- \      ~-. _ .-~                 \      /\'
-  \                   }            {   .*
-   ~.                 '-/        /.-~----.
-     ~- _             /        >..----.\\\
-         ~ - - - - ^}_ _ _ _ _ _ _.-\\\
-",
+        })
+        {
+            asciiColors = new List<(string, ConsoleColor)>
+            {
+                (@"                     ^\    ^\", ConsoleColor.Red),
+                (@"                    / \\  /  \\", ConsoleColor.Red),
+                (@"                   /.  \\/    \\      |\___/|", ConsoleColor.Red),
+                (@"  *----*          /  / |  \\    \  __/  ･`  ･\", ConsoleColor.Red),
+                (@"  |   /          /  /  |   \\    \_\/  \     \\", ConsoleColor.Red),
+                (@"  / /\/         /   /   |    \\   _\/    '@___@", ConsoleColor.Red),
+                (@"  /  /         /    /    |     \\ _\/       |", ConsoleColor.Red),
+                (@"  |  |       /     /     |      \\\/        |", ConsoleColor.Red),
+                (@"  \  |     /_     /      |       \\  )   \ _|_", ConsoleColor.Red),
+                (@"  \   \       ~-./_ _    |    .- ; (  \_ _ _,\'", ConsoleColor.Red),
+                (@"  ~    ~.           .-~-.|.-*      _        {-,", ConsoleColor.Red),
+                (@"  \      ~-. _ .-~                 \      /\'", ConsoleColor.Red),
+                (@"  \                   }            {   .*", ConsoleColor.Red),
+                (@"  ~.                 '-/        /.-~----.", ConsoleColor.Red),
+                (@"      ~- _             /        >..----.\\\", ConsoleColor.Red),
+                (@"          ~ - - - - ^}_ _ _ _ _ _ _.-\\\", ConsoleColor.Red)
+            };
+        }
 
-        }) { }
+        public override void Ascii() // 드래곤 아스키 오버라이딩
+        {
+            asciiColors.ForEach(line =>
+            {
+                Console.ForegroundColor = line.color;
+                Console.WriteLine(line.line);
+            });
+            Console.ResetColor();
+        }
     }
 }

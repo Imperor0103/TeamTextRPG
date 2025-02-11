@@ -18,7 +18,7 @@ namespace SpartaDungeon.Scenes
         //
         public override void Awake()
         {
-
+            saveSlots = new GameData[5];
         }
         public override void Start()
         {
@@ -33,10 +33,11 @@ namespace SpartaDungeon.Scenes
             DataManager.Instance.ShowSaveSlots(saveSlots);
             Console.WriteLine("1~5 중에서 슬롯을 선택하여 저장, 불러오기, 삭제 가능\n0.이전화면으로 돌아가기\n"); // \n4.게임 저장\n5.게임 불러오기\n6.종료
 
-            int input = InputManager.Instance.GetValidNumber("저장하고 싶은 슬롯의 번호를 입력해주세요.", 1, saveSlots.Count());
+            int input = InputManager.Instance.GetValidNumber("저장하고 싶은 슬롯의 번호를 입력해주세요.", 0, saveSlots.Count());
             if (input == 0)
             {
-                SceneManager.Instance.LoadScene("town");
+                string prevSceneName = SceneManager.Instance.GetPrevScene().GetName();
+                SceneManager.Instance.LoadScene(prevSceneName);
             }
             else
             {

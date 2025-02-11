@@ -124,8 +124,10 @@ namespace SpartaDungeon.Managers
         {
             // 파일, 슬롯의 인덱스를 받고, 저장한다
             GameData tmpData = new GameData(fileIdx, player);
-            string jsonStr = JsonConvert.SerializeObject(tmpData);
-            // SaveFiles에 세이브파일생성
+            string jsonStr = JsonConvert.SerializeObject(tmpData, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All // 추상클래스인경우를 대비하여 실제 자료형을 기록한다
+            });            // SaveFiles에 세이브파일생성
             File.WriteAllText(GetFilePath(fileIdx), jsonStr);
         }
         public bool LoadData(int fileIdx)
@@ -171,22 +173,41 @@ namespace SpartaDungeon.Managers
             return false;
         }
         // 선택한 슬롯에 데이터가 있는지 체크
-        public void CheckSelectedSlot(GameData[] slots, int arrIdx)
+        public void CheckSelectedSlot(GameData[] slots, int fileIdx)
         {
             // 매개변수로 넘어온 것은 배열의 인덱스
             // 현재 씬은 SaveLoadScene이므로 이전 씬의 데이터를 저장한다
             // 이때 이전 씬이 entry인 경우는 저장할 데이터가 없으므로 저장하지 않는다
+            int arrIdx = fileIdx - 1;
             if (SceneManager.Instance.GetPrevScene() != null)
             {
                 if (IsSlotVacant(slots[arrIdx]))
                 {
                     // 슬롯에 데이터가 없다 -> 자동으로 저장
-
+                    SaveDataToSlot(slots, fileIdx);
                 }
                 else
                 {
                     // 슬롯에 데이터가 있다 -> 덮어쓰기, 삭제 중에서 선택
-
+                    Console.WriteLine("1.슬롯에 저장된 데이터 불러오기\n2.슬롯에 새로운 데이터 덮어쓰기\n3.슬롯에 저장된 데이터 삭제\n0.이전화면으로 돌아가기\n"); // \n4.게임 저장\n5.게임 불러오기\n6.종료
+                    int input = InputManager.Instance.GetValidNumber("원하시는 행동을 입력해주세요.", 0, 3);
+                    switch (input)
+                    {
+                        case 0:
+                            // 아직 SaveLoadScene이므로 씬을 바꾸면 안된다
+                            break;
+                        case 1:
+                            LoadDataFromSlot(slots, arrIdx);
+                            break;
+                        case 2:
+                            SaveDataToSlot(slots, fileIdx);
+                            break;
+                        case 3:
+                            DeleteSaveFile(slots, arrIdx);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
             else
@@ -203,15 +224,58 @@ namespace SpartaDungeon.Managers
             }
             return false;
         }
-        // 세이브파일 변경
-        public void OverwriteSaveFile(int arrIdx)
+        // 슬롯에 데이터 저장하기(슬롯이 비어있는지 여부는 이전에 이미 판단했다)
+        public void SaveDataToSlot(GameData[] slots, int fileIndex)
         {
-
+            // 데이터매니저가 가진 player를 저장할 새 데이터를 생성
+            int arrIdx = fileIndex - 1;
+            GameData newData = new GameData(fileIndex, player);
+            // 데이터매니저의 player가 null인 경우에도 newData가 생성되는것에 주의
+            // 플레이어가 null이 아닐때에만 저장
+            if (newData.player != null)
+            {
+                SaveData(fileIndex);
+                slots[arrIdx] = newData;
+                Console.WriteLine($"슬롯 {slots[arrIdx].fileIndex}번에 새로운 데이터를 저장했습니다. 계속하려면 Enter를 누르세요.");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("저장할 데이터가 없습니다.");
+            }
+        }
+        // 슬롯에서 데이터파일 불러오기
+        public void LoadDataFromSlot(GameData[] slots, int arrIdx)
+        {
+            int fileIndex = arrIdx + 1;
+            bool isLoaded = LoadData(fileIndex);
+            if (isLoaded)
+            {
+                Console.WriteLine($"슬롯 {slots[arrIdx].fileIndex}번의 데이터를 불러왔습니다. 계속하려면 Enter를 누르세요.");
+                Console.ReadLine();
+                // 마을씬으로 바꾼다
+                SceneManager.Instance.LoadScene("town"); // 
+            }
+            else
+            {
+                Console.WriteLine($"저장된 데이터를 불러오는 데 실패했습니다. 계속하려면 Enter를 누르세요.");
+                Console.ReadLine();
+            }
         }
         // 세이브파일 삭제
-        public void DeleteSaveFile(int fileIdx)
+        public void DeleteSaveFile(GameData[] slots, int arrIdx)
         {
-
+            // 매개변수로 들어가는 슬롯에 있는 데이터 삭제
+            int fileIdx = arrIdx + 1;
+            string filePath = GetFilePath(slots[arrIdx].fileIndex);
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+            // 슬롯 배열에서도 데이터를 제거
+            slots[arrIdx] = null;
+            Console.WriteLine($"슬롯 {fileIdx}번의 데이터가 삭제되었습니다.계속하려면 Enter를 누르세요.");
+            Console.ReadLine();
         }
     }
 }
