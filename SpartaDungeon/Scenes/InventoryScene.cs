@@ -18,12 +18,11 @@ namespace SpartaDungeon.Scenes
         //
         public override void Awake()
         {
-            // 인벤토리의 멤버 초기화
-            // 플레이어의 아이템을 보여주는데, 플레이어의 아이템은 DataManager가 가지고 있어서 안전하다
-            player = DataManager.Instance.player;
         }
         public override void Start()
         {
+            // 플레이어의 아이템을 보여주는데, 플레이어의 아이템은 DataManager가 가지고 있어서 안전하다
+            player = DataManager.Instance.player;
         }
         public override void Update()
         {

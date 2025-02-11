@@ -18,18 +18,17 @@ namespace SpartaDungeon.Scenes
 
         public override void Awake()
         {
-            player = DataManager.Instance.player;
         }
-
         public override void Start()
         {
-
+            player = DataManager.Instance.player;
         }
 
         public override void Update()
         {
             // 장착관리창
             // 화면출력
+
             ItemManager.Instance.PrintInventory();
             // 출력메뉴를 보여준다
             Console.WriteLine("0.나가기\n\n"); // 

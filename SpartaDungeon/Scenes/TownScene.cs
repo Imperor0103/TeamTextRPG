@@ -11,9 +11,9 @@ namespace SpartaDungeon.Scenes
     {
         #region 새로운 생성자 만들기 금지
         // 생성자에서는 현재 씬의 이름만 설정한다. 씬에 있는 멤버들의 초기화는 Awake나 Start에서 한다
-        public TownScene(string name) : base(name) { }        
+        public TownScene(string name) : base(name) { }
         #endregion
-        
+
         public override void Awake()
         {
             Console.Clear();
@@ -21,11 +21,11 @@ namespace SpartaDungeon.Scenes
         }
         public override void Start()
         {
-            
         }
 
         public override void Update()
         {
+            Console.Clear();
             Console.WriteLine();
             Console.WriteLine("행동을 선택하세요.");
             Console.WriteLine();
@@ -40,6 +40,7 @@ namespace SpartaDungeon.Scenes
             {
                 case "1":
                     Console.WriteLine("상태보기를 선택했습니다.\n");
+                    SceneManager.Instance.LoadScene("status");
                     return;
                 case "2":
                     Console.WriteLine("인벤토리를 선택했습니다.\n");
@@ -59,6 +60,7 @@ namespace SpartaDungeon.Scenes
                     return;
                 case "6":
                     Console.WriteLine("저장 / 불러오기를 선택했습니다.\n");
+                    SceneManager.Instance.LoadScene("saveLoad");
                     return;
                 default:
                     Console.WriteLine();
