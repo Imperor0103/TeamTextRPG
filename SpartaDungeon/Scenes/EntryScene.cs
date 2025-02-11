@@ -12,6 +12,7 @@ namespace SpartaDungeon.Scenes
     public class EntryScene : BaseScene
     {
         Player player;
+        PlayerData data;
 
         #region 새로운 생성자 만들기 금지
         // 생성자에서는 현재 씬의 이름만 설정한다. 씬에 있는 멤버들의 초기화는 Awake나 Start에서 한다
@@ -20,24 +21,7 @@ namespace SpartaDungeon.Scenes
         //
         public override void Awake()
         {
-            PlayerData data = new PlayerData()
-            {
-                name = "",
-                classType = eClassType.NONE,
-                level = 1,
-                attack = 10f,
-                defence = 5f,
-                maxHp = 100f,
-                hp = 100f,
-                maxMp = 100f,
-                mp = 0f,
-                exp = 0,
-                gold = 1500
-            };
-            
-            player = new Player(data);
-
-            DataManager.Instance.player = player;
+            Console.Clear();
         }
 
         public override void Start()
@@ -71,6 +55,8 @@ namespace SpartaDungeon.Scenes
 
         private void CreateNewGame()
         {
+            CreateNewCharacter();
+
             Console.WriteLine("\n\n[ 새로생성 ]\n");
 
             bool isNameSaved = false; 
@@ -113,6 +99,28 @@ namespace SpartaDungeon.Scenes
             }
         }
 
+        private void CreateNewCharacter()
+        {
+            data = new PlayerData()
+            {
+                name = "",
+                classType = eClassType.NONE,
+                level = 1,
+                attack = 10f,
+                defence = 5f,
+                maxHp = 100f,
+                hp = 100f,
+                maxMp = 100f,
+                mp = 0f,
+                exp = 0,
+                gold = 1500
+            };
+
+            player = new Player(data);
+
+            DataManager.Instance.player = player;
+        }
+
         private void SelectClass()
         {
             // 올바른 입력이 들어올 때까지 반복
@@ -127,16 +135,19 @@ namespace SpartaDungeon.Scenes
                     case "1":
                         player.data.classType = eClassType.WARRIOR;
                         Console.WriteLine("전사를 선택했습니다.\n");
+                        Thread.Sleep(1000);
                         SceneManager.Instance.LoadScene("town");
                         return;
                     case "2":
                         player.data.classType = eClassType.MAGE;
                         Console.WriteLine("마법사를 선택했습니다.\n");
+                        Thread.Sleep(1000);
                         SceneManager.Instance.LoadScene("town");
                         return;
                     case "3":
                         player.data.classType = eClassType.ARCHER;
                         Console.WriteLine("궁수를 선택했습니다.\n");
+                        Thread.Sleep(1000);
                         SceneManager.Instance.LoadScene("town");
                         return;
                     default:
