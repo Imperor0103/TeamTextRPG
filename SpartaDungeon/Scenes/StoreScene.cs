@@ -17,6 +17,9 @@ namespace SpartaDungeon.Scenes
             ItemManager.Instance.CreateItem("편백나무 막대기", 1, 2, 70, 0, 0, 0, "피톤치드가 나오는 그럭저럭한 막대기", 100);
             ItemManager.Instance.CreateItem("가죽 갑옷", 2, 3, 0, 35, 0, 0, "가볍고 꽤 질긴 가죽으로 만든 갑옷", 150);
             ItemManager.Instance.CreateItem("참나무 곡궁", 1, 3, 90, 0, 0, 0, "조금 썩었지만, 가볍고 튼튼한 활", 100);
+            ItemManager.Instance.CreateItem("소량의 체력 포션", 3, 3, 0, 0, 10, 0, "즉시 체력 10을 회복합니다", 30);
+            ItemManager.Instance.CreateItem("소량의 마나 포션", 3, 3, 0, 0, 0, 10, "즉시 마나 10을 회복합니다", 30);
+
         }
         public override void Start()
         {
