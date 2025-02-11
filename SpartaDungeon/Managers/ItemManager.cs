@@ -81,27 +81,33 @@ namespace SpartaDungeon.Managers
         }
         public Equipment CreateItem(string n, int t, int c, float a, float d, float h, float m, string des, int p)
         {
-            if (t == 1) // 무기
+            switch (t)
             {
-                Weapon weapon = new Weapon(n, t, c, a, d, h, m, des, p);
-                SceneManager.Instance.GetCurrentScene().objectList.Add(weapon);
-                ItemManager.Instance.equipmentList.Add(weapon);
-                return weapon;
-            }
-            else if (t == 2) // 갑옷
-            {
-                Armor armor = new Armor(n, t, c, a, d, h, m, des, p);
-                SceneManager.Instance.GetCurrentScene().objectList.Add(armor);
-                equipmentList.Add(armor);
-                return armor;
-            }
-            else // 포션
-            {
-                // 포션 추가해보기
-                Potion potion = new Potion(n, t, c, a, d, h, m, des, p);
-                SceneManager.Instance.GetCurrentScene().objectList.Add(potion);
-                equipmentList.Add(potion);
-                return potion;
+                case 1: // 무기                     
+                    {
+                        Weapon weapon = new Weapon(n, t, c, a, d, h, m, des, p);
+                        SceneManager.Instance.GetCurrentScene().objectList.Add(weapon);
+                        ItemManager.Instance.equipmentList.Add(weapon);
+                        return weapon;
+                    }
+                case 2: // 갑옷
+                    {
+                        Armor armor = new Armor(n, t, c, a, d, h, m, des, p);
+                        SceneManager.Instance.GetCurrentScene().objectList.Add(armor);
+                        equipmentList.Add(armor);
+                        return armor;
+                    }
+                case 3: // 포션
+                    {
+                        // 포션 추가해보기
+                        Potion potion = new Potion(n, t, c, a, d, h, m, des, p);
+                        SceneManager.Instance.GetCurrentScene().objectList.Add(potion);
+                        equipmentList.Add(potion);
+                        return potion;
+                    }
+                default:
+                    Console.WriteLine("아이템이 생성되지 않았습니다");
+                    return null;
             }
         }
         // 포션 사용 메서드(화면에 표시된 아이템 번호(실제 인덱스는 아이템 번호 -1)를 누르면 사용
@@ -109,6 +115,5 @@ namespace SpartaDungeon.Managers
         {
 
         }
-        
     }
 }
