@@ -4,6 +4,7 @@
     {
         string name { get; }
         int itemType { get; }   // 1: 무기 2: 갑옷, 3: 포션, 
+        // string itemText { get {switch문을 작성} }
         int classType { get; }   // 1: 전사 2: 마법사 3: 궁수 4: ALL
         float attack { get; }
         float defence { get; }
@@ -28,7 +29,7 @@
 
 
     }
-        public class Armor : Equipment
+        public class Armor : Equipment // 정확하게 명시해서 작성할것
         {
             public Armor(string n, int t, int c, float a, float d, float h,float m, string des, int p) 
             {

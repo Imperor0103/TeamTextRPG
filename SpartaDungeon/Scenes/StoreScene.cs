@@ -23,7 +23,7 @@ namespace SpartaDungeon.Scenes
         }
         public override void Start()
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            
         }
         public override void Update()
         {
@@ -37,7 +37,9 @@ namespace SpartaDungeon.Scenes
             for (int i = 0; i < storeItems.Count; i++)
             {
                 var item = storeItems[i];
-                Console.WriteLine($"{i + 1}. {item.name} | 종류: {item.itemType} | 직업: {item.classType} | 공격력: {item.attack} | 방어력: {item.defence} | {item.description} | {item.price}G");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"{i + 1}. {item.name} | 종류: {item.itemType } | 직업: {item.classType} | 공격력: {item.attack} | 방어력: {item.defence} | {item.description} | {item.price}G");
+                Console.ResetColor();
             }
 
             Console.WriteLine("\n1. 아이템 구매하기");

@@ -33,14 +33,15 @@ namespace SpartaDungeon.Managers
                 {
                     Console.ResetColor();   // 색깔 원래대로
                 }
+                var item = DataManager.Instance.player.ownedList[i];
                 Console.Write($"{i + 1} ");
-                Console.Write($"이름: {DataManager.Instance.player.ownedList[i].name} | ");
-                Console.Write($"종류: {DataManager.Instance.player.ownedList[i].itemType} | ");
-                Console.Write($"공격력: {DataManager.Instance.player.ownedList[i].attack} | ");
-                Console.Write($"방어력: {DataManager.Instance.player.ownedList[i].defence} | ");
-                Console.Write($"hp추가: {DataManager.Instance.player.ownedList[i].hp} | ");
-                Console.Write($"mp추가: {DataManager.Instance.player.ownedList[i].mp} | ");
-                Console.Write($"{DataManager.Instance.player.ownedList[i].description} | ");
+                Console.Write($"이름: {item.name} | ");
+                Console.Write($"종류: {item.itemType} | ");
+                Console.Write($"공격력: {item.attack} | ");
+                Console.Write($"방어력: {item.defence} | ");
+                Console.Write($"hp추가: {item.hp} | ");
+                Console.Write($"mp추가: {item.mp} | ");
+                Console.Write($"{item.description} | ");
             }
         }
         // 해당 아이템을 장착하고 있는지 여부
