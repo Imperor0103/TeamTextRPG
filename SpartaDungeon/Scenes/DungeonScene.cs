@@ -59,7 +59,6 @@ namespace SpartaDungeon.Scenes
 
             if (monster != null)
             {
-                Console.WriteLine($"{monster.data.name}과(와)의 전투를 시작합니다!");
                 Battle();
             }
             else
@@ -70,15 +69,15 @@ namespace SpartaDungeon.Scenes
         }
         public bool Battle()
         {
-            Console.Clear();
             Console.WriteLine();
-            Console.WriteLine($"{monster.data.ascii}");
             Console.WriteLine($"{monster.data.name}과(와)의 전투 시작!");
-            Console.WriteLine($"[체력: {monster.data.maxHp}][공격력: {monster.data.attack}][방어력: {monster.data.defence}]");
             Console.WriteLine();
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             while (player.data.hp > 0 && monster.data.hp > 0)
             {
+                Console.Clear();
+                monster.Ascii();
+                Console.WriteLine($"[체력: {monster.data.hp}][공격력: {monster.data.attack}][방어력: {monster.data.defence}]");
                 PlayerTurn();
                 if (monster.data.hp <= 0) break; // 몬스터가 죽으면 루프 종료
 
@@ -91,13 +90,16 @@ namespace SpartaDungeon.Scenes
             {
                 Console.WriteLine($"🎉 {monster.data.name}을(를) 처치했습니다! 보상을 획득합니다.");
                 player.data.exp += monster.data.level;
+                player.data.gold += monster.data.gold;
                 Console.WriteLine($"경험치: {monster.data.level}+");
+                Console.WriteLine($"Gold: {monster.data.gold}+");
                 VictoryMessages.RandomVictoryMessage();
                 Thread.Sleep(3000);
             }
             else
             {
-                Console.WriteLine("⚔️ 당신은 전투에서 패배했습니다... 마을로 돌아갑니다.");
+                Console.WriteLine("당신은 전투에서 패배했습니다... 마을로 돌아갑니다.");
+                Thread.Sleep(3000);
             }
 
             // 장면 전환
@@ -112,18 +114,27 @@ namespace SpartaDungeon.Scenes
             Console.ReadLine();
             float damage = Math.Max(player.data.attack - monster.data.defence, 1); // 1은 최소 대미지
             monster.data.hp -= damage;
-            Console.WriteLine($"{monster.data.name}에게 {player.data.attack} 피해");
-            Thread.Sleep(500);
+            if (player.data.attack - monster.data.defence <= 0)
+            {
+                damage = 1;
+            }
+            Console.WriteLine("(。･`з･)ﾉ");
+            Console.WriteLine($"{monster.data.name}에게 {damage} 피해");
+            Thread.Sleep(1000);
         }
         private void MonsterTurn()
         {
             Console.WriteLine();
-            Console.WriteLine($"{monster.data.name} 체력: {monster.data.hp}");
-            Console.WriteLine($"{monster.data.name}의 턴");
             float damage = Math.Max(monster.data.attack - player.data.defence, 1);
             player.data.hp -= damage;
-            Console.WriteLine($"{player.data.name}에게 {monster.data.attack} 피해");
-            Thread.Sleep(500);
+            if (monster.data.attack - player.data.defence <= 0)
+            {
+                damage = 1;
+            }
+            
+            Console.WriteLine("ヽ( `皿´ )ﾉ");
+            Console.WriteLine($"{player.data.name}에게 {damage} 피해");
+            Thread.Sleep(1000);
         }
 
         // 축하
