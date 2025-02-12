@@ -218,7 +218,7 @@ namespace SpartaDungeon.Managers
             // 현재 씬은 SaveLoadScene이므로 이전 씬의 데이터를 저장한다
             // 이때 이전 씬이 entry인 경우는 저장할 데이터가 없으므로 저장하지 않는다
             int arrIdx = fileIdx - 1;
-            if (SceneManager.Instance.GetPrevScene() != null)
+            if (SceneManager.Instance.GetPrevScene().GetName() != "entry")   
             {
                 if (IsSlotVacant(slots[arrIdx]))
                 {
@@ -252,6 +252,7 @@ namespace SpartaDungeon.Managers
             else
             {
                 Console.WriteLine("저장할 데이터가 없습니다");
+                Thread.Sleep(1000);
             }
         }
         // 슬롯에 세이브파일이 이미 있는지 체크
