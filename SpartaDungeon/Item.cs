@@ -2,15 +2,15 @@
 {
     public interface ItemData
     {
-        string name { get; }
-        int itemType { get; }   // 1: 무기 2: 갑옷, 3: 포션, 
+        string Name { get; }
+        int ItemType { get; }   // 1: 무기 2: 갑옷, 3: 포션, 
         // string itemText { get {switch문을 작성} }
         // 기존의 switch문(확장 용이)
-        string itemText
+        string ItemText
         {
             get
             {
-                switch (itemType)
+                switch (ItemType)
                 {
                     case 1: return "무기";
                     case 2: return "갑옷";
@@ -19,9 +19,9 @@
                 }
             }
         }
-        int classType { get; }   // 1: 전사 2: 마법사 3: 궁수 4: ALL
+        int ClassType { get; }   // 1: 전사 2: 마법사 3: 궁수 4: ALL
         // switch 표현식 사용(간결한 방법)
-        string classText => classType switch
+        string classText => ClassType switch
         {
             1 => "전사",
             2 => "마법사",
@@ -29,74 +29,82 @@
             _ => "캐릭터 직업이 없습니다(다시 불러오기)"
         };
 
-        float attack { get; }
-        float defence { get; }
-        float hp { get; }
-        float mp { get; }
-        string description { get; }
-        int price { get; }
+        float Attack { get; }
+        float Defence { get; }
+        float Hp { get; }
+        float Mp { get; }
+        string Description { get; }
+        int Price { get; }
     }
 
     public abstract class Equipment : ItemData
     {
-        public string name { get; set; }
-        public int itemType { get; set; }
-        public int classType { get; set; }
-        public float attack { get; set; }
-        public float defence { get; set; }
-        public float hp { get; set; }
-        public float mp { get; set; }
-        public string description { get; set; }
-        public int price { get; set; }
+        public string Name { get; set; }
+        public int ItemType { get; set; }
+        public string ItemText { get; set; }
+        public int ClassType { get; set; }
+        public string ClassText { get; set; }
+        public float Attack { get; set; }
+        public float Defence { get; set; }
+        public float Hp { get; set; }
+        public float Mp { get; set; }
+        public string Description { get; set; }
+        public int Price { get; set; }
         public bool IsEquipable { get; set; }
 
 
     }
     public class Armor : Equipment // 정확하게 명시해서 작성할것
     {
-        public Armor(string n, int t, int c, float a, float d, float h, float m, string des, int p)
+        public Armor(string name, int itemtype, string itemtext,int classtype, string classtext,float attack, float defense, float hp, float mp, string description, int price)
         {
-            name = n;
-            itemType = t;
-            classType = c;
-            attack = a;
-            defence = d;
-            hp = h;
-            mp = m;
-            description = des;
-            price = p;
+            Name = name;
+            ItemType = itemtype;
+            ItemText = itemtext;
+            ClassType = classtype;
+            ClassText = classtext;
+            Attack = attack;
+            Defence = defense;
+            Hp = hp;
+            Mp = mp;
+            Description = description;
+            Price = price;
         }
     }
 
     public class Weapon : Equipment
     {
-        public Weapon(string n, int t, int c, float a, float d, float h, float m, string des, int p)
+        public Weapon(string name, int itemtype, string itemtext,int classtype, string classtext,float attack, float defense, float hp, float mp, string description, int price)
         {
-            name = n;
-            itemType = t;
-            classType = c;
-            attack = a;
-            defence = d;
-            hp = h;
-            mp = m;
-            description = des;
-            price = p;
+            Name = name;
+            ItemType = itemtype;
+            ItemText = itemtext;
+            ClassType = classtype;
+            ClassText = classtext;
+            Attack = attack;
+            Defence = defense;
+            Hp = hp;
+            Mp = mp;
+            Description = description;
+            Price = price;
         }
     }
 
     public class Potion : Equipment
     {
-        public Potion(string n, int t, int c, float a, float d, float h, float m, string des, int p)
+        public Potion(string name, int itemtype, string itemtext,int classtype, string classtext, float attack, float defense, float hp, float mp, string description, int price)
         {
-            name = n;
-            itemType = t;
-            classType = c;
-            attack = a;
-            defence = d;
-            hp = h;
-            mp = m;
-            description = des;
-            price = p;
+            Name = name;
+            ItemType = itemtype;
+            ItemText = itemtext;
+            ClassType = classtype;
+            ClassText = classtext;
+            Attack = attack;
+            Defence = defense;
+            Hp = hp;
+            Mp = mp;
+            Description = description;
+            Price = price;
         }
     }
 }

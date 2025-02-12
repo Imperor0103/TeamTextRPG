@@ -91,7 +91,7 @@ namespace SpartaDungeon
             /// 아이템 공격력 추가
             if (weapon != null)
             {
-                Console.Write($"(+{weapon.attack}) ");
+                Console.Write($"(+{DataManager.Instance.player.weapon.Attack}) ");
             }
             Console.Write("\n");
             //
@@ -99,7 +99,7 @@ namespace SpartaDungeon
             /// 아이템 방어력 추가
             if (armor != null)
             {
-                Console.Write($"(+{armor.defence}) ");
+                Console.Write($"(+{DataManager.Instance.player.armor.Defence}) ");
             }
             Console.Write("\n");
             //
@@ -111,56 +111,71 @@ namespace SpartaDungeon
         // 무기장착은 플레이어에서 한다
         public void EquipItem(Equipment item) // 입력받은건 가지고 있는 아이템
         {
+            var targetItem = ItemManager.Instance.armedList.FirstOrDefault(armedItem => armedItem.Name == item.Name);
             if (item != null)
             {
                 // 장비하고 있는 아이템과 "같은" 것이면 해제, 다르면 장착
-                if (ItemManager.Instance.armedList.Contains(item))   // 장비한 아이템은 armedList이 참조를 가지고 있다
+                if (targetItem != null)  // 장비한 아이템은 armedList이 참조를 가지고 있다
                 {
                     // 해당 아이템이 weapon인지 armor인지 판단 후 해제
-                    ItemManager.Instance.armedList.Remove(item); // 리스트에서 제거하기전에 item을 null로 만들면 null참조 오류
+                    ItemManager.Instance.armedList.Remove(targetItem); // 리스트에서 제거하기전에 item을 null로 만들면 null참조 오류
                     if (item is Weapon)
                     {
                         weapon = null;
-                        Console.WriteLine($"{item.name}을 해제했습니다.");
+                        Console.WriteLine($"{item.Name}을 해제했습니다.");
+                        Thread.Sleep(1000);
                     }
                     else if (item is Armor)
                     {
                         armor = null;
-                        Console.WriteLine($"{item.name}을 해제했습니다.");
+                        Console.WriteLine($"{item.Name}을 해제했습니다.");
+                        Thread.Sleep(1000);
                     }
                 }
                 // 장비하고 있는 아이템과 다르다면
                 else
                 {
-                    if (item.itemType == 1) // 무기
+                    if (item.ItemType == 1) // 무기
                     {
                         if (weapon == null)
                         {
                             weapon = item as Weapon;
                             ItemManager.Instance.armedList.Add(weapon);      // 새 장비 추가
+                            Console.WriteLine($"{item.Name}을 장착했습니다.");
+                            Thread.Sleep(1000);
                         }
                         else
                         {
                             // 기존의 장비 해제 후 착용
                             ItemManager.Instance.armedList.Remove(weapon);   // 기존 장비 제거
+                            Console.WriteLine($"{weapon.Name}을 해제했습니다.");
+
                             weapon = item as Weapon;
                             ItemManager.Instance.armedList.Add(weapon);      // 새 장비 추가
+                            Console.WriteLine($"{item.Name}을 장착했습니다.");
+                            Thread.Sleep(1000);
                         }
                     }
-                    else if (item.itemType == 2)    // 갑옷
+                    else if (item.ItemType == 2)    // 갑옷
                     {
                         // 있다면 착용, 없다면 안한다
                         if (armor == null)
                         {
                             armor = item as Armor;
                             ItemManager.Instance.armedList.Add(armor);       // 새 장비 추가
+                            Console.WriteLine($"{item.Name}을 장착했습니다.");
+                            Thread.Sleep(1000);
                         }
                         else
                         {
                             // 기존의 장비 해제 후 착용
                             ItemManager.Instance.armedList.Remove(armor);    // 기존 장비 제거
+                            Console.WriteLine($"{armor.Name}을 해제했습니다.");
+
                             armor = item as Armor;
                             ItemManager.Instance.armedList.Add(armor);       // 새 장비 추가
+                            Console.WriteLine($"{item.Name}을 장착했습니다.");
+                            Thread.Sleep(1000);
                         }
                     }
                     else
@@ -180,7 +195,7 @@ namespace SpartaDungeon
         {
             if (DataManager.Instance.player.weapon != null)
             {
-                return data.attack + DataManager.Instance.player.weapon.attack;
+                return data.attack + DataManager.Instance.player.weapon.Attack;
             }
             else
             {
@@ -191,7 +206,7 @@ namespace SpartaDungeon
         {
             if (DataManager.Instance.player.armor != null)
             {
-                return data.defence + DataManager.Instance.player.armor.defence;
+                return data.defence + DataManager.Instance.player.armor.Defence;
             }
             else
             {

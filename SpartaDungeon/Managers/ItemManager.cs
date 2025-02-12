@@ -47,13 +47,13 @@ namespace SpartaDungeon.Managers
                     Console.Write($"{i + 1} ");
                     Console.Write($"    | ");
                 }
-                Console.Write($"이름: {item.name} | ");
-                Console.Write($"종류: {item.itemType} | ");
-                Console.Write($"공격력: {item.attack} | ");
-                Console.Write($"방어력: {item.defence} | ");
-                Console.Write($"hp추가: {item.hp} | ");
-                Console.Write($"mp추가: {item.mp} | ");
-                Console.Write($"{item.description} \n");
+                Console.Write($"이름: {item.Name} | ");
+                Console.Write($"종류: {item.ItemType} | ");
+                Console.Write($"공격력: {item.Attack} | ");
+                Console.Write($"방어력: {item.Defence} | ");
+                Console.Write($"hp추가: {item.Hp} | ");
+                Console.Write($"mp추가: {item.Mp} | ");
+                Console.Write($"{item.Description} \n");
                 Console.ResetColor();   // 색깔 원래대로
             }
             Console.WriteLine();
@@ -62,11 +62,11 @@ namespace SpartaDungeon.Managers
         // 해당 아이템을 장착하고 있는지 여부
         public bool IsEquiped(Equipment item)
         {
-            return ItemManager.Instance.armedList.Any(armedItem => armedItem.name == item.name);
+            return ItemManager.Instance.armedList.Any(armedItem => armedItem.Name == item.Name);
         }
         public bool IsOwned(Equipment item)
         {
-            return ItemManager.Instance.ownedList.Any(ownedItem => ownedItem.name == item.name);
+            return ItemManager.Instance.ownedList.Any(ownedItem => ownedItem.Name == item.Name);
         }
         public void PrintPrice(Equipment item)
         {
@@ -74,27 +74,27 @@ namespace SpartaDungeon.Managers
             // 구매한 것과 아닌 것의 출력 메세지는 달라야한다
             if (!IsOwned(item))
             {
-                Console.Write($"{item.price}");
+                Console.Write($"{item.Price}");
             }
             else // 구매했다
             {
                 Console.Write("구매완료");
             }
         }
-        public Equipment CreateItem(string n, int t, int c, float a, float d, float h, float m, string des, int p)
+        public Equipment CreateItem (string name, int itemtype, string itemtext,int classtype, string classtext,float attack, float defense, float hp, float mp, string description, int price)
         {
-            switch (t)
+            switch (itemtype)
             {
                 case 1: // 무기                     
                     {
-                        Weapon weapon = new Weapon(n, t, c, a, d, h, m, des, p);
+                        Weapon weapon = new Weapon(name, itemtype, itemtext, classtype, classtext, attack, defense, hp, mp, description, price);
                         SceneManager.Instance.GetCurrentScene().objectList.Add(weapon);
                         ItemManager.Instance.equipmentList.Add(weapon);
                         return weapon;
                     }
                 case 2: // 갑옷
                     {
-                        Armor armor = new Armor(n, t, c, a, d, h, m, des, p);
+                        Armor armor = new Armor(name, itemtype, itemtext, classtype, classtext, attack, defense, hp, mp, description, price);
                         SceneManager.Instance.GetCurrentScene().objectList.Add(armor);
                         equipmentList.Add(armor);
                         return armor;
@@ -102,7 +102,7 @@ namespace SpartaDungeon.Managers
                 case 3: // 포션
                     {
                         // 포션 추가해보기
-                        Potion potion = new Potion(n, t, c, a, d, h, m, des, p);
+                        Potion potion = new Potion(name, itemtype, itemtext, classtype, classtext, attack, defense, hp, mp, description, price);
                         SceneManager.Instance.GetCurrentScene().objectList.Add(potion);
                         equipmentList.Add(potion);
                         return potion;
@@ -113,9 +113,28 @@ namespace SpartaDungeon.Managers
             }
         }
         // 포션 사용 메서드(화면에 표시된 아이템 번호(실제 인덱스는 아이템 번호 -1)를 누르면 사용
-        public void UsePotion(int scrNum)
+        public void UsePotion(Equipment potion)
         {
+            var player = DataManager.Instance.player;
 
+            if(potion != null)
+            {
+                if (ItemManager.Instance.ownedList.Contains(potion))
+                {
+                    ItemManager.Instance.ownedList.Remove(potion);
+                    if(potion is Potion)
+                    {
+                        potion = null;
+                        Console.WriteLine($"{potion.Name}을 마셨습니다.");
+                        player.data.hp += potion.Hp;
+                        player.data.mp += potion.Mp;
+                    }
+                    else
+                    {
+                        Console.WriteLine("포션을 선택해주세요!");
+                    }
+                }
+            }
         }
     }
 }
