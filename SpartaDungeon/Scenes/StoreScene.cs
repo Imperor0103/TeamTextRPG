@@ -13,7 +13,7 @@ namespace SpartaDungeon.Scenes
         {
             ItemManager.Instance.CreateItem("낡은 갑옷", 2, "방어구", 1, " 전사 ", 0, 50, 0, 0, "낡았지만 아직은 쓸만하다", 150);
             ItemManager.Instance.CreateItem("빛바랜 검", 1, "무기", 1, " 전사 ", 30, 0, 0, 0, "색이 빠진 낡은 검, 겨우 휘두룰수 있는 정도다", 100);
-            ItemManager.Instance.CreateItem("희미한 마력의 로브", 2, "방어구", 2, " 마법사 ", 0, 40, 0, 0, "가죽 덩어리 같지만, 희미한 마력이 느껴진다", 150);
+            ItemManager.Instance.CreateItem("희미한 마력의 로브", 2, "방어구", 2, " 마법사 ", 0, 40, 0, 0, "가죽덩어리 같지만,마력이 느껴진다", 150);
             ItemManager.Instance.CreateItem("편백나무 막대기", 1, "무기", 2, " 마법사 ", 70, 0, 0, 0, "피톤치드가 나오는 그럭저럭한 막대기", 100);
             ItemManager.Instance.CreateItem("가죽 갑옷", 2, " 방어구 ", 3, " 궁수 ", 0, 35, 0, 0, "가볍고 꽤 질긴 가죽으로 만든 갑옷", 150);
             ItemManager.Instance.CreateItem("참나무 곡궁", 1, " 무기 ", 3, " 궁수 ", 90, 0, 0, 0, "조금 썩었지만, 가볍고 튼튼한 활", 100);

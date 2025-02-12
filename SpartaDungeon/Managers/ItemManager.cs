@@ -113,9 +113,28 @@ namespace SpartaDungeon.Managers
             }
         }
         // 포션 사용 메서드(화면에 표시된 아이템 번호(실제 인덱스는 아이템 번호 -1)를 누르면 사용
-        public void UsePotion(int scrNum)
+        public void UsePotion(Equipment potion)
         {
+            var player = DataManager.Instance.player;
 
+            if(potion != null)
+            {
+                if (ItemManager.Instance.ownedList.Contains(potion))
+                {
+                    ItemManager.Instance.ownedList.Remove(potion);
+                    if(potion is Potion)
+                    {
+                        potion = null;
+                        Console.WriteLine($"{potion.Name}을 마셨습니다.");
+                        player.data.hp += potion.Hp;
+                        player.data.mp += potion.Mp;
+                    }
+                    else
+                    {
+                        Console.WriteLine("포션을 선택해주세요!");
+                    }
+                }
+            }
         }
     }
 }
