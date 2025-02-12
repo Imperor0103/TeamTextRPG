@@ -1,4 +1,7 @@
 ﻿using SpartaDungeon.Managers;
+using System.Drawing;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SpartaDungeon.Scenes
 {
@@ -31,6 +34,8 @@ namespace SpartaDungeon.Scenes
         {
 
         }
+            
+           
         public override void Update()
         {
             Console.Clear();
@@ -46,9 +51,12 @@ namespace SpartaDungeon.Scenes
 
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Thread.Sleep(150);
-                Console.WriteLine($"{i + 1}. {item.Name} | 종류: {item.ItemText} | 직업: {item.ClassText} | 공격력: {item.Attack} | 방어력: {item.Defence} | {item.Description} | {item.Price}G");
+                Console.Write($"{i + 1}. {item.Name} | 종류: {item.ItemText} | 직업: {item.ClassText} | 공격력: {item.Attack} | 방어력: {item.Defence} | {item.Description} | ");
+                SoldOutItem(i);
+                Console.WriteLine();
                 Console.ResetColor();
             }
+
 
             Console.WriteLine("\n1. 아이템 구매하기");
             Console.WriteLine("2. 아이템 판매하기");
@@ -83,10 +91,21 @@ namespace SpartaDungeon.Scenes
 
 
         }
+         private void SoldOutItem(int i)
+         {
+             var item = ItemManager.Instance.equipmentList[i];
 
+          if (ItemManager.Instance.IsOwned(item))
+                 {
+                Console.Write("\x1b[38;2;255;255;0m판매완료\x1b[0m");
+                 }
+                 else
+                 {
+                     Console.Write($"{item.Price}G");
+                 }
 
-
-
+         }
+     
         private void BuyItem()
         {
             Console.Write("\n구매할 아이템 번호를 입력하세요: ");
