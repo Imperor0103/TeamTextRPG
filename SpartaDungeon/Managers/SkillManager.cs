@@ -11,8 +11,11 @@ namespace SpartaDungeon.Managers
     // 플레이어가 배운 스킬 저장: 리스트(또는 배열)
     public class SkillManager : Singleton<SkillManager>
     {
+        // 스킬매니저는 모든 스킬을 관리한다
+        public List<Skill> allSkillList = new List<Skill>();
+
         // 배열에 직접 저장할 것
-        public List<Skill> playerSkillArr = new List<Skill>();
+        public List<Skill> playerSkillList = new List<Skill>();
 
         public void InitSkill(Player player)
         {
@@ -22,8 +25,8 @@ namespace SpartaDungeon.Managers
             {
                 // 스킬 4개 만들기
                 Skill skill_1 = new Skill(1, "백호참", eClassType.WARRIOR, 10, 10, 10, 10, 10);
+                allSkillList.Add(skill_1);
                 // skill_2, skill_3, skill_4도 이런식으로
-
 
             }
             else if (player.data.classType == eClassType.MAGE)
@@ -57,7 +60,7 @@ namespace SpartaDungeon.Managers
             {
                 // 스킬의 Id를 비교해서 "Id-1" 인덱스에 집어넣는다
                 // 1번 스킬은 0번 인덱스에 저장
-                playerSkillArr[skill.skillData.Id - 1] = skill;
+                playerSkillList[skill.skillData.Id - 1] = skill;
             }
         }
 
@@ -65,7 +68,7 @@ namespace SpartaDungeon.Managers
         public float UseSkill_1(Player player)
         {
             // 마나 소모
-            player.data.mp -= playerSkillArr[0].skillData.Mp;
+            player.data.mp -= playerSkillList[0].skillData.Mp;
 
             // 공격한다(데미지를 리턴해서 몬스터한테 주면 그게 공격임)
             float damage = 0;
@@ -74,18 +77,18 @@ namespace SpartaDungeon.Managers
         public void UseSkill_2(Player player)
         {
             // 마나 소모
-            player.data.mp -= playerSkillArr[1].skillData.Mp;
+            player.data.mp -= playerSkillList[1].skillData.Mp;
             // 플레이어의 공격력을 "몇초간" 올린다
-            player.data.attack += playerSkillArr[1].skillData.Attack;
+            player.data.attack += playerSkillList[1].skillData.Attack;
             // 플레이어의 공격력을 몇초간 올리는 방법
 
         }
         public void UseSkill_3(Player player)
         {
             // 마나 소모
-            player.data.mp -= playerSkillArr[2].skillData.Mp;
+            player.data.mp -= playerSkillList[2].skillData.Mp;
             // 플레이어의 방어력을 "몇초간" 올린다
-            player.data.attack += playerSkillArr[2].skillData.Defence;
+            player.data.attack += playerSkillList[2].skillData.Defence;
             // 플레이어의 공격력을 몇초간 올리는 방법
 
         }
@@ -93,10 +96,10 @@ namespace SpartaDungeon.Managers
         public void UseSkill_4(Player player)
         {
             // 마나 소모
-            player.data.mp -= playerSkillArr[3].skillData.Mp;
+            player.data.mp -= playerSkillList[3].skillData.Mp;
 
             // 플레이의 체력을 회복한다
-            player.data.hp += playerSkillArr[0].skillData.Hp;
+            player.data.hp += playerSkillList[0].skillData.Hp;
         }
         // 자료형은 바뀔 수 있음
     }
