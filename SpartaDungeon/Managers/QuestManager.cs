@@ -378,6 +378,9 @@ namespace SpartaDungeon.Managers
         }
         public void RewardPlayer(Npc npc, Player player)
         {
+            // 정렬하기 위해 ongoing에서 남은 퀘스트를 옮긴다
+            Dictionary<string, Quest> newOngoing = new Dictionary<string, Quest>();
+            // 남은거 차례로 newOngoing에 전달
             // 플레이어에게 보상
             foreach (var quest in ongoingQuestDictionary.Values)
             {
@@ -385,10 +388,19 @@ namespace SpartaDungeon.Managers
                 // 완료한 것은 ongoing에서 제거하고 completed에 넣는다
                 if (quest.questData.IsCleared)
                 {
+                    // 인덱스 정렬을 할 수 없어서 새로 만들어야한다
                     ongoingQuestDictionary.Remove(quest.questData.Name);
                     completedQuestDictionary[quest.questData.Name] = quest;
                 }
+                else
+                {
+                    /// 남는건 newOngoing에 추가
+                    newOngoing[quest.questData.Name] = quest;
+                }
             }
+            ongoingQuestDictionary = null;
+            /// Dictionary 교체
+            ongoingQuestDictionary = newOngoing;
         }
     }
 }

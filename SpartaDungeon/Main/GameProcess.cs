@@ -47,7 +47,6 @@ namespace SpartaDungeon.Main
             if (questManager == null)
             {
                 questManager = QuestManager.Instance;
-                questManager.Init();
             }
             if (skillManager == null)
             {

@@ -21,6 +21,10 @@ namespace SpartaDungeon.Scenes
         //
         public override void Awake()
         {
+            /// Town에서 Entry로 올 때 기존의 퀘스트 진행도가 남아있는 문제가 있었다
+            /// GameProcess의 Awake는 두번다시 실행하지 않기 때문에
+            /// 새로운 퀘스트데이터를 여기서 만들어야 한다
+            QuestManager.Instance.Init();
         }
 
         public override void Start()

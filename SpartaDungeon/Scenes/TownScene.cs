@@ -57,6 +57,9 @@ namespace SpartaDungeon.Scenes
                 case 0:
                     Console.WriteLine("나가기를 선택했습니다.\n");
                     SceneManager.Instance.LoadScene("entry");
+                    /// 모든 퀘스트정보 초기화
+                    QuestManager.Instance.completedQuestDictionary.Clear();
+                    QuestManager.Instance.ongoingQuestDictionary.Clear();
                     return;
                 case 1:
                     Console.WriteLine("상태보기를 선택했습니다.\n");
