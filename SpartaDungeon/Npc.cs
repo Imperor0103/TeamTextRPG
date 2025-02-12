@@ -8,5 +8,17 @@ namespace SpartaDungeon
 {
     public class Npc
     {
+        public List<Quest> questList;   
+
+        public Npc()
+        {
+            if (questList == null)
+            {
+                questList = new List<Quest>();
+            }
+
+        }
+
+
     }
 }

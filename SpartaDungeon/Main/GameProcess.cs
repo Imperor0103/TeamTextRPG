@@ -14,6 +14,8 @@ namespace SpartaDungeon.Main
         ItemManager itemManager;
         DataManager dataManager;
         InputManager inputManager;
+        QuestManager questManager;
+        SkillManager skillManager;
 
         public static bool isPlaying;   // 종료하는 곳에서 false로 바꾼다
 
@@ -41,6 +43,14 @@ namespace SpartaDungeon.Main
             if (inputManager == null)
             {
                 inputManager = InputManager.Instance;
+            }
+            if (questManager == null)
+            {
+                questManager = QuestManager.Instance;
+            }
+            if (skillManager == null)
+            {
+                skillManager = SkillManager.Instance;
             }
         }
         // 1번만 호출되는 메서드
