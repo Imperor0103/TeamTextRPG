@@ -11,6 +11,9 @@ namespace SpartaDungeon.Managers
         // 다형성을 유지하기위해 object형식으로 선언
         public List<object> ownedList;   // 아이템매니저의 ownedList에 있는 것을 저장
         public List<object> armedList;   // 아이템매니저의 armedList에 있는 것을 저장
+        //
+        public Dictionary<string, object> completedQuestDictionary;    // 클리어한 퀘스트 저장
+        public Dictionary<string, object> ongoingQuestDictionary;    // 진행중인 퀘스트 저장
 
         // 불러올 때
         public GameData()
@@ -23,17 +26,31 @@ namespace SpartaDungeon.Managers
             {
                 armedList = new List<object>();
             }
+            //
+            if (completedQuestDictionary == null)
+            {
+                completedQuestDictionary = new Dictionary<string, object>();
+            }
+            if (ongoingQuestDictionary == null)
+            {
+                ongoingQuestDictionary = new Dictionary<string, object>();
+            }
             int arrayIndex = 0;
             player = new Player();
         }
         // 저장할 때
-        public GameData(int idx, Player p, List<Equipment> owned, List<Equipment> armed)
+        public GameData(int idx, Player p, List<Equipment> owned, List<Equipment> armed, Dictionary<string, Quest> comp, Dictionary<string, Quest> on)
         {
             fileIndex = idx;
             player = p;
             /// 저장할 때 object로 변환
             ownedList = owned.Cast<object>().ToList();
             armedList = armed.Cast<object>().ToList();
+
+            // completedQuestDictionary와 ongoingQuestDictionary 변환(ChatGPT)
+            // kvp: Key Value Pair
+            completedQuestDictionary = comp.ToDictionary(kvp => kvp.Key, kvp => (object)kvp.Value);
+            ongoingQuestDictionary = on.ToDictionary(kvp => kvp.Key, kvp => (object)kvp.Value);
         }
     }
 
@@ -103,7 +120,7 @@ namespace SpartaDungeon.Managers
                             TypeNameHandling = TypeNameHandling.All
                         };
                         // JSON 데이터를 GameData 객체로 변환
-                        GameData loadedData = JsonConvert.DeserializeObject<GameData>(jsonData);
+                        GameData loadedData = JsonConvert.DeserializeObject<GameData>(jsonData, settings);    // 여기에 settings 써야하는거 아닌가?
                         slots[i] = loadedData;
                     }
                     catch (Exception e)
@@ -143,7 +160,8 @@ namespace SpartaDungeon.Managers
         {
             // 파일, 슬롯의 인덱스를 받고, 저장한다
             /// 아이템 매니저의 데이터 복사
-            GameData tmpData = new GameData(fileIdx, player, ItemManager.Instance.ownedList, ItemManager.Instance.armedList);
+            GameData tmpData = new GameData(fileIdx, player, ItemManager.Instance.ownedList, ItemManager.Instance.armedList,
+                               QuestManager.Instance.completedQuestDictionary, QuestManager.Instance.ongoingQuestDictionary);
 
             string jsonStr = JsonConvert.SerializeObject(tmpData, new JsonSerializerSettings
             {
@@ -157,9 +175,18 @@ namespace SpartaDungeon.Managers
         // 특정 슬롯에 연결된 세이브파일을 불러온다
         public bool LoadData(int fileIdx)
         {
+            /// LoadData는 saveLoadScene에서 호출이 되는 메서드이므로
+            /// entryScene을 이미 지났기 때문에 npc는 생성되어 있는 상태다
+            /// 즉, 여기서 불러온 퀘스트 완료정보를 npc의 퀘스트 완료정보에 대입할 수 있다
+            /// (참조오류가 발생하여 직접 대입해서 반영해줘야한다)
+
+
             /// 불러오기를 하는 경우, ItemManager에 있던 기존의 리스트를 비워주지 않으면 같은 아이템이 뒤에 추가로 들어가는 문제가 발생
             ItemManager.Instance.ownedList.Clear();
             ItemManager.Instance.armedList.Clear();
+            // 같은 이유로 QuestManager에 있는 Dictionary도 Clear();
+            QuestManager.Instance.completedQuestDictionary.Clear();
+            QuestManager.Instance.ongoingQuestDictionary.Clear();
 
             player = new Player();
             GameData gameData = new GameData();
@@ -204,9 +231,42 @@ namespace SpartaDungeon.Managers
                         ItemManager.Instance.armedList.Add(weapon);
                     }
                 }
-
                 player.weapon = gameData.player.weapon;
                 player.armor = gameData.player.armor;
+
+                // 퀘스트를 Dictionary에 추가
+                foreach (var pair in gameData.completedQuestDictionary)
+                {
+                    try
+                    {
+                        // 명시적으로 Quest 형변환
+                        Quest qst = (Quest)pair.Value;
+                        QuestManager.Instance.completedQuestDictionary.Add(pair.Key, qst);
+
+                        /// npc의 해당 퀘스트의 클리어정보를 바꿔야한다
+                        if (QuestManager.Instance.npc.questList.ContainsKey(pair.Key))
+                        {
+                            QuestManager.Instance.npc.questList[pair.Key].questData.IsCleared = true;
+                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine($"{pair.Value}를 Quest로 형변환하지 못했습니다");
+                    }
+                }
+                foreach (var pair in gameData.ongoingQuestDictionary)
+                {
+                    try
+                    {
+                        // 명시적으로 Quest 형변환
+                        Quest qst = (Quest)pair.Value;
+                        QuestManager.Instance.ongoingQuestDictionary.Add(pair.Key, qst);
+                    }
+                    catch
+                    {
+                        Console.WriteLine($"{pair.Value}를 Quest로 형변환하지 못했습니다");
+                    }
+                }
                 return true;
             }
             return false;
@@ -276,7 +336,8 @@ namespace SpartaDungeon.Managers
         {
             // 데이터매니저가 가진 player를 저장할 새 데이터를 생성
             int arrIdx = fileIndex - 1;
-            GameData newData = new GameData(fileIndex, player, ItemManager.Instance.ownedList, ItemManager.Instance.armedList);
+            GameData newData = new GameData(fileIndex, player, ItemManager.Instance.ownedList, ItemManager.Instance.armedList,
+                                QuestManager.Instance.completedQuestDictionary, QuestManager.Instance.ongoingQuestDictionary);
             // 데이터매니저의 player가 null인 경우에도 newData가 생성되는것에 주의
             // 플레이어가 null이 아닐때에만 저장
             if (newData.player != null)

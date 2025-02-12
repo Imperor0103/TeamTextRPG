@@ -21,9 +21,14 @@ namespace SpartaDungeon.Scenes
         //
         public override void Awake()
         {
-            /// Town에서 Entry로 올 때 기존의 퀘스트 진행도가 남아있는 문제가 있었다
+            /// 퀘스트정보를 여기서 초기화하는 이유
+            /// 1. Town에서 Entry로 올 때 기존의 퀘스트 진행도가 남아있는 문제가 있었다
             /// GameProcess의 Awake는 두번다시 실행하지 않기 때문에
             /// 새로운 퀘스트데이터를 여기서 만들어야 한다
+            /// 
+            /// 2. entryScene은 saveLoadScene보다 먼저 진입하기 때문이다
+            /// 데이터를 불러오기전에 이미 npc가 생성이 되어 있어야한다
+            /// 그래야 데이터의 퀘스트정보를 npc의 퀘스트정보에 대입할 수 있다
             QuestManager.Instance.Init();
         }
 
