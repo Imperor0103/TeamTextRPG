@@ -179,7 +179,7 @@ namespace SpartaDungeon.Managers
                 player.data = gameData.player.data;
                 player.weapon = gameData.player.weapon;
                 player.armor = gameData.player.armor;
-                
+
                 /// 아이템들이 object형식이므로 다시 원래의 자료형으로 바꿔준 다음, 아이템매니저의 리스트에 복사
                 /// 나중에 LINQ 공부하고 나서 수정해보자
                 foreach (var item in gameData.ownedList)
@@ -203,7 +203,7 @@ namespace SpartaDungeon.Managers
                     {
                         ItemManager.Instance.armedList.Add(weapon);
                     }
-                }           
+                }
 
                 player.weapon = gameData.player.weapon;
                 player.armor = gameData.player.armor;
@@ -218,41 +218,48 @@ namespace SpartaDungeon.Managers
             // 현재 씬은 SaveLoadScene이므로 이전 씬의 데이터를 저장한다
             // 이때 이전 씬이 entry인 경우는 저장할 데이터가 없으므로 저장하지 않는다
             int arrIdx = fileIdx - 1;
-            if (SceneManager.Instance.GetPrevScene().GetName() != "entry")   
+            if (IsSlotVacant(slots[arrIdx]))
             {
-                if (IsSlotVacant(slots[arrIdx]))
+                // entry씬일 때는 저장할 수 없다
+                if (SceneManager.Instance.GetPrevScene().GetName() == "entry")
                 {
-                    // 슬롯에 데이터가 없다 -> 자동으로 저장
-                    SaveDataToSlot(slots, fileIdx);
+                    Console.WriteLine("저장할 데이터가 없습니다");
+                    Thread.Sleep(1000);
                 }
-                else
-                {
-                    // 슬롯에 데이터가 있다 -> 덮어쓰기, 삭제 중에서 선택
-                    Console.WriteLine("1.슬롯에 저장된 데이터 불러오기\n2.슬롯에 새로운 데이터 덮어쓰기\n3.슬롯에 저장된 데이터 삭제\n0.이전화면으로 돌아가기\n"); // \n4.게임 저장\n5.게임 불러오기\n6.종료
-                    int input = InputManager.Instance.GetValidNumber("원하시는 행동을 입력해주세요.", 0, 3);
-                    switch (input)
-                    {
-                        case 0:
-                            // 아직 SaveLoadScene이므로 씬을 바꾸면 안된다
-                            break;
-                        case 1:
-                            LoadDataFromSlot(slots, arrIdx);                            
-                            break;
-                        case 2:
-                            SaveDataToSlot(slots, fileIdx);
-                            break;
-                        case 3:
-                            DeleteSaveFile(slots, arrIdx);
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                // 슬롯에 데이터가 없다 -> 자동으로 저장
+                SaveDataToSlot(slots, fileIdx);
             }
             else
             {
-                Console.WriteLine("저장할 데이터가 없습니다");
-                Thread.Sleep(1000);
+                // 슬롯에 데이터가 있다 -> 덮어쓰기, 삭제 중에서 선택
+                Console.WriteLine("1.슬롯에 저장된 데이터 불러오기\n2.슬롯에 새로운 데이터 덮어쓰기\n3.슬롯에 저장된 데이터 삭제\n0.이전화면으로 돌아가기\n"); // \n4.게임 저장\n5.게임 불러오기\n6.종료
+                int input = InputManager.Instance.GetValidNumber("원하시는 행동을 입력해주세요.", 0, 3);
+                switch (input)
+                {
+                    case 0:
+                        // 아직 SaveLoadScene이므로 씬을 바꾸면 안된다
+                        break;
+                    case 1:
+                        LoadDataFromSlot(slots, arrIdx);
+                        break;
+                    case 2:
+                        // entry씬일 때는 저장할 수 없다
+                        if (SceneManager.Instance.GetPrevScene().GetName() == "entry")
+                        {
+                            Console.WriteLine("저장할 데이터가 없습니다");
+                            Thread.Sleep(1000);
+                        }
+                        else
+                        {
+                            SaveDataToSlot(slots, fileIdx);
+                        }
+                        break;
+                    case 3:
+                        DeleteSaveFile(slots, arrIdx);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         // 슬롯에 세이브파일이 이미 있는지 체크
