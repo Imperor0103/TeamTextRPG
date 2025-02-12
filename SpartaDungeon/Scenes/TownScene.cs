@@ -27,8 +27,6 @@ namespace SpartaDungeon.Scenes
         {
             Console.Clear();
             Console.WriteLine();
-            Console.WriteLine("행동을 선택하세요.");
-            Console.WriteLine();
             Console.WriteLine("1.상태보기");
             Console.WriteLine("2.인벤토리");
             Console.WriteLine("3.상점");
@@ -36,29 +34,30 @@ namespace SpartaDungeon.Scenes
             Console.WriteLine("5.사우나");
             Console.WriteLine("6.저장 / 불러오기");
             Console.WriteLine();
-            switch (Console.ReadLine())
+
+            switch (InputManager.Instance.GetValidNumber("\n선택을 입력하세요", 1, 6))
             {
-                case "1":
+                case 1:
                     Console.WriteLine("상태보기를 선택했습니다.\n");
                     SceneManager.Instance.LoadScene("status");
                     return;
-                case "2":
+                case 2:
                     Console.WriteLine("인벤토리를 선택했습니다.\n");
                     SceneManager.Instance.LoadScene("inventory");
                     return;
-                case "3":
+                case 3:
                     Console.WriteLine("상점을 선택했습니다.\n");
                     SceneManager.Instance.LoadScene("store");
                     return;
-                case "4":
+                case 4:
                     Console.WriteLine("던전입장를 선택했습니다.\n");
                     SceneManager.Instance.LoadScene("dungeon");
                     return;
-                case "5":
+                case 5:
                     Console.WriteLine("사우나를 선택했습니다.\n");
                     SceneManager.Instance.LoadScene("sauna");
                     return;
-                case "6":
+                case 6:
                     Console.WriteLine("저장 / 불러오기를 선택했습니다.\n");
                     SceneManager.Instance.LoadScene("saveLoad");
                     return;
