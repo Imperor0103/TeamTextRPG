@@ -28,10 +28,12 @@ namespace SpartaDungeon.Scenes
 
         public override void Update()
         {
-            Console.WriteLine("휴식하기");
+            Thread.Sleep(1000);
+            Console.Clear();
+            Console.WriteLine("여관");
             Console.WriteLine($"500 G 를 내면 체력을 회복할 수 있습니다. (보유 골드 : {player.data.gold})");
             Console.WriteLine();
-            Console.WriteLine("1.휴식하기");
+            Console.WriteLine("1.잠자기");
             Console.WriteLine("2.습식사우나");
             Console.WriteLine("0.나가기");
             Console.WriteLine();
@@ -39,15 +41,11 @@ namespace SpartaDungeon.Scenes
             switch (Console.ReadLine())
             {
                 case "1":
-                    Console.WriteLine("휴식하기를 선택했습나다.\n");
-                    Console.WriteLine($"골드: {player.data.gold} -> {player.data.gold - 500}");
-                    player.data.gold -= 500;
-                    player.data.hp = 100;
-                    return;
+                    RentedRoom(); break;
                 case "2":
                     Rest(); break;
                 case "0":
-                    Console.WriteLine("나가기를 선택했습니다.\n");
+                    Console.WriteLine("마을로 돌아갑니다.\n");
                     SceneManager.Instance.LoadScene("town");
                     return;
                 default:
@@ -56,46 +54,53 @@ namespace SpartaDungeon.Scenes
                     break;
             }
         }
+        private void RentedRoom()
+        {
+            Console.WriteLine("잠을 잡니다.\n");
+            if(player.data.hp == player.data.maxHp)
+            {
+                Thread.Sleep(1000);
+                Console.WriteLine("일어나려면 Enter...");
+                Console.ReadLine();
+                return;
+            }
+            else
+            {
+                Console.WriteLine($"골드: {player.data.gold} -> {player.data.gold - 500}");
+                Console.WriteLine("일어나려면 Enter...");
+                Console.ReadLine();
+                player.data.gold -= 500;
+                player.data.hp = 100;
+            }
+            return;
+        }
+
         private void Rest()
         {
             Console.WriteLine("습식사우나에 들어갑니다.");
-            CancellationTokenSource cts = new CancellationTokenSource();
-            CancellationToken token = cts.Token;
-
             if (player.data.hp >= player.data.maxHp)
             {
                 Console.WriteLine("체력이 이미 가득 찼습니다.");
+                Console.WriteLine();
                 return;
             }
             Console.WriteLine("휴식 중... (종료하려면 아무 키나 누르세요)");
 
-            Task healTask = Task.Run(async () =>
+            Task healTask = Task.Run(() =>
             {
                 while (player.data.hp < player.data.maxHp)
                 {
                     Thread.Sleep(2000);
-                    if (token.IsCancellationRequested)
-                    {
-                        Console.WriteLine("휴식이 중단되었습니다.");
-                        break;
-                    }
                     player.data.hp = Math.Min(player.data.hp + 1, player.data.maxHp);
-                    Console.WriteLine($"체력 +1 \n현재 체력: {player.data.hp}");
-                    Console.WriteLine();
-
+                    Console.WriteLine($"체력 +1 \n현재 체력: {player.data.hp}\n");
                     if (player.data.hp >= player.data.maxHp)
                     {
-                        Console.WriteLine("체력이 가득 찼습니다.");
-                        Console.WriteLine();
+                        Console.WriteLine("체력이 가득 찼습니다.\n");
                         break;
                     }
                 }
-            }, token);
-
-            Task inputTask = Task.Run(() => Console.ReadKey());
-            Task.WhenAny(healTask, inputTask).Wait();
-            cts.Cancel();
-            healTask.Wait();
+            });
+            Task.WaitAny(healTask, Task.Run(() => Console.ReadKey()));
             Console.WriteLine("휴식 종료");
         }
     }
