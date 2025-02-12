@@ -33,10 +33,15 @@ namespace SpartaDungeon.Scenes
             Console.WriteLine("4.던전입장");
             Console.WriteLine("5.사우나");
             Console.WriteLine("6.저장 / 불러오기");
+            Console.WriteLine("0.나가기");
             Console.WriteLine();
 
-            switch (InputManager.Instance.GetValidNumber("\n선택을 입력하세요", 1, 6))
+            switch (InputManager.Instance.GetValidNumber("\n선택을 입력하세요", 0, 6))
             {
+                case 0:
+                    Console.WriteLine("나가기를 선택했습니다.\n");
+                    SceneManager.Instance.LoadScene("entry");
+                    return;
                 case 1:
                     Console.WriteLine("상태보기를 선택했습니다.\n");
                     SceneManager.Instance.LoadScene("status");
