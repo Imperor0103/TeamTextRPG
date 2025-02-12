@@ -43,11 +43,18 @@ namespace SpartaDungeon.Scenes
             for (int i = 0; i < storeItems.Count; i++)
             {
                 var item = storeItems[i];
+
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine();
                 Thread.Sleep(100);
                 Console.WriteLine($"{i + 1}. {item.Name} | 종류: {item.ItemText} | 직업: {item.ClassText} | 공격력: {item.Attack} | 방어력: {item.Defence} | {item.Description} | {item.Price}G");
                 Console.ResetColor();
+
+                if(ItemManager.Instance.IsOwned(item))
+                {
+                    item.Price = int.Parse("구매완료");
+                    return;
+                }
             }
 
             Console.WriteLine("\n1. 아이템 구매하기");
@@ -80,6 +87,8 @@ namespace SpartaDungeon.Scenes
             {
                 Console.WriteLine("잘못된 선택입니다.");
             }
+
+
         }
 
 
@@ -100,6 +109,7 @@ namespace SpartaDungeon.Scenes
             if (ItemManager.Instance.IsOwned(item))
             {
                 Console.WriteLine("이미 구매한 아이템입니다!");
+                item.Price = int.Parse("구매완료");
             }
             else if (player.data.gold >= item.Price)
             {
@@ -108,13 +118,14 @@ namespace SpartaDungeon.Scenes
 
                 Console.WriteLine($"{item.Name}을 구매하였습니다!");
                 Console.WriteLine($"남은 골드: {player.data.gold}G");
+               
             }
             else
             {
                 Console.WriteLine("골드가 부족합니다!");
             }
 
-            Console.ReadLine();
+            Thread.Sleep(1000);
         }
 
         private void SellItem()
