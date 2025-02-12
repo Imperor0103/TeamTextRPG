@@ -39,12 +39,12 @@ namespace SpartaDungeon.Scenes
             Console.WriteLine("2. 오크");
             Console.WriteLine("3. 트롤");
             Console.WriteLine("4. 드래곤");
-            Console.WriteLine("9. 돌아가기");
+            Console.WriteLine("0. 나가기");
         }
         public override void Update()
         {
         int choice = InputManager.Instance.GetValidNumber("-입력-", 1, 9);
-            if (choice == 9)
+            if (choice == 0)
             {
                 Console.WriteLine("마을로 돌아갑니다.");
                 return;
