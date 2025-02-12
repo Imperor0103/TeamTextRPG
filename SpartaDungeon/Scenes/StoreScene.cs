@@ -11,12 +11,18 @@ namespace SpartaDungeon.Scenes
         //
         public override void Awake()
         {
-            ItemManager.Instance.CreateItem("낡은 갑옷", 2, "방어구", 1, " 전사 ", 0, 50, 0, 0, "낡았지만 아직은 쓸만하다", 150);
-            ItemManager.Instance.CreateItem("빛바랜 검", 1, "무기", 1, " 전사 ", 30, 0, 0, 0, "색이 빠진 낡은 검, 겨우 휘두룰수 있는 정도다", 100);
-            ItemManager.Instance.CreateItem("희미한 마력의 로브", 2, "방어구", 2, " 마법사 ", 0, 40, 0, 0, "가죽덩어리 같지만,마력이 느껴진다", 150);
-            ItemManager.Instance.CreateItem("편백나무 막대기", 1, "무기", 2, " 마법사 ", 70, 0, 0, 0, "피톤치드가 나오는 그럭저럭한 막대기", 100);
-            ItemManager.Instance.CreateItem("가죽 갑옷", 2, " 방어구 ", 3, " 궁수 ", 0, 35, 0, 0, "가볍고 꽤 질긴 가죽으로 만든 갑옷", 150);
-            ItemManager.Instance.CreateItem("참나무 곡궁", 1, " 무기 ", 3, " 궁수 ", 90, 0, 0, 0, "조금 썩었지만, 가볍고 튼튼한 활", 100);
+            ItemManager.Instance.CreateItem("낡은 갑옷", 2, "방어구", 1, " 전사 ", 0, 50, 0, 0, "낡았지만 아직은 쓸만하다", 300);
+            ItemManager.Instance.CreateItem("빛바랜 검", 1, "무기", 1, " 전사 ", 30, 0, 0, 0, "색이 빠진 낡은 검, 겨우 휘두룰수 있는 정도다", 150);
+            ItemManager.Instance.CreateItem("판금 갑옷", 2, "방어구", 1, " 전사 ", 0, 75, 0, 0, "빤딱빤딱한 판금으로 만든 갑옷", 450);
+            ItemManager.Instance.CreateItem("브로드 소드", 1, "무기", 1, "전사", 40, 0, 0, 0, "청동으로 만들었다, 고블린 정도는 순살!", 300);
+            ItemManager.Instance.CreateItem("희미한 마력의 로브", 2, "방어구", 2, " 마법사 ", 0, 40, 0, 0, "가죽덩어리 같지만,마력이 느껴진다", 300);
+            ItemManager.Instance.CreateItem("편백나무 막대기", 1, "무기", 2, " 마법사 ", 70, 0, 0, 0, "피톤치드가 나오는 그럭저럭한 막대기", 150);
+            ItemManager.Instance.CreateItem("트리슈라의 로브", 2, "방어구", 2, "마법사", 0, 45, 0, 0, "꼬마정령 트리슈라의 기운이 담겨있다", 450);
+            ItemManager.Instance.CreateItem("적절한 지팡이", 1, " 무기 ", 2, "마법사", 80, 0, 0, 0, "적절한 이름, 적절한 성능", 300);
+            ItemManager.Instance.CreateItem("가죽 갑옷", 2, " 방어구 ", 3, " 궁수 ", 0, 35, 0, 0, "가볍고 꽤 질긴 가죽으로 만든 갑옷", 300);
+            ItemManager.Instance.CreateItem("참나무 곡궁", 1, " 무기 ", 3, " 궁수 ", 90, 0, 0, 0, "조금 썩었지만, 가볍고 튼튼한 활", 130);
+            ItemManager.Instance.CreateItem("호피 갑옷", 2, "방어구", 3, "궁수", 0, 40, 0, 0, "호피는 개성도 더해주고 가죽도 강화해준다는 사실", 450);
+            ItemManager.Instance.CreateItem("오동나무 곡궁", 1, " 무기 ", 3, " 궁수 ", 95, 0, 0, 0, "조금 썩었지만, 가볍고 튼튼한 활", 130);
             ItemManager.Instance.CreateItem("소량의 체력 포션", 3, "포션", 3, "모두", 0, 0, 10, 0, "즉시 체력 10을 회복합니다", 30);
             ItemManager.Instance.CreateItem("소량의 마나 포션", 3, "포션", 3, "모두", 0, 0, 0, 10, "즉시 마나 10을 회복합니다", 30);
 
