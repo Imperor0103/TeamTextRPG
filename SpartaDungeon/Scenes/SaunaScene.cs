@@ -10,7 +10,7 @@ namespace SpartaDungeon.Scenes
     public class SaunaScene : BaseScene
     {
         Player player;
-
+        Npc npc;
         #region 새로운 생성자 만들기 금지
         // 생성자에서는 현재 씬의 이름만 설정한다. 씬에 있는 멤버들의 초기화는 Awake나 Start에서 한다
         public SaunaScene(string name) : base(name) { }
@@ -23,7 +23,7 @@ namespace SpartaDungeon.Scenes
 
         public override void Start()
         {
-            
+            npc = QuestManager.Instance.npc;
         }
 
         public override void Update()
