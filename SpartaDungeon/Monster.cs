@@ -119,51 +119,51 @@ namespace SpartaDungeon
         {
             name = "드래곤",
             level = 50,
-            attack = 100,
+            attack = 10,
             defence = 50,
-            maxHp = 1000,
-            hp = 1000,
+            maxHp = 10,
+            hp = 10,
             gold = 10,
             maxMp = 5,
             mp = 0,
             skill = "브레스",
             ascii = @"
-                     ^\    ^\
-                    / \\  /  \\
-                   /.  \\/    \\      |\___/|
-  *----*          /  / |  \\    \  __/   O  O\
-  |   /          /  /  |   \\    \_\/  \     \\
-  / /\/         /   /   |    \\   _\/    '@___@
-  /  /         /    /    |     \\ _\/       |U
-  |  |       /     /     |      \\\/        |
-  \  |     /_     /      |       \\  )   \ _|_
-  \   \       ~-./_ _    |    .- ; (  \_ _ _,\'
-  ~    ~.           .-~-.|.-*      _        {-,
-  \      ~-. _ .-~                 \      /\'
-  \                   }            {   .* 
-  ~.                 '-/        /.-~----.
-      ~- _             /        >..----.\\\
-          ~ - - - - ^}_ _ _ _ _ _ _.-\\\"
+                ^    ^
+               / \  //\
+  |\___/|      /   \//  .\
+ /O  O  \__  /    //  | \ \
+/     /  \/_/    //   |  \  \
+@___@'    \/_   //    |   \   \ 
+ U |       \/_ //     |    \    \ 
+   |        \///      |     \     \ 
+  _|_ /   )  //       |      \     _\
+ '/,_ _ _/  ( ; -.    |    _ _\.-~        .-~~~^-.
+ ,-{        _      `-.|.-~-.           .~         `.
+  '/\      /                 ~-. _ .-~      .-~^-.  \
+     `.   {            }                   /      \  \
+   .----~-.\        \-'                 .~         \  `. \^-.
+  ///.----..>    c   \             _ -~             `.  ^-`   ^-_
+    ///-._ _ _ _ _ _ _}^ - - - - ~                     ~--,___.-~"
         })
         {
             asciiColors = new List<(string, ConsoleColor)>
             {
-                (@"                     ^\    ^\", ConsoleColor.Red),
-                (@"                    / \\  /  \\", ConsoleColor.Red),
-                (@"                   /.  \\/    \\      |\___/|", ConsoleColor.Red),
-                (@"  *----*          /  / |  \\    \  __/  ･`  ･\", ConsoleColor.Red),
-                (@"  |   /          /  /  |   \\    \_\/  \     \\", ConsoleColor.Red),
-                (@"  / /\/         /   /   |    \\   _\/    '@___@", ConsoleColor.Red),
-                (@"  /  /         /    /    |     \\ _\/       |", ConsoleColor.Red),
-                (@"  |  |       /     /     |      \\\/        |", ConsoleColor.Red),
-                (@"  \  |     /_     /      |       \\  )   \ _|_", ConsoleColor.Red),
-                (@"  \   \       ~-./_ _    |    .- ; (  \_ _ _,\'", ConsoleColor.Red),
-                (@"  ~    ~.           .-~-.|.-*      _        {-,", ConsoleColor.Red),
-                (@"  \      ~-. _ .-~                 \      /\'", ConsoleColor.Red),
-                (@"  \                   }            {   .*", ConsoleColor.Red),
-                (@"  ~.                 '-/        /.-~----.", ConsoleColor.Red),
-                (@"      ~- _             /        >..----.\\\", ConsoleColor.Red),
-                (@"          ~ - - - - ^}_ _ _ _ _ _ _.-\\\", ConsoleColor.Red)
+                (@"                ^    ^", ConsoleColor.Red),
+                (@"               / \  //\", ConsoleColor.Red),
+                (@" |\___/|      /   \//  .\", ConsoleColor.Red),
+                (@" /. '.  \__  /    //  | \ \", ConsoleColor.Red),
+                (@"/     /  \/_/    //   |  \  \", ConsoleColor.Red),
+                (@"@___@'    \/_   //    |   \   \ ", ConsoleColor.Red),
+                (@"   |       \/_ //     |    \    \ ", ConsoleColor.Red),
+                (@"   |        \///      |     \     \ ", ConsoleColor.Red),
+                (@"  _|_ /   )  //       |      \     _\", ConsoleColor.Red),
+                (@" '/,_ _ _/  ( ; -.    |    _ _\.-~        .-~~~^-.", ConsoleColor.Red),
+                (@" ,-{        _      `-.|.-~-.           .~         `.", ConsoleColor.Red),
+                (@"  '/\      /                 ~-. _ .-~      .-~^-.  \", ConsoleColor.Red),
+                (@"     `.   {            }                   /      \  \", ConsoleColor.Red),
+                (@"   .----~-.\        \-'                 .~         \  `. \^-.", ConsoleColor.Red),
+                (@"  ///.----..>    c   \             _ -~             `.  ^-`   ^-_", ConsoleColor.Red),
+                (@"    ///-._ _ _ _ _ _ _}^ - - - - ~                     ~--,___.-~", ConsoleColor.Red)
             };
         }
 

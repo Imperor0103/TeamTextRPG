@@ -80,7 +80,49 @@ namespace SpartaDungeon.Scenes
             Thread.Sleep(1500);
 
             bool phase2 = false; // 페이즈를 위한 bool
-
+            if (monster.data.name == "드래곤")
+            {
+                Console.OutputEncoding = Encoding.UTF8;
+                Console.WriteLine(@"                 /           /   ");
+                Thread.Sleep(10);
+                Console.WriteLine(@"                /' .,,,,  ./     ");
+                Thread.Sleep(10);
+                Console.WriteLine(@"               /';'     ,/       ");
+                Thread.Sleep(10);
+                Console.WriteLine(@"              / /   ,,//,`'`     ");
+                Thread.Sleep(10);
+                Console.WriteLine(@"             ( ,, '_,  ,,,' ``   ");
+                Thread.Sleep(10);
+                Console.WriteLine(@"             |    ///  ,,, ;'  ' ");
+                Thread.Sleep(1000);
+                Console.WriteLine(@"            /    .   ,''/' `,``  ");
+                Thread.Sleep(100);
+                Console.WriteLine(@"           /   .     ./, `,, ` ; ");
+                Thread.Sleep(100);
+                Console.WriteLine(@"        ,./  .   ,-,',` ,,/''\,' ");
+                Thread.Sleep(10);
+                Console.WriteLine(@"       |   /; ./,,'`,,'' |   |   ");
+                Thread.Sleep(10);
+                Console.WriteLine(@"       |     /   ','    /    |   ");
+                Thread.Sleep(10);
+                Console.WriteLine(@"        \___/'   '     |     |   ");
+                Thread.Sleep(10);
+                Console.WriteLine(@"          `,,'  |      /     `\  ");
+                Thread.Sleep(10);
+                Console.WriteLine(@"               /      |        ~\");
+                Thread.Sleep(10);
+                Console.WriteLine(@"              '       (          ");
+                Thread.Sleep(10);
+                Console.WriteLine(@"             :                   ");
+                Thread.Sleep(10);
+                Console.WriteLine(@"            ; .         \--      ");
+                Thread.Sleep(10);
+                Console.WriteLine(@"          :   \         ;        ");
+                Thread.Sleep(2000);
+                Console.WriteLine();
+                Console.WriteLine("Enter...");
+                Console.ReadLine();
+            }
             while (player.data.hp > 0 && monster.data.hp > 0) // 전투 루틴
             {
                 Console.Clear();
@@ -89,6 +131,7 @@ namespace SpartaDungeon.Scenes
                 if (monster.data.hp <= 0) break; // 몬스터가 죽으면 루프 종료
                 if (Phase2(ref phase2)) // 2페이즈에 진압하기 위한 bool값
                 {
+                    phase2 = true;
                     Phase2Statuse(); // 2페이즈 능력치 상승
                 }
                 MonsterTurn();
@@ -188,6 +231,12 @@ namespace SpartaDungeon.Scenes
             }
             else
             {
+                player.data.hp = 1;
+                Console.OutputEncoding = Encoding.UTF8;
+                Console.WriteLine("  ~~~");
+                Console.WriteLine(" (´･ω･)  =3");
+                Console.WriteLine(" /　 ⌒ヽ");
+                Console.WriteLine("(人＿＿つ_つ");
                 Console.WriteLine("패배했습니다... 잠시 후 마을로 돌아갑니다.");
                 Thread.Sleep(1000);
                 Console.WriteLine("...");

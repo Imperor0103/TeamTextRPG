@@ -17,7 +17,6 @@ namespace SpartaDungeon.Scenes
         public override void Awake()
         {
             Console.Clear();
-            Console.Write("마을 도착!");
         }
         public override void Start()
         {
@@ -26,7 +25,22 @@ namespace SpartaDungeon.Scenes
         public override void Update()
         {
             Console.Clear();
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.Write("마을 도착!");
             Console.WriteLine();
+            Thread.Sleep(500);
+            Console.WriteLine("° :.   • ○   ° ★  .   .");
+            Thread.Sleep(50);
+            Console.WriteLine("★ ° . .   . ☾ °☆ . * ●");
+            Thread.Sleep(50);
+            Console.WriteLine("∩ │◥███◣ ╱◥███◣");
+            Thread.Sleep(50);
+            Console.WriteLine("╱◥◣ ◥████◣▓∩▓│∩║");
+            Thread.Sleep(50);
+            Console.WriteLine("│╱◥█◣║∩∩∩ ║◥█▓ ▓█◣");
+            Thread.Sleep(50);
+            Console.WriteLine("││∩│▓ ║∩田│║▓ ▓ ▓∩║");
+            Thread.Sleep(1000);
             Console.WriteLine("1.상태보기");
             Console.WriteLine("2.인벤토리");
             Console.WriteLine("3.상점");
