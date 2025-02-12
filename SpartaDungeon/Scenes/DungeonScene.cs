@@ -7,7 +7,7 @@ using SpartaDungeon.Managers;
 
 namespace SpartaDungeon.Scenes
 {
-    public class DungeonScene: BaseScene
+    public class DungeonScene : BaseScene
     {
         public Player player;
         public Monster monster;
@@ -23,6 +23,7 @@ namespace SpartaDungeon.Scenes
         }
         public override void Start()
         {
+            Console.OutputEncoding = Encoding.UTF8;
             Console.Clear();
             Console.WriteLine();
             Thread.Sleep(500);
@@ -41,9 +42,10 @@ namespace SpartaDungeon.Scenes
             Console.WriteLine("4. 드래곤");
             Console.WriteLine("0. 나가기");
         }
+
         public override void Update()
         {
-        int choice = InputManager.Instance.GetValidNumber("-입력-", 1, 9);
+            int choice = InputManager.Instance.GetValidNumber("-입력-", 0, 4);
             if (choice == 0)
             {
                 Console.WriteLine("마을로 돌아갑니다.");
@@ -67,87 +69,89 @@ namespace SpartaDungeon.Scenes
             {
                 Console.WriteLine("잘못된 입력입니다.");
             }
-            
+
         }
+
         public bool Battle()
         {
             Console.WriteLine();
             Console.WriteLine($"{monster.data.name}과(와)의 전투 시작!");
             Console.WriteLine();
             Thread.Sleep(1500);
-            bool phase2 = false;
-            while (player.data.hp > 0 && monster.data.hp > 0)
+
+            bool phase2 = false; // 페이즈를 위한 bool
+
+            while (player.data.hp > 0 && monster.data.hp > 0) // 전투 루틴
             {
                 Console.Clear();
-                if(!phase2)
-                {
-                    Console.WriteLine($"{monster.data.ascii}");
-                }
-                else
-                {
-                    monster.Ascii();
-                }
-                Console.WriteLine($"[체력: {monster.data.hp}][공격력: {monster.data.attack}][방어력: {monster.data.defence}]");
+                MonsterStatus(phase2); // 몬스터 정보
                 PlayerTurn();
                 if (monster.data.hp <= 0) break; // 몬스터가 죽으면 루프 종료
-                if (monster.data.name == "드래곤" && monster.data.hp <= (monster.data.maxHp * 0.3) && !phase2) // 드래곤의 체력이 30%에 달하면 공격력 증가
+                if (Phase2(ref phase2)) // 2페이즈에 진압하기 위한 bool값
                 {
-                    monster.data.attack += 50;
-                    phase2 = true;
-                    Console.WriteLine("!!ヽ(ﾟдﾟヽ)(ﾉﾟдﾟ)ﾉ!!");
-                    Thread.Sleep(500);
-                    Console.WriteLine($"{monster.data.name}의 공격력 증가!");
-                    Thread.Sleep(2000);
+                    Phase2Statuse(); // 2페이즈 능력치 상승
                 }
                 MonsterTurn();
                 if (player.data.hp <= 0) break; // 플레이어가 죽으면 루프 종료
-                monster.data.mp += 1;
+                monster.data.mp += 1; // 몬스터의 스킬 차징
             }
+            return BattleResult(); // 결과
+        }
 
-            // 전투 결과 출력
-            if (monster.data.hp <= 0)
+        private void MonsterStatus(bool phase2) // 몬스터의 정보
+        {
+            if (!phase2)
             {
-                Console.WriteLine($"{monster.data.name}을(를) 처치했습니다! 보상을 획득합니다.");
-                player.data.exp += monster.data.level;
-                player.data.gold += monster.data.gold;
-                Console.WriteLine($"경험치: {monster.data.level}+");
-                Console.WriteLine($"Gold: {monster.data.gold}+");
-                VictoryAscii.RandomVictory();
-                Console.WriteLine();
-                Thread.Sleep(3000);
-                Console.WriteLine("Enter...");
-                Console.ReadLine();
+                Console.WriteLine($"{monster.data.ascii}");
             }
             else
             {
-                Console.WriteLine("패배했습니다... 잠시 후 마을로 돌아갑니다.");
-                Thread.Sleep(3000);
+                monster.Ascii();
             }
 
-            // 장면 전환
-            SceneManager.Instance.LoadScene("town");
-            return player.data.hp > 0;
+            Console.WriteLine($"[체력: {monster.data.hp}][공격력: {monster.data.attack}][방어력: {monster.data.defence}]");
         }
+
         private void PlayerTurn()
         {
             Console.WriteLine();
             Console.WriteLine($"플레이어 체력: {player.data.hp}");
             Console.WriteLine($"{player.data.name}의 턴 (공격하려면 Enter)");
             Console.ReadLine();
-            float damage = Math.Max(player.data.attack - monster.data.defence, 1); // 1은 최소 대미지
+
+            // 플레이어의 최종 공격력 계산
+            float attackPower = player.PlayerAttack();
+
+            // 피해 계산 (최소 1 보장)
+            float damage = Math.Max(attackPower - monster.data.defence, 1);
             monster.data.hp -= damage;
-            if (player.data.attack - monster.data.defence <= 0)
-            {
-                damage = 1;
-            }
+
             Console.WriteLine("(。･`з･)ﾉ");
-            Console.WriteLine($"{monster.data.name}에게 {damage} 피해");
+            Console.WriteLine($"{monster.data.name}에게 {damage} 피해!");
             Thread.Sleep(1000);
         }
+
+        private bool Phase2(ref bool phase2) // 2페이즈에 진압하기 위한 bool값
+        {
+            if (monster.data.name == "드래곤" && monster.data.hp <= (monster.data.maxHp * 0.3) && !phase2)
+            {
+                return true;
+            }
+            return false;
+        }
+        private void Phase2Statuse() // 2페이즈 능력치 상승
+        {
+            monster.data.attack += 50;
+            Console.WriteLine("!!ヽ(ﾟдﾟヽ)(ﾉﾟдﾟ)ﾉ!!");
+            Thread.Sleep(500);
+            Console.WriteLine($"{monster.data.name}의 공격력 증가!");
+            Thread.Sleep(2000);
+        }
+
         private void MonsterTurn()
         {
             Console.WriteLine();
-            float damage = Math.Max(monster.data.attack - player.data.defence, 1);
+            float damage = Math.Max(monster.data.attack - player.PlayerDefence(), 1);
             if (monster.data.mp == monster.data.maxMp)
             {
                 Console.WriteLine("\x1b[38;2;255;0;0mヽ( `皿´ )ﾉ\x1b[0m");
@@ -164,25 +168,56 @@ namespace SpartaDungeon.Scenes
             Thread.Sleep(1000);
         }
 
+        private bool BattleResult() // 결과
+        {
+            if (monster.data.hp <= 0)
+            {
+                Console.WriteLine($"{monster.data.name}을(를) 처치했습니다! 보상을 획득합니다.");
+                player.data.exp += monster.data.level;
+                player.data.gold += monster.data.gold;
+                Console.WriteLine($"경험치: {monster.data.level}+");
+                Console.WriteLine($"Gold: {monster.data.gold}+");
+                VictoryAscii.RandomVictory();
+                Console.WriteLine();
+                Thread.Sleep(3000);
+                Console.WriteLine("Enter...");
+                Console.ReadLine();
+                SceneManager.Instance.LoadScene("town");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("패배했습니다... 잠시 후 마을로 돌아갑니다.");
+                Thread.Sleep(1000);
+                Console.WriteLine("...");
+                Thread.Sleep(1000);
+                Console.WriteLine("...");
+                Thread.Sleep(1000);
+                
+                SceneManager.Instance.LoadScene("town");
+                return false;
+            }
+        }
+
         // 축하
         public class VictoryAscii
         {
             private static readonly List<string> victoryascii = new()
             {
                 "  ✨🏆 VICTORY 🏆✨\n     ___________\n    '._==_==_=_.'\n    .-\\:      /-.\n   | (|:.     |) |\n    '-|:.     |-'\n      \\::.    /\n       '::. .'\n         ) (\n       _.' '._",
-                
+
                 "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🔥 🎉 VICTORY! 🎉 🔥\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n    \\        /\n     \\  🏆  /\n      (🔥🔥)\n       (🔥)\n        \\/",
-                
+
                 "      ✨🌟✨\n  🌟 VICTORY! 🌟\n      ✨🌟✨",
-                
+
                 "  ⚡⚡⚡⚡⚡⚡\n ⚡ 🎉 WIN 🎉 ⚡\n  ⚡⚡⚡⚡⚡⚡",
-                
+
                 " 🏆 Victory! 🏆\n   🛡️   ⚔️   🛡️",
-                
+
                 " 🏆 VICTORY!! 🏆\n   🚩        🚩\n   | WINNER |\n   |________|",
-                
+
                 "  💰💰💰💰💰💰💰\n  💰 YOU WIN! 💰\n  💰💰💰💰💰💰💰",
-                
+
                 "      👑🏆👑\n  🎉 VICTORY! 🎉\n      👑🏆👑",
 
                 "\x1b[38;2;255;255;255m  ██╗    ██╗██╗████████╗ ██████╗ ██████╗ ██╗   ██╗\n\x1b[38;2;255;200;200m  ██║    ██║██║╚══██╔══╝██╔═══██╗██╔══██╗╚██║ ██╔╝\n\x1b[38;2;255;150;150m  ╚██╗  ██╔╝██║   ██║   ██║   ██║██████╔╝ ╚████╔╝\n\x1b[38;2;255;100;100m   ╚██╗██╔╝ ██║   ██║   ██║   ██║██╔██╔╝   ╚██╔╝\n\x1b[38;2;255;50;50m    ╚███╔╝  ██║   ██║   ╚██████╔╝██║ ███╗   ██║\n\x1b[38;2;255;0;0m      ╚═╝   ╚═╝   ╚═╝    ╚═════╝ ╚═╝ ╚══╝   ╚═╝\x1b[0m"
