@@ -45,16 +45,9 @@ namespace SpartaDungeon.Scenes
                 var item = storeItems[i];
 
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine();
-                Thread.Sleep(100);
+                Thread.Sleep(150);
                 Console.WriteLine($"{i + 1}. {item.Name} | 종류: {item.ItemText} | 직업: {item.ClassText} | 공격력: {item.Attack} | 방어력: {item.Defence} | {item.Description} | {item.Price}G");
                 Console.ResetColor();
-
-                if(ItemManager.Instance.IsOwned(item))
-                {
-                    item.Price = int.Parse("구매완료");
-                    return;
-                }
             }
 
             Console.WriteLine("\n1. 아이템 구매하기");
@@ -109,7 +102,6 @@ namespace SpartaDungeon.Scenes
             if (ItemManager.Instance.IsOwned(item))
             {
                 Console.WriteLine("이미 구매한 아이템입니다!");
-                item.Price = int.Parse("구매완료");
             }
             else if (player.data.gold >= item.Price)
             {
