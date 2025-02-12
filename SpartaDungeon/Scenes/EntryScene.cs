@@ -132,6 +132,7 @@ namespace SpartaDungeon.Scenes
                         player.data.classType = eClassType.WARRIOR;
                         Console.WriteLine("전사를 선택했습니다.\n");
                         Thread.Sleep(1000);
+                        Intro();
                         SceneManager.Instance.LoadScene("town");
                         return;
                     case 2:
@@ -144,6 +145,7 @@ namespace SpartaDungeon.Scenes
                         player.data.mp = 0f;
                         player.data.defence = 4f;
                         Thread.Sleep(1000);
+                        Intro();
                         SceneManager.Instance.LoadScene("town");
                         return;
                     case 3:
@@ -154,6 +156,7 @@ namespace SpartaDungeon.Scenes
                         player.data.hp = 90f;
                         player.data.defence = 3f;
                         Thread.Sleep(1000);
+                        Intro();
                         SceneManager.Instance.LoadScene("town");
                         return;
                 }
@@ -164,6 +167,55 @@ namespace SpartaDungeon.Scenes
         {
             Console.WriteLine("게임을 종료합니다.");
             GameProcess.isPlaying = false;
+        }
+
+        private void Intro()
+        {
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.WriteLine("                                             ______________");
+            Thread.Sleep(50);
+            Console.WriteLine("   _______________________-------------------              `\\");
+            Thread.Sleep(50);
+            Console.WriteLine(" /:--_                                                      |");
+            Thread.Sleep(50);
+            Console.WriteLine("||[ ]||                                    _________________/");
+            Thread.Sleep(50);
+            Console.WriteLine("| \\__/_________________-------------------                |");
+            Thread.Sleep(50);
+            Console.WriteLine("|                                                         |");
+            Thread.Sleep(50);
+            Console.WriteLine(" |                  C  H  A  T    G  P  T                  |");
+            Thread.Sleep(50);
+            Console.WriteLine(" |                     이   거   해   조                   |");
+            Thread.Sleep(50);
+            Console.WriteLine(" |                                                         |");
+            Thread.Sleep(50);
+            Console.WriteLine("  |                                                         |");
+            Thread.Sleep(50);
+            Console.WriteLine("  |                                                         |");
+            Thread.Sleep(50);
+            Console.WriteLine("  |      대 장 : 최 시 훈                                   |");
+            Thread.Sleep(50);
+            Console.WriteLine("  |      부 대 장 : 임 성 균                                |");
+            Thread.Sleep(50);
+            Console.WriteLine("   |     고 라 니  사 냥 꾼 : 김 여 진                       |");
+            Thread.Sleep(50);
+            Console.WriteLine("   |     멍 멍 이 : 박 관 우                                 |");
+            Thread.Sleep(50);
+            Console.WriteLine("   |                                                        |");
+            Thread.Sleep(50);
+            Console.WriteLine("  |                                    _____________________|_");
+            Thread.Sleep(50);
+            Console.WriteLine("  |  ___________________———————————————                       `\\");
+            Thread.Sleep(50);
+            Console.WriteLine("  |/`--_                                                       |");
+            Thread.Sleep(50);
+            Console.WriteLine("  ||[ ]||                                  ____________________/");
+            Thread.Sleep(50);
+            Console.WriteLine("   \\===/___________________——————————————-");
+            Thread.Sleep(50);
+            Console.WriteLine("Enter...");
+            Console.Read();
         }
     }
 }
