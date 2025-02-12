@@ -32,27 +32,29 @@ namespace SpartaDungeon.Managers
             for (int i = 0; i < ItemManager.Instance.ownedList.Count; i++)
             {
                 // 장착관리씬 한정해서 장착한 아이템은 [E] 출력
+                var item = ItemManager.Instance.ownedList[i];
                 if (SceneManager.Instance.GetCurrentScene().GetName() == "equip"
                     && IsEquiped(ItemManager.Instance.ownedList[i]))
                 {
                     // 글씨 색 바꾸어보자
                     Console.ForegroundColor = ConsoleColor.Green;
                     // 배경색 바꾸기: Console.BackgroundColor
-                    Console.Write($"[E]");
+                    Console.Write($"{i + 1} ");
+                    Console.Write($"[E] | ");
                 }
                 else
                 {
-                    Console.ResetColor();   // 색깔 원래대로
+                    Console.Write($"{i + 1} ");
+                    Console.Write($"    | ");
                 }
-                var item = ItemManager.Instance.ownedList[i];
-                Console.Write($"{i + 1} ");
                 Console.Write($"이름: {item.name} | ");
                 Console.Write($"종류: {item.itemType} | ");
                 Console.Write($"공격력: {item.attack} | ");
                 Console.Write($"방어력: {item.defence} | ");
                 Console.Write($"hp추가: {item.hp} | ");
                 Console.Write($"mp추가: {item.mp} | ");
-                Console.Write($"{item.description} | \n");
+                Console.Write($"{item.description} \n");
+                Console.ResetColor();   // 색깔 원래대로
             }
             Console.WriteLine();
         }
