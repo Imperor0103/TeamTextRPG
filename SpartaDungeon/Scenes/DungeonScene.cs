@@ -75,32 +75,33 @@ namespace SpartaDungeon.Scenes
             Console.WriteLine($"{monster.data.name}과(와)의 전투 시작!");
             Console.WriteLine();
             Thread.Sleep(1500);
+            bool phase2 = false;
             while (player.data.hp > 0 && monster.data.hp > 0)
             {
                 Console.Clear();
-                monster.Ascii();
+                if(!phase2)
+                {
+                    Console.WriteLine($"{monster.data.ascii}");
+                }
+                else
+                {
+                    monster.Ascii();
+                }
                 Console.WriteLine($"[체력: {monster.data.hp}][공격력: {monster.data.attack}][방어력: {monster.data.defence}]");
                 PlayerTurn();
                 if (monster.data.hp <= 0) break; // 몬스터가 죽으면 루프 종료
-                if (monster.data.name == "드래곤" && monster.data.hp <= (monster.data.maxHp * 0.3)) // 드래곤의 체력이 30%에 달하면 공격력 증가
+                if (monster.data.name == "드래곤" && monster.data.hp <= (monster.data.maxHp * 0.3) && !phase2) // 드래곤의 체력이 30%에 달하면 공격력 증가
                 {
                     monster.data.attack += 50;
+                    phase2 = true;
                     Console.WriteLine("!!ヽ(ﾟдﾟヽ)(ﾉﾟдﾟ)ﾉ!!");
                     Thread.Sleep(500);
                     Console.WriteLine($"{monster.data.name}의 공격력 증가!");
                     Thread.Sleep(2000);
                 }
-                if (monster.data.name == "트롤") // 트롤 턴제 회복
-                {
-                    if (monster.data.maxHp - 10 > monster.data.hp)
-                    {
-                        Console.WriteLine("트롤의 체력이 소량 회복되었습니다.");
-                        monster.data.hp += 5;
-                        Thread.Sleep(1000);
-                    }
-                }
                 MonsterTurn();
                 if (player.data.hp <= 0) break; // 플레이어가 죽으면 루프 종료
+                monster.data.mp += 1;
             }
 
             // 전투 결과 출력
@@ -147,14 +148,19 @@ namespace SpartaDungeon.Scenes
         {
             Console.WriteLine();
             float damage = Math.Max(monster.data.attack - player.data.defence, 1);
-            player.data.hp -= damage;
-            if (monster.data.attack - player.data.defence <= 0)
+            if (monster.data.mp == monster.data.maxMp)
             {
-                damage = 1;
+                Console.WriteLine("\x1b[38;2;255;0;0mヽ( `皿´ )ﾉ\x1b[0m");
+                Console.WriteLine($"{monster.data.skill}발동!");
+                monster.Skill();
+                monster.data.mp = 0;
             }
-            
-            Console.WriteLine("\x1b[38;2;255;0;0mヽ( `皿´ )ﾉ\x1b[0m");
-            Console.WriteLine($"{player.data.name}에게 {damage} 피해");
+            else
+            {
+                player.data.hp -= damage;
+                Console.WriteLine("\x1b[38;2;255;0;0mヽ( `皿´ )ﾉ\x1b[0m");
+                Console.WriteLine($"{player.data.name}에게 {damage} 피해");
+            }
             Thread.Sleep(1000);
         }
 
