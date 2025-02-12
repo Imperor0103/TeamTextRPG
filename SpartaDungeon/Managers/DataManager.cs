@@ -12,17 +12,34 @@ namespace SpartaDungeon.Managers
     {
         public int fileIndex;
         public Player player;
+
+        // 아이템을 가지고 있어야 할 것 같다
+        // 다형성을 유지하기위해 object형식으로 선언
+        public List<object> ownedList;   // 아이템매니저의 ownedList에 있는 것을 저장
+        public List<object> armedList;   // 아이템매니저의 armedList에 있는 것을 저장
+
         // 불러올 때
         public GameData()
         {
+            if (ownedList == null)
+            {
+                ownedList = new List<object>();
+            }
+            if (armedList == null)
+            {
+                armedList = new List<object>();
+            }
             int arrayIndex = 0;
             player = new Player();
         }
         // 저장할 때
-        public GameData(int idx, Player p)
+        public GameData(int idx, Player p, List<Equipment> owned, List<Equipment> armed)
         {
             fileIndex = idx;
             player = p;
+            /// 저장할 때 object로 변환
+            ownedList = owned.Cast<object>().ToList();
+            armedList = armed.Cast<object>().ToList();
         }
     }
 
@@ -68,7 +85,7 @@ namespace SpartaDungeon.Managers
                 }
             }
         }
-        // Slot배열에 데이터가 있는지 없는지 검사하여 
+        // Slot배열에 데이터가 있는지 없는지 검사하여 콘솔창에 표시
         public void CheckSlots(GameData[] slots)
         {
             // SaveLoadScene이 가진 저장슬롯을 보여준다
@@ -86,11 +103,17 @@ namespace SpartaDungeon.Managers
                         // 역직렬화(JSON, XML -> object(원래의 객체))를 위한 설정
                         var settings = new JsonSerializerSettings()
                         {
-                            NullValueHandling = NullValueHandling.Include,
-                            MissingMemberHandling = MissingMemberHandling.Ignore
+                            NullValueHandling = NullValueHandling.Include,  // null값도 불러온다
+                            MissingMemberHandling = MissingMemberHandling.Ignore,
+
+                            TypeNameHandling = TypeNameHandling.All
                         };
                         // JSON 데이터를 GameData 객체로 변환
                         GameData loadedData = JsonConvert.DeserializeObject<GameData>(jsonData);
+                        // object에서 원래 자료형으로 바꾼다
+                        //loadedData.ownedList = loadedData.ownedList.Cast<Equipment>().ToList();
+                        //loadedData.armedList = loadedData.armedList.Cast<Equipment>().ToList();
+
                         slots[i] = loadedData;
                     }
                     catch (Exception e)
@@ -129,15 +152,25 @@ namespace SpartaDungeon.Managers
         public void SaveData(int fileIdx)
         {
             // 파일, 슬롯의 인덱스를 받고, 저장한다
-            GameData tmpData = new GameData(fileIdx, player);
+            /// 아이템 매니저의 데이터 복사
+            GameData tmpData = new GameData(fileIdx, player, ItemManager.Instance.ownedList, ItemManager.Instance.armedList);
+
             string jsonStr = JsonConvert.SerializeObject(tmpData, new JsonSerializerSettings
             {
+                NullValueHandling = NullValueHandling.Include,      // null값도 json에 저장
+                MissingMemberHandling = MissingMemberHandling.Ignore,  // JSON 데이터에 C# 객체에 정의되지 않은 속성이 있을 때, 이를 무시하고 계속 진행할 수 있습니다 
+
                 TypeNameHandling = TypeNameHandling.All // 추상클래스인경우를 대비하여 실제 자료형을 기록한다
             });            // SaveFiles에 세이브파일생성
             File.WriteAllText(GetFilePath(fileIdx), jsonStr);
         }
+        // 특정 슬롯에 연결된 세이브파일을 불러온다
         public bool LoadData(int fileIdx)
         {
+            /// 불러오기를 하는 경우, ItemManager에 있던 기존의 리스트를 비워주지 않으면 같은 아이템이 뒤에 추가로 들어가는 문제가 발생
+            ItemManager.Instance.ownedList.Clear();
+            ItemManager.Instance.armedList.Clear();
+
             player = new Player();
             GameData gameData = new GameData();
             string path = GetFilePath(fileIdx);
@@ -146,32 +179,42 @@ namespace SpartaDungeon.Managers
                 string jsonData = File.ReadAllText(path);
                 var settings = new JsonSerializerSettings
                 {
-                    NullValueHandling = NullValueHandling.Include,  // null값도 json에 저장
+                    NullValueHandling = NullValueHandling.Include,  // null값도 불러온다
                     MissingMemberHandling = MissingMemberHandling.Ignore, // JSON 데이터에 C# 객체에 정의되지 않은 속성이 있을 때, 이를 무시하고 계속 진행할 수 있습니다 
+
+                    TypeNameHandling = TypeNameHandling.All
                 };
                 gameData = JsonConvert.DeserializeObject<GameData>(jsonData, settings);
                 // 데이터매니저의 플레이어에 데이터 저장
-                player.data.name = gameData.player.data.name;
-                player.data.classType = gameData.player.data.classType;
-                player.data.level = gameData.player.data.level;
-                player.data.attack = gameData.player.data.attack;
-                player.data.defence = gameData.player.data.defence;
-                player.data.maxHp = gameData.player.data.maxHp;
-                player.data.hp = gameData.player.data.hp;
-                player.data.maxMp = gameData.player.data.maxMp;
-                player.data.mp = gameData.player.data.mp;
-                player.data.exp = gameData.player.data.exp;
-                player.data.gold = gameData.player.data.gold;
-                // 플레이어의 소지아이템 저장
-                foreach (var data in gameData.player.ownedList)
+                player.data = gameData.player.data;
+                player.weapon = gameData.player.weapon;
+                player.armor = gameData.player.armor;
+                
+                /// 아이템들이 object형식이므로 다시 원래의 자료형으로 바꿔준 다음, 아이템매니저의 리스트에 복사
+                /// 나중에 LINQ 공부하고 나서 수정해보자
+                foreach (var item in gameData.ownedList)
                 {
-                    player.ownedList.Add(data);
+                    if (item is Armor armor)
+                    {
+                        ItemManager.Instance.ownedList.Add(armor);
+                    }
+                    else if (item is Weapon weapon)
+                    {
+                        ItemManager.Instance.ownedList.Add(weapon);
+                    }
                 }
-                // 플레이어의 장착여부, 장착아이템 저장
-                foreach (var data in gameData.player.armedList)
+                foreach (var item in gameData.armedList)
                 {
-                    player.armedList.Add(data);
-                }
+                    if (item is Armor armor)
+                    {
+                        ItemManager.Instance.armedList.Add(armor);
+                    }
+                    else if (item is Weapon weapon)
+                    {
+                        ItemManager.Instance.armedList.Add(weapon);
+                    }
+                }           
+
                 player.weapon = gameData.player.weapon;
                 player.armor = gameData.player.armor;
                 return true;
@@ -203,7 +246,7 @@ namespace SpartaDungeon.Managers
                             // 아직 SaveLoadScene이므로 씬을 바꾸면 안된다
                             break;
                         case 1:
-                            LoadDataFromSlot(slots, arrIdx);
+                            LoadDataFromSlot(slots, arrIdx);                            
                             break;
                         case 2:
                             SaveDataToSlot(slots, fileIdx);
@@ -235,7 +278,7 @@ namespace SpartaDungeon.Managers
         {
             // 데이터매니저가 가진 player를 저장할 새 데이터를 생성
             int arrIdx = fileIndex - 1;
-            GameData newData = new GameData(fileIndex, player);
+            GameData newData = new GameData(fileIndex, player, ItemManager.Instance.ownedList, ItemManager.Instance.armedList);
             // 데이터매니저의 player가 null인 경우에도 newData가 생성되는것에 주의
             // 플레이어가 null이 아닐때에만 저장
             if (newData.player != null)

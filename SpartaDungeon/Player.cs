@@ -35,38 +35,44 @@ namespace SpartaDungeon
     public class Player
     {
         public PlayerData data;
-        public List<Equipment> ownedList;
-        // 장착여부 확인, 데이터 로드시 장착무기를 연결할 변수가 필요하다
-        public List<Equipment> armedList;   // 해당 무기 장착여부를 검색하기 위해 사용
+
+        /// <summary>
+        /// 아래의 List<Equiptment>를 플레이어가 가지고 있으면 json파일을 불러올 수 없다
+        /// ItemManager로 옮긴다
+        /// </Equiptment>
+        /// </summary>
+        //public List<Equipment> ownedList;
+        //// 장착여부 확인, 데이터 로드시 장착무기를 연결할 변수가 필요하다
+        //public List<Equipment> armedList;   // 해당 무기 장착여부를 검색하기 위해 사용
         public Armor? armor;
         public Weapon? weapon;
         // 캐릭터 새로 생성
         public Player(PlayerData playerData)
         {
-            if (ownedList == null)
+            if (ItemManager.Instance.ownedList == null)
             {
-                ownedList = new List<Equipment>();
+                ItemManager.Instance.ownedList = new List<Equipment>();
 
             }
-            if (armedList == null)
+            if (ItemManager.Instance.armedList == null)
             {
-                armedList = new List<Equipment>();
+                ItemManager.Instance.armedList = new List<Equipment>();
             }
             data = playerData;
         }
         // 캐릭터 불러오기
         public Player()
         {
-            if (ownedList == null)
+            if (ItemManager.Instance.ownedList == null)
             {
-                if (ownedList == null)
+                if (ItemManager.Instance.ownedList == null)
                 {
-                    ownedList = new List<Equipment>();
+                    ItemManager.Instance.ownedList = new List<Equipment>();
 
                 }
-                if (armedList == null)
+                if (ItemManager.Instance.armedList == null)
                 {
-                    armedList = new List<Equipment>();
+                    ItemManager.Instance.armedList = new List<Equipment>();
                 }
                 // PlayerData는 불러올 때 생성해서 플레이어의 data에 대입한다
             }
@@ -108,10 +114,10 @@ namespace SpartaDungeon
             if (item != null)
             {
                 // 장비하고 있는 아이템과 "같은" 것이면 해제, 다르면 장착
-                if (armedList.Contains(item))   // 장비한 아이템은 armedList이 참조를 가지고 있다
+                if (ItemManager.Instance.armedList.Contains(item))   // 장비한 아이템은 armedList이 참조를 가지고 있다
                 {
                     // 해당 아이템이 weapon인지 armor인지 판단 후 해제
-                    armedList.Remove(item); // 리스트에서 제거하기전에 item을 null로 만들면 null참조 오류
+                    ItemManager.Instance.armedList.Remove(item); // 리스트에서 제거하기전에 item을 null로 만들면 null참조 오류
                     if (item is Weapon)
                     {
                         weapon = null;
@@ -131,14 +137,14 @@ namespace SpartaDungeon
                         if (weapon == null)
                         {
                             weapon = item as Weapon;
-                            armedList.Add(weapon);      // 새 장비 추가
+                            ItemManager.Instance.armedList.Add(weapon);      // 새 장비 추가
                         }
                         else
                         {
                             // 기존의 장비 해제 후 착용
-                            armedList.Remove(weapon);   // 기존 장비 제거
+                            ItemManager.Instance.armedList.Remove(weapon);   // 기존 장비 제거
                             weapon = item as Weapon;
-                            armedList.Add(weapon);      // 새 장비 추가
+                            ItemManager.Instance.armedList.Add(weapon);      // 새 장비 추가
                         }
                     }
                     else if (item.itemType == 2)    // 갑옷
@@ -147,14 +153,14 @@ namespace SpartaDungeon
                         if (armor == null)
                         {
                             armor = item as Armor;
-                            armedList.Add(armor);       // 새 장비 추가
+                            ItemManager.Instance.armedList.Add(armor);       // 새 장비 추가
                         }
                         else
                         {
                             // 기존의 장비 해제 후 착용
-                            armedList.Remove(armor);    // 기존 장비 제거
+                            ItemManager.Instance.armedList.Remove(armor);    // 기존 장비 제거
                             armor = item as Armor;
-                            armedList.Add(armor);       // 새 장비 추가
+                            ItemManager.Instance.armedList.Add(armor);       // 새 장비 추가
                         }
                     }
                     else

@@ -35,14 +35,15 @@ namespace SpartaDungeon.Scenes
             //Console.Write($"장착하고싶은 아이템의 번호를 입력해주세요. \n>>");
             // 입력받기
             int input = InputManager.Instance.GetValidNumber("장착하고싶은 아이템의 번호를 입력해주세요.",
-                0, player.ownedList.Count);
+                0, ItemManager.Instance.ownedList.Count);
             if (input == 0)
             {
                 SceneManager.Instance.LoadScene("inventory");
             }
             else
             {
-                player.EquipItem(player.ownedList[input]);
+                int arrIdx = input - 1;
+                player.EquipItem(ItemManager.Instance.ownedList[arrIdx]);
             }
         }
     }

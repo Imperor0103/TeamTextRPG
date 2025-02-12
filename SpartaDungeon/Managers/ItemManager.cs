@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -13,17 +14,26 @@ namespace SpartaDungeon.Managers
         // 생성자 만들지 않아도 됨
         public List<Equipment> equipmentList = new List<Equipment>();    // 아이템 저장
 
+        ///// <summary>
+        ///// 플레이어가 가지고 있어야 할 것이지만, 
+        ///// Equipment가 추상클래스라서 이걸 플레이어가 가지고 있으면 불러오기가 안된다
+        ///// </summary>
+        public List<Equipment> ownedList;
+        // 장착여부 확인, 데이터 로드시 장착무기를 연결할 변수가 필요하다
+        public List<Equipment> armedList;   // 해당 무기 장착여부를 검색하기 위해 사용
+
+
         // 인벤토리, 장착관리의 아이템
         public void PrintInventory()
         {
             Console.Clear();
             Console.WriteLine($"[{SceneManager.Instance.GetCurrentScene().GetName()}]\n보유 중인 아이템을 관리할 수 있습니다.\n");
             Console.WriteLine("[아이템 목록]\n");
-            for (int i = 0; i < DataManager.Instance.player.ownedList.Count; i++)
+            for (int i = 0; i < ItemManager.Instance.ownedList.Count; i++)
             {
                 // 장착관리씬 한정해서 장착한 아이템은 [E] 출력
                 if (SceneManager.Instance.GetCurrentScene().GetName() == "equip"
-                    && IsEquiped(DataManager.Instance.player.ownedList[i]))
+                    && IsEquiped(ItemManager.Instance.ownedList[i]))
                 {
                     // 글씨 색 바꾸어보자
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -34,7 +44,7 @@ namespace SpartaDungeon.Managers
                 {
                     Console.ResetColor();   // 색깔 원래대로
                 }
-                var item = DataManager.Instance.player.ownedList[i];
+                var item = ItemManager.Instance.ownedList[i];
                 Console.Write($"{i + 1} ");
                 Console.Write($"이름: {item.name} | ");
                 Console.Write($"종류: {item.itemType} | ");
@@ -42,7 +52,7 @@ namespace SpartaDungeon.Managers
                 Console.Write($"방어력: {item.defence} | ");
                 Console.Write($"hp추가: {item.hp} | ");
                 Console.Write($"mp추가: {item.mp} | ");
-                Console.Write($"{item.description} | ");
+                Console.Write($"{item.description} | \n");
             }
             Console.WriteLine();
         }
@@ -50,21 +60,11 @@ namespace SpartaDungeon.Managers
         // 해당 아이템을 장착하고 있는지 여부
         public bool IsEquiped(Equipment item)
         {
-            // 해당 아이템을 플레이어가 장착하고있다면
-            if (DataManager.Instance.player.armedList.Contains(item))
-            {
-                return true;
-            }
-            return false;
+            return ItemManager.Instance.armedList.Any(armedItem => armedItem.name == item.name);
         }
         public bool IsOwned(Equipment item)
         {
-            // 플레이어의 아이템 리스트에 item이 있는지 확인한다
-            if (DataManager.Instance.player.ownedList.Contains(item))
-            {
-                return true;
-            }
-            return false;
+            return ItemManager.Instance.ownedList.Any(ownedItem => ownedItem.name == item.name);
         }
         public void PrintPrice(Equipment item)
         {

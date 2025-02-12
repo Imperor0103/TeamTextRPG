@@ -94,7 +94,7 @@ namespace SpartaDungeon.Scenes
             else if (player.data.gold >= item.price)
             {
                 player.data.gold -= item.price;
-                player.ownedList.Add(item);
+                ItemManager.Instance.ownedList.Add(item);
                
                 Console.WriteLine($"{item.name}을 구매하였습니다!");
                 Console.WriteLine($"남은 골드: {player.data.gold}G");
@@ -109,27 +109,27 @@ namespace SpartaDungeon.Scenes
         {
             var player = DataManager.Instance.player;
 
-            if (player.ownedList.Count == 0)
+            if (ItemManager.Instance.ownedList.Count == 0)
             {
                 Console.WriteLine("판매할 아이템이 없습니다.");
                 return;
             }
 
             Console.WriteLine("\n[보유 중인 아이템 목록]");
-            for (int i = 0; i < player.ownedList.Count; i++)
+            for (int i = 0; i < ItemManager.Instance.ownedList.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {player.ownedList[i].name} | 판매 가격: {player.ownedList[i].price / 2}G");
+                Console.WriteLine($"{i + 1}. {ItemManager.Instance.ownedList[i].name} | 판매 가격: {ItemManager.Instance.ownedList[i].price / 2}G");
             }
 
             Console.Write("\n판매할 아이템 번호를 입력하세요: ");
-            if (!int.TryParse(Console.ReadLine(), out int itemIndex) || itemIndex < 1 || itemIndex > player.ownedList.Count)
+            if (!int.TryParse(Console.ReadLine(), out int itemIndex) || itemIndex < 1 || itemIndex > ItemManager.Instance.ownedList.Count)
             {
                 Console.WriteLine("잘못된 입력입니다.");
                 return;
             }
 
-            var item = player.ownedList[itemIndex - 1];
-            player.ownedList.Remove(item);
+            var item = ItemManager.Instance.ownedList[itemIndex - 1];
+            ItemManager.Instance.ownedList.Remove(item);
             player.data.gold += item.price / 2;
 
             Console.WriteLine($"{item.name}을 {item.price / 2}G에 판매하였습니다!");
