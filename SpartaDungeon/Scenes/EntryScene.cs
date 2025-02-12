@@ -178,7 +178,7 @@ namespace SpartaDungeon.Scenes
             Thread.Sleep(50);
             Console.WriteLine(" /:--_                                                      |");
             Thread.Sleep(50);
-            Console.WriteLine("||[ ]||                                    _________________/");
+            Console.WriteLine("||[ ]||                                   __________________/");
             Thread.Sleep(50);
             Console.WriteLine("| \\__/_________________-------------------                |");
             Thread.Sleep(50);
@@ -194,13 +194,13 @@ namespace SpartaDungeon.Scenes
             Thread.Sleep(50);
             Console.WriteLine("  |                                                         |");
             Thread.Sleep(50);
-            Console.WriteLine("  |      대 장 : 최 시 훈                                   |");
+            Console.WriteLine("  |      풍 신 : 최 시 훈                                   |");
             Thread.Sleep(50);
-            Console.WriteLine("  |      부 대 장 : 임 성 균                                |");
+            Console.WriteLine("  |      해 적 왕 : 임 성 균                                 |");
             Thread.Sleep(50);
-            Console.WriteLine("   |     고 라 니  사 냥 꾼 : 김 여 진                       |");
+            Console.WriteLine("   |     신 생  모 험 가 : 김 여 진                          |");
             Thread.Sleep(50);
-            Console.WriteLine("   |     멍 멍 이 : 박 관 우                                 |");
+            Console.WriteLine("   |     지 존 : 박 관 우                                    |");
             Thread.Sleep(50);
             Console.WriteLine("   |                                                        |");
             Thread.Sleep(50);
