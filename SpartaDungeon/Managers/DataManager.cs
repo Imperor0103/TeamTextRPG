@@ -104,10 +104,6 @@ namespace SpartaDungeon.Managers
                         };
                         // JSON 데이터를 GameData 객체로 변환
                         GameData loadedData = JsonConvert.DeserializeObject<GameData>(jsonData);
-                        // object에서 원래 자료형으로 바꾼다
-                        //loadedData.ownedList = loadedData.ownedList.Cast<Equipment>().ToList();
-                        //loadedData.armedList = loadedData.armedList.Cast<Equipment>().ToList();
-
                         slots[i] = loadedData;
                     }
                     catch (Exception e)

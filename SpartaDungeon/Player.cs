@@ -204,6 +204,24 @@ namespace SpartaDungeon
         // 경험치 체크와 레벨업
         public void CheckLevelUp()
         {
+            bool isLevelUp = data.exp >= 10 * data.level;
+            while (isLevelUp)
+            {
+                // 다음 레벨까지 필요한 경험치 공식: 10 * 플레이어의 현재레벨
+                int remainExp = data.exp - 10 * data.level;
+
+                // 레벨업
+                data.level += 1;
+                data.attack += 0.5f;
+                data.defence += 1.0f;
+                data.maxHp += 10.0f;
+                data.hp += 10.0f;
+                data.exp = remainExp;
+                Console.WriteLine($"축하합니다. 레벨이 {data.level}가 되었습니다");
+                Console.WriteLine($"다음 레벨까지 남은 경험치:{10 * data.level - data.exp}");
+                isLevelUp = data.exp >= 10 * data.level ? true : false;
+
+            }
 
         }
     }

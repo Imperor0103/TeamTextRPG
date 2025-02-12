@@ -17,6 +17,7 @@ namespace SpartaDungeon
         public float maxMp;
         public float mp;
         public int gold;
+        public string skill;
         public string ascii;
     }
 
@@ -27,6 +28,11 @@ namespace SpartaDungeon
         public Monster(MonsterData monsterData)
         {
             data = monsterData;
+        }
+
+        public virtual void Skill()
+        {
+            Console.WriteLine(data.skill);
         }
 
         public virtual void Ascii()
@@ -46,10 +52,19 @@ namespace SpartaDungeon
             maxHp = 20,
             hp = 20,
             gold = 10,
-            // maxMp = 0,
-            // mp = 0,
+            maxMp = 2,
+            mp = 0,
+            skill = "찌르기",
             ascii = "(*｀ω´*)"
         }) { }
+        public override void Skill()
+        {
+            float activeSkill = data.attack;
+            data.attack += 5;
+            Console.WriteLine($"{data.name}의 {data.skill}");
+            Console.WriteLine($"{data.attack}피해");
+            data.attack = activeSkill;
+        }
     }
     public class Oak : Monster
     {
@@ -62,10 +77,17 @@ namespace SpartaDungeon
             maxHp = 50,
             hp = 50,
             gold = 50,
-            // maxMp = 0,
-            // mp = 0,
+            maxMp = 5,
+            mp = 0,
+            skill = "광폭화",
             ascii = "\\(｀_´メ)"
         }) { }
+        public override void Skill()
+        {
+            data.attack += 10;
+            Console.WriteLine($"{data.name}의 {data.skill}");
+            Console.WriteLine($"{data.attack}피해");
+        }
     }
     public class Troll : Monster
     {
@@ -78,10 +100,17 @@ namespace SpartaDungeon
             maxHp = 100,
             hp = 100,
             gold = 100,
-            // maxMp = 0,
-            // mp = 0,
+            maxMp = 2,
+            mp = 0,
+            skill = "회복",
             ascii = "(｀ㅠ´メ)"
         }) { }
+        public override void Skill()
+        {
+            data.hp = Math.Min(data.hp + 5, data.maxHp);
+            Console.WriteLine("");
+            Console.WriteLine($"{data.name}의 체력이 5 회복되었습니다.");
+        }
     }
     public class Dragon : Monster
     {
@@ -90,13 +119,31 @@ namespace SpartaDungeon
         {
             name = "드래곤",
             level = 50,
-            attack = 100,
+            attack = 1,
             defence = 50,
-            maxHp = 1000,
-            hp = 1000,
-            gold = 10
-            // maxMp = 0,
-            // mp = 0,
+            maxHp = 10,
+            hp = 10,
+            gold = 10,
+            maxMp = 5,
+            mp = 0,
+            skill = "브레스",
+            ascii = @"
+                     ^\    ^\
+                    / \\  /  \\
+                   /.  \\/    \\      |\___/|
+  *----*          /  / |  \\    \  __/   O  O\
+  |   /          /  /  |   \\    \_\/  \     \\
+  / /\/         /   /   |    \\   _\/    '@___@
+  /  /         /    /    |     \\ _\/       |U
+  |  |       /     /     |      \\\/        |
+  \  |     /_     /      |       \\  )   \ _|_
+  \   \       ~-./_ _    |    .- ; (  \_ _ _,\'
+  ~    ~.           .-~-.|.-*      _        {-,
+  \      ~-. _ .-~                 \      /\'
+  \                   }            {   .* 
+  ~.                 '-/        /.-~----.
+      ~- _             /        >..----.\\\
+          ~ - - - - ^}_ _ _ _ _ _ _.-\\\"
         })
         {
             asciiColors = new List<(string, ConsoleColor)>
@@ -128,6 +175,14 @@ namespace SpartaDungeon
                 Console.WriteLine(line.line);
             });
             Console.ResetColor();
+        }
+        public override void Skill()
+        {
+            float activeSkill = data.attack;
+            data.attack += 30;
+            Console.WriteLine($"{data.name}의 {data.skill}");
+            Console.WriteLine($"{data.attack}피해");
+            data.attack = activeSkill;
         }
     }
 }
