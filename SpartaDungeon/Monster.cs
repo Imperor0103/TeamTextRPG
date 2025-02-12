@@ -119,10 +119,10 @@ namespace SpartaDungeon
         {
             name = "드래곤",
             level = 50,
-            attack = 1,
+            attack = 100,
             defence = 50,
-            maxHp = 10,
-            hp = 10,
+            maxHp = 1000,
+            hp = 1000,
             gold = 10,
             maxMp = 5,
             mp = 0,
@@ -179,7 +179,7 @@ namespace SpartaDungeon
         public override void Skill()
         {
             float activeSkill = data.attack;
-            data.attack += 30;
+            data.attack += 50;
             Console.WriteLine($"{data.name}의 {data.skill}");
             Console.WriteLine($"{data.attack}피해");
             data.attack = activeSkill;
