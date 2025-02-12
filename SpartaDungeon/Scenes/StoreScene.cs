@@ -34,8 +34,8 @@ namespace SpartaDungeon.Scenes
         {
 
         }
-            
-           
+
+
         public override void Update()
         {
             //
@@ -94,24 +94,33 @@ namespace SpartaDungeon.Scenes
 
 
         }
-         private void SoldOutItem(int i)
-         {
-             var item = ItemManager.Instance.equipmentList[i];
+        private void SoldOutItem(int i)
+        {
+            var item = ItemManager.Instance.equipmentList[i];
 
-          if (ItemManager.Instance.IsOwned(item))
-                 {
-                Console.Write("\x1b[38;2;255;255;0m판매완료\x1b[0m");
-                 }
-                 else
-                 {
-                     Console.Write($"{item.Price}G");
-                 }
+            /// 포션은 중복구매 가능하게 바꾸었다
+            /// 
+            if (item.Name == "소량의 체력 포션" || item.Name == "소량의 마력 포션")
+            {
+                Console.Write($"{item.Price} G"); // 포션은 중복 구매 가능하므로 판매 완료 표시하지 않음
+            }
+            else
+            {
+                if (ItemManager.Instance.IsOwned(item))
+                {
+                    Console.Write("\x1b[38;2;255;255;0m판매완료\x1b[0m");
+                }
+                else
+                {
+                    Console.Write($"{item.Price}G");
+                }
+            }
 
-         }
-     
+        }
+
         private void BuyItem()
         {
-            Console.Write("\n구매할 아이템 번호를 입력하세요: ");
+            Console.Write("\n구매할 아이템 번호를 입력하세요(포션은 중복구매 가능): ");
             if (!int.TryParse(Console.ReadLine(), out int itemIndex) || itemIndex < 1 || itemIndex > ItemManager.Instance.equipmentList.Count)
             {
                 Console.WriteLine("잘못된 입력입니다.");
@@ -121,7 +130,8 @@ namespace SpartaDungeon.Scenes
             var item = ItemManager.Instance.equipmentList[itemIndex - 1];
             var player = DataManager.Instance.player;
 
-            if (ItemManager.Instance.IsOwned(item))
+            /// 포션은 중복구매 가능
+            if ((item.Name != "소량의 체력 포션" && item.Name != "소량의 마력 포션") && ItemManager.Instance.IsOwned(item))
             {
                 Console.WriteLine("이미 구매한 아이템입니다!");
             }
@@ -132,7 +142,7 @@ namespace SpartaDungeon.Scenes
 
                 Console.WriteLine($"{item.Name}을 구매하였습니다!");
                 Console.WriteLine($"남은 골드: {player.data.gold}G");
-               
+
             }
             else
             {
@@ -175,7 +185,7 @@ namespace SpartaDungeon.Scenes
         }
 
     }
-    
+
 }
 
 

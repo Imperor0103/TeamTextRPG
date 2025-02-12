@@ -86,5 +86,9 @@ namespace SpartaDungeon
             questData.requiredQuest= data.requiredQuest;
             questData.requiredQuest = data.requiredQuest;
         }
+        public string GetName(Quest quest)
+        {
+            return quest.questData.Name;
+        }
     }
 }

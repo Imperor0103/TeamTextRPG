@@ -8,7 +8,7 @@ namespace SpartaDungeon
 {
     public struct NpcData
     {
-        public string name;
+                public string name;
         public eClassType classType;
         public int level;
         public float attack;

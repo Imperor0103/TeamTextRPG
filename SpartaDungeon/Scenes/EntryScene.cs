@@ -26,7 +26,7 @@ namespace SpartaDungeon.Scenes
         public override void Start()
         {
             Console.Write("Enter 누르면 게임 시작");
-            player.data.name = Console.ReadLine();
+            Console.ReadLine();
         }
 
         public override void Update()

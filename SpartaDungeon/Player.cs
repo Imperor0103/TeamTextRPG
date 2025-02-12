@@ -109,6 +109,7 @@ namespace SpartaDungeon
             // 진행중인 퀘스트정보
             Console.WriteLine("진행중인 퀘스트정보");
             QuestManager.Instance.PrintOngoingQuest();
+            Console.WriteLine();
             // 완료한 퀘스트정보
             Console.WriteLine("완료한 퀘스트정보");
             QuestManager.Instance.PrintCompletedQuest();

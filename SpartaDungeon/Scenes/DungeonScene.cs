@@ -52,6 +52,7 @@ namespace SpartaDungeon.Scenes
             if (choice == 0)
             {
                 Console.WriteLine("마을로 돌아갑니다.");
+                SceneManager.Instance.LoadScene("town");
                 return;
             }
 
@@ -224,6 +225,30 @@ namespace SpartaDungeon.Scenes
         {
             if (monster.data.hp <= 0)
             {
+                /// ongoing퀘스트에 고블린, 드래곤 퀘스트가 있는지 확인하고
+                /// 몬스터가 고블린, 드래곤이면 count를 1 올린다
+                foreach (var questPair in QuestManager.Instance.ongoingQuestDictionary)
+                {
+                    var quest = questPair.Value;
+                    if (quest.questData.Name == "고블린 5마리 잡기" && monster.data.name == "고블린")
+                    {
+                        quest.questData.Count += 1;  // 고블린 처치 수 증가
+                        if (quest.questData.Count < 5)
+                        {
+                            Console.WriteLine($"고블린을 {5 - quest.questData.Count}마리 더 잡아야 합니다");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"고블린을 5마리 이상 잡았으니 Npc에게 가십시오");
+                        }
+                    }
+                    else if (quest.questData.Name == "드래곤 잡기" && monster.data.name == "드래곤")
+                    {
+                        quest.questData.Count += 1;  // 드래곤 처치 수 증가
+                        Console.WriteLine($"드래곤을 잡았으니 Npc에게 가십시오");
+                    }
+                }
+
                 Console.WriteLine($"{monster.data.name}을(를) 처치했습니다! 보상을 획득합니다.");
                 player.data.exp += monster.data.level;
                 player.data.gold += monster.data.gold;

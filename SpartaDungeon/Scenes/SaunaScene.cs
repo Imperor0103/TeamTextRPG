@@ -72,6 +72,7 @@ namespace SpartaDungeon.Scenes
             Console.WriteLine();
             Console.WriteLine("1.잠자기");
             Console.WriteLine("2.습식사우나");
+            Console.WriteLine("3.퀘스트 받기");
             Console.WriteLine("0.나가기");
             Console.WriteLine();
             Console.Write("행동을 선택하세요: ");
@@ -81,6 +82,8 @@ namespace SpartaDungeon.Scenes
                     RentedRoom(); break;
                 case "2":
                     Rest(); break;
+                case "3":
+                    TalkToNpc(); break;
                 case "0":
                     Console.WriteLine("마을로 돌아갑니다.\n");
                     SceneManager.Instance.LoadScene("town");
@@ -117,7 +120,7 @@ namespace SpartaDungeon.Scenes
             Console.WriteLine("|   .           '           '");
             Console.WriteLine("|  .");
             Console.WriteLine("|_______________________________________________________________");
-            if(player.data.hp == player.data.maxHp)
+            if (player.data.hp == player.data.maxHp)
             {
                 Thread.Sleep(1000);
                 Console.WriteLine("일어나려면 Enter...");
@@ -185,6 +188,22 @@ namespace SpartaDungeon.Scenes
             cts.Cancel();
             healTask.Wait();
             Console.WriteLine("휴식 종료");
+        }
+        private void TalkToNpc()
+        {
+            //
+            Console.Clear();
+            Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+            //
+
+            //NPC가 제공하는 퀘스트 목록을 출력
+            // 완료한 퀘스트가 있다면 자동 보상
+            QuestManager.Instance.RewardPlayer(npc, player);
+           
+            Console.WriteLine("NPC: 퀘스트를 선택하세요:");
+            // 퀘스트 목록을 가져오기 (예시)
+            QuestManager.Instance.PrintAllQuest(npc);
+            QuestManager.Instance.SelectQuest(npc);
         }
     }
 }
