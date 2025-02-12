@@ -124,7 +124,7 @@ namespace SpartaDungeon.Scenes
             Console.WriteLine("\n[보유 중인 아이템 목록]");
             for (int i = 0; i < ItemManager.Instance.ownedList.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {ItemManager.Instance.ownedList[i].name} | 판매 가격: {ItemManager.Instance.ownedList[i].price / 2}G");
+                Console.WriteLine($"{i + 1}. {ItemManager.Instance.ownedList[i].Name} | 판매 가격: {ItemManager.Instance.ownedList[i].Price / 2}G");
             }
 
             Console.Write("\n판매할 아이템 번호를 입력하세요: ");
@@ -136,7 +136,7 @@ namespace SpartaDungeon.Scenes
 
             var item = ItemManager.Instance.ownedList[itemIndex - 1];
             ItemManager.Instance.ownedList.Remove(item);
-            player.data.gold += item.price / 2;
+            player.data.gold += item.Price / 2;
 
             Console.WriteLine($"{item.Name}을 {item.Price / 2}G에 판매하였습니다!");
             Console.WriteLine($"현재 골드: {player.data.gold}G");
