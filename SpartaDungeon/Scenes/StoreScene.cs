@@ -98,7 +98,7 @@ namespace SpartaDungeon.Scenes
             else if (player.data.gold >= item.Price)
             {
                 player.data.gold -= item.Price;
-                player.ownedList.Add(item);
+                ItemManager.Instance.ownedList.Add(item);
 
                 Console.WriteLine($"{item.Name}을 구매하였습니다!");
                 Console.WriteLine($"남은 골드: {player.data.gold}G");
