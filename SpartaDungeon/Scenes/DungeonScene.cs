@@ -175,8 +175,9 @@ namespace SpartaDungeon.Scenes
                 Console.WriteLine($"{monster.data.name}을(를) 처치했습니다! 보상을 획득합니다.");
                 player.data.exp += monster.data.level;
                 player.data.gold += monster.data.gold;
-                Console.WriteLine($"경험치: {monster.data.level}+");
                 Console.WriteLine($"Gold: {monster.data.gold}+");
+                Console.WriteLine($"경험치: {monster.data.level}+");
+                player.CheckLevelUp();
                 VictoryAscii.RandomVictory();
                 Console.WriteLine();
                 Thread.Sleep(3000);
