@@ -106,6 +106,12 @@ namespace SpartaDungeon
             Console.Write($"체 력 : {data.hp} / {data.maxHp} \n");
             Console.Write($"exp : {data.exp} / 다음레벨까지 남은 경험치: {10 * data.level - data.exp} \n");
             Console.Write($"Gold : {data.gold} G\n\n");
+            // 진행중인 퀘스트정보
+            Console.WriteLine("진행중인 퀘스트정보");
+            QuestManager.Instance.PrintOngoingQuest();
+            // 완료한 퀘스트정보
+            Console.WriteLine("완료한 퀘스트정보");
+            QuestManager.Instance.PrintCompletedQuest();
         }
 
         // 무기장착은 플레이어에서 한다

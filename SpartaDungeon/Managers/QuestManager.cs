@@ -122,7 +122,10 @@ namespace SpartaDungeon.Managers
                 }
                 Console.WriteLine($"기본 퀘스트 데이터 {loadedObjs.Count}개 불러오기 완료!");
                 Thread.Sleep(1000);
+                //
                 Console.Clear();
+                Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+            //
             }
             catch (Exception ex)
             {

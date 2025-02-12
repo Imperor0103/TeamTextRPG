@@ -26,9 +26,10 @@ namespace SpartaDungeon.Scenes
 
         public override void Update()
         {
-            // 장착관리창
-            // 화면출력
-
+            //
+            Console.Clear();
+            Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+            //
             ItemManager.Instance.PrintInventory();
             // 출력메뉴를 보여준다
             Console.WriteLine("0.나가기\n\n"); // 

@@ -30,7 +30,10 @@ namespace SpartaDungeon.Scenes
         public override void Update()
         {
             Thread.Sleep(1000);
+            //
             Console.Clear();
+            Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+            //
             Console.OutputEncoding = Encoding.UTF8;
             Console.Write("여관");
             Console.WriteLine();
@@ -90,7 +93,10 @@ namespace SpartaDungeon.Scenes
         }
         private void RentedRoom()
         {
+            //
             Console.Clear();
+            Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+            //
             Console.WriteLine("잠을 잡니다.\n");
             Console.WriteLine("                  ..______________________________________||__||___________");
             Console.WriteLine("                .  |                  [CHAT GPT Home]     |__|||    .____.");
@@ -131,7 +137,10 @@ namespace SpartaDungeon.Scenes
 
         private void Rest()
         {
+            //
             Console.Clear();
+            Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+            //
             Console.WriteLine("습식사우나에 들어갑니다.");
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;

@@ -24,7 +24,10 @@ namespace SpartaDungeon.Scenes
         public override void Start()
         {
             Console.OutputEncoding = Encoding.UTF8;
+            //
             Console.Clear();
+            Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+            //
             Console.WriteLine();
             Thread.Sleep(500);
             Console.WriteLine("──────▄██▀▀▀▀▄");
@@ -74,7 +77,10 @@ namespace SpartaDungeon.Scenes
 
         public bool Battle()
         {
-            Console.WriteLine();
+            //
+            Console.Clear();
+            Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+            //
             Console.WriteLine($"{monster.data.name}과(와)의 전투 시작!");
             Console.WriteLine();
             Thread.Sleep(1500);
@@ -125,7 +131,10 @@ namespace SpartaDungeon.Scenes
             }
             while (player.data.hp > 0 && monster.data.hp > 0) // 전투 루틴
             {
+                //
                 Console.Clear();
+                Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+                //
                 MonsterStatus(phase2); // 몬스터 정보
                 PlayerTurn();
                 if (monster.data.hp <= 0) break; // 몬스터가 죽으면 루프 종료
@@ -221,9 +230,13 @@ namespace SpartaDungeon.Scenes
                 Console.WriteLine($"Gold: {monster.data.gold}+");
                 Console.WriteLine($"경험치: {monster.data.level}+");
                 player.CheckLevelUp();
+                Thread.Sleep(3000);
+                //
+                Console.Clear();
+                Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+                //
                 VictoryAscii.RandomVictory();
                 Console.WriteLine();
-                Thread.Sleep(3000);
                 Console.WriteLine("Enter...");
                 Console.ReadLine();
                 SceneManager.Instance.LoadScene("town");
@@ -243,7 +256,7 @@ namespace SpartaDungeon.Scenes
                 Thread.Sleep(1000);
                 Console.WriteLine("...");
                 Thread.Sleep(1000);
-                
+
                 SceneManager.Instance.LoadScene("town");
                 return false;
             }

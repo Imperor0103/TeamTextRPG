@@ -26,7 +26,10 @@ namespace SpartaDungeon.Scenes
         }
         public override void Update()
         {
+            //
             Console.Clear();
+            Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+            //
             Console.WriteLine("[저장 / 불러오기] \n현재까지의 데이터를 저장하거나, 이전의 데이터를 불러올 수 있습니다.\n");
             // 저장슬롯 보여준다
             Console.WriteLine("[저장 슬롯]\n");

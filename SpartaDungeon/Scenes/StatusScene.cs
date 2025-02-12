@@ -26,6 +26,11 @@ namespace SpartaDungeon.Scenes
         }
         public override void Update()
         {
+            //
+            Console.Clear();
+            Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+            //
+
             player.ShowStatus();
 
             Console.WriteLine("0.나가기\n\n"); // 

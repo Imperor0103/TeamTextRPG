@@ -1,4 +1,7 @@
-﻿namespace SpartaDungeon
+﻿using System.Diagnostics;
+using System.Xml.Linq;
+
+namespace SpartaDungeon
 {
     public interface ItemData
     {
@@ -70,6 +73,20 @@
             Description = description;
             Price = price;
         }
+        public Armor()
+        {
+            Name = "";
+            ItemType = 0;
+            ItemText = "";
+            ClassType = 0;
+            ClassText = "";
+            Attack = 0f;
+            Defence = 0f;
+            Hp = 0f;
+            Mp = 0f;
+            Description = "";
+            Price = 0;
+        }
     }
 
     public class Weapon : Equipment
@@ -88,6 +105,20 @@
             Description = description;
             Price = price;
         }
+        public Weapon()
+        {
+            Name = "";
+            ItemType = 0;
+            ItemText = "";
+            ClassType = 0;
+            ClassText = "";
+            Attack = 0f;
+            Defence = 0f;
+            Hp = 0f;
+            Mp = 0f;
+            Description = "";
+            Price = 0;
+        }
     }
 
     public class Potion : Equipment
@@ -105,6 +136,20 @@
             Mp = mp;
             Description = description;
             Price = price;
+        }
+        public Potion()
+        {
+            Name = "";
+            ItemType = 0;
+            ItemText = "";
+            ClassType = 0;
+            ClassText = "";
+            Attack = 0f;
+            Defence = 0f;
+            Hp = 0f;
+            Mp = 0f;
+            Description = "";
+            Price = 0;
         }
     }
 }

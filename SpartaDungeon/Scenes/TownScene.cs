@@ -16,7 +16,6 @@ namespace SpartaDungeon.Scenes
 
         public override void Awake()
         {
-            Console.Clear();
         }
         public override void Start()
         {
@@ -24,7 +23,10 @@ namespace SpartaDungeon.Scenes
 
         public override void Update()
         {
+            //
             Console.Clear();
+            Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+            //
             Console.OutputEncoding = Encoding.UTF8;
             Console.Write("마을 도착!");
             Console.WriteLine();
