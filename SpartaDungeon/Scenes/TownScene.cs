@@ -31,7 +31,7 @@ namespace SpartaDungeon.Scenes
             Console.WriteLine("2.인벤토리");
             Console.WriteLine("3.상점");
             Console.WriteLine("4.던전입장");
-            Console.WriteLine("5.사우나");
+            Console.WriteLine("5.여관");
             Console.WriteLine("6.저장 / 불러오기");
             Console.WriteLine();
 
@@ -54,7 +54,7 @@ namespace SpartaDungeon.Scenes
                     SceneManager.Instance.LoadScene("dungeon");
                     return;
                 case 5:
-                    Console.WriteLine("사우나를 선택했습니다.\n");
+                    Console.WriteLine("여관을 선택했습니다.\n");
                     SceneManager.Instance.LoadScene("sauna");
                     return;
                 case 6:

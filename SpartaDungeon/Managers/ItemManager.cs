@@ -47,13 +47,13 @@ namespace SpartaDungeon.Managers
                     Console.Write($"{i + 1} ");
                     Console.Write($"    | ");
                 }
-                Console.Write($"이름: {item.name} | ");
-                Console.Write($"종류: {item.itemType} | ");
-                Console.Write($"공격력: {item.attack} | ");
-                Console.Write($"방어력: {item.defence} | ");
-                Console.Write($"hp추가: {item.hp} | ");
-                Console.Write($"mp추가: {item.mp} | ");
-                Console.Write($"{item.description} \n");
+                Console.Write($"이름: {item.Name} | ");
+                Console.Write($"종류: {item.ItemType} | ");
+                Console.Write($"공격력: {item.Attack} | ");
+                Console.Write($"방어력: {item.Defence} | ");
+                Console.Write($"hp추가: {item.Hp} | ");
+                Console.Write($"mp추가: {item.Mp} | ");
+                Console.Write($"{item.Description} \n");
                 Console.ResetColor();   // 색깔 원래대로
             }
             Console.WriteLine();
@@ -62,11 +62,11 @@ namespace SpartaDungeon.Managers
         // 해당 아이템을 장착하고 있는지 여부
         public bool IsEquiped(Equipment item)
         {
-            return ItemManager.Instance.armedList.Any(armedItem => armedItem.name == item.name);
+            return ItemManager.Instance.armedList.Any(armedItem => armedItem.Name == item.Name);
         }
         public bool IsOwned(Equipment item)
         {
-            return ItemManager.Instance.ownedList.Any(ownedItem => ownedItem.name == item.name);
+            return ItemManager.Instance.ownedList.Any(ownedItem => ownedItem.Name == item.Name);
         }
         public void PrintPrice(Equipment item)
         {

@@ -46,7 +46,7 @@ namespace SpartaDungeon.Scenes
 
             Console.WriteLine("\n1. 아이템 구매하기");
             Console.WriteLine("2. 아이템 판매하기");
-            Console.WriteLine("3. 상점 나가기");
+            Console.WriteLine("0. 나가기");
 
             Console.Write("\n선택: ");
             if (!int.TryParse(Console.ReadLine(), out int choice))
@@ -55,7 +55,7 @@ namespace SpartaDungeon.Scenes
 
             }
 
-            if (choice == 3)
+            if (choice == 0)
             {
                 Console.WriteLine("상점을 나갑니다.");
                 Console.ResetColor();
