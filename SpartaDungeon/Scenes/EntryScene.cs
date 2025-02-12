@@ -35,9 +35,9 @@ namespace SpartaDungeon.Scenes
 
             Console.WriteLine("1. 새로시작");
             Console.WriteLine("2. 불러오기");
-            Console.WriteLine("3. 종료");
+            Console.WriteLine("0. 종료");
 
-            switch (InputManager.Instance.GetValidNumber("\n선택을 입력하세요", 1, 3))
+            switch (InputManager.Instance.GetValidNumber("\n선택을 입력하세요", 0, 2))
             {
                 case 1:
                     CreateNewGame();
@@ -45,7 +45,7 @@ namespace SpartaDungeon.Scenes
                 case 2:
                     SceneManager.Instance.LoadScene("saveLoad");
                     break;
-                case 3:
+                case 0:
                     Quit();
                     break;
             }
