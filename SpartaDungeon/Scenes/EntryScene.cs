@@ -37,17 +37,15 @@ namespace SpartaDungeon.Scenes
             Console.WriteLine("2. 불러오기");
             Console.WriteLine("3. 종료");
 
-            Console.Write("\n선택을 입력하세요: ");
-
-            switch (Console.ReadLine())
+            switch (InputManager.Instance.GetValidNumber("\n선택을 입력하세요", 1, 3))
             {
-                case "1":
+                case 1:
                     CreateNewGame();
                     break;
-                case "2":
+                case 2:
                     SceneManager.Instance.LoadScene("saveLoad");
                     break;
-                case "3":
+                case 3:
                     Quit();
                     break;
             }
@@ -128,57 +126,37 @@ namespace SpartaDungeon.Scenes
             {
                 Console.WriteLine("\n1. 전사 / 2. 마법사 / 3. 궁수: ");
 
-                Console.Write("\n직업을 선택하세요: ");
-
-                switch (Console.ReadLine())
+                switch (InputManager.Instance.GetValidNumber("\n직업을 선택하세요.", 1, 3))
                 {
-                    case "1":
+                    case 1:
                         player.data.classType = eClassType.WARRIOR;
                         Console.WriteLine("전사를 선택했습니다.\n");
                         Thread.Sleep(1000);
                         SceneManager.Instance.LoadScene("town");
                         return;
-                    case "2":
+                    case 2:
                         player.data.classType = eClassType.MAGE;
                         Console.WriteLine("마법사를 선택했습니다.\n");
+                        player.data.attack = 14f;
+                        player.data.maxHp = 80f;
+                        player.data.hp = 80f;
+                        player.data.maxMp = 200f;
+                        player.data.mp = 0f;
+                        player.data.defence = 4f;
                         Thread.Sleep(1000);
                         SceneManager.Instance.LoadScene("town");
                         return;
-                    case "3":
+                    case 3:
                         player.data.classType = eClassType.ARCHER;
                         Console.WriteLine("궁수를 선택했습니다.\n");
+                        player.data.attack = 13f;
+                        player.data.maxHp = 90f;
+                        player.data.hp = 90f;
+                        player.data.defence = 3f;
                         Thread.Sleep(1000);
                         SceneManager.Instance.LoadScene("town");
                         return;
-                    default:
-                        Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.\n");
-                        break;
                 }
-            }
-        }
-
-        // 임시 코드
-        private void LoadGame()
-        {
-            Console.WriteLine("불러오기 / 저장\n");
-
-            Console.WriteLine("1. slot");
-            Console.WriteLine("2. slot");
-            Console.WriteLine("3. slot");
-
-            Console.WriteLine("0. 나가기");
-
-            Console.Write("\n선택을 입력하세요: ");
-            string choice = Console.ReadLine();
-
-            switch (choice)
-            {
-                case "1":
-                    break;
-                case "2":
-                    break;
-                case "3":
-                    break;
             }
         }
 
