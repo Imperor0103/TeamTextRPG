@@ -12,6 +12,7 @@ namespace SpartaDungeon
         public string Name { get; set; }
         public eClassType ClassType { get; set; }    // 배울 수 있는 직업
         public int Level { get; set; }  // 퀘스트 배우는 레벨
+        public string Description { get; set; } // 설명
         public float Attack { get; set; }  // 공격력 올려주는 스킬, 공격 스킬에 사용
         public float Defence { get; set; }  // 방어력 올려준다
         public float Hp { get; set; }   // 체력회복
@@ -36,18 +37,20 @@ namespace SpartaDungeon
             skillData.Name = "";
             skillData.ClassType = eClassType.ALL;
             skillData.Level = 0;
+            skillData.Description = "";
             skillData.Attack = 0f;
             skillData.Defence = 0f;
             skillData.Hp = 0f;
             skillData.Mp = 0f;
         }
 
-        public Skill(int i, string n, eClassType t, int l, float a, float d, float h, float m)
+        public Skill(int i, string n, eClassType t, int l, string des, float a, float d, float h, float m)
         {
             skillData.Id = i;
             skillData.Name = n;
             skillData.ClassType = t;
             skillData.Level = l;
+            skillData.Description = des;
             skillData.Attack = a;
             skillData.Defence = d;
             skillData.Hp = h;
