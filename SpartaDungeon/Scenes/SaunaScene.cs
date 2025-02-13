@@ -160,6 +160,11 @@ namespace SpartaDungeon.Scenes
                 while (player.data.hp < player.data.maxHp)
                 {
                     Thread.Sleep(2000);
+                    //
+                    Console.Clear();
+                    Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+            //
+
                     if (token.IsCancellationRequested)
                     {
                         Console.WriteLine("휴식이 중단되었습니다.");
@@ -199,7 +204,7 @@ namespace SpartaDungeon.Scenes
             //NPC가 제공하는 퀘스트 목록을 출력
             // 완료한 퀘스트가 있다면 자동 보상
             QuestManager.Instance.RewardPlayer(npc, player);
-           
+
             Console.WriteLine("NPC: 퀘스트를 선택하세요:");
             // 퀘스트 목록을 가져오기 (예시)
             QuestManager.Instance.PrintAllQuest(npc);
