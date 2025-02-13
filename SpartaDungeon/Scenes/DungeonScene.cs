@@ -253,6 +253,7 @@ namespace SpartaDungeon.Scenes
                     }
                 }
 
+                Console.OutputEncoding = Encoding.UTF8;
                 Console.WriteLine($"{monster.data.name}을(를) 처치했습니다! 보상을 획득합니다.");
                 player.data.exp += monster.data.level;
                 player.data.gold += monster.data.gold;
@@ -296,21 +297,21 @@ namespace SpartaDungeon.Scenes
         {
             private static readonly List<string> victoryascii = new()
             {
-                "  ✨🏆 VICTORY 🏆✨\n     ___________\n    '._==_==_=_.'\n    .-\\:      /-.\n   | (|:.     |) |\n    '-|:.     |-'\n      \\::.    /\n       '::. .'\n         ) (\n       _.' '._",
+                // "  ✨🏆 VICTORY 🏆✨\n     ___________\n    '._==_==_=_.'\n    .-\\:      /-.\n   | (|:.     |) |\n    '-|:.     |-'\n      \\::.    /\n       '::. .'\n         ) (\n       _.' '._",
 
-                "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🔥 🎉 VICTORY! 🎉 🔥\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n    \\        /\n     \\  🏆  /\n      (🔥🔥)\n       (🔥)\n        \\/",
+                // "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🔥 🎉 VICTORY! 🎉 🔥\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n    \\        /\n     \\  🏆  /\n      (🔥🔥)\n       (🔥)\n        \\/",
 
-                "      ✨🌟✨\n  🌟 VICTORY! 🌟\n      ✨🌟✨",
+                // "      ✨🌟✨\n  🌟 VICTORY! 🌟\n      ✨🌟✨",
 
-                "  ⚡⚡⚡⚡⚡⚡\n ⚡ 🎉 WIN 🎉 ⚡\n  ⚡⚡⚡⚡⚡⚡",
+                // "  ⚡⚡⚡⚡⚡⚡\n ⚡ 🎉 WIN 🎉 ⚡\n  ⚡⚡⚡⚡⚡⚡",
 
-                " 🏆 Victory! 🏆\n   🛡️   ⚔️   🛡️",
+                // " 🏆 Victory! 🏆\n   🛡️   ⚔️   🛡️",
 
-                " 🏆 VICTORY!! 🏆\n   🚩        🚩\n   | WINNER |\n   |________|",
+                // " 🏆 VICTORY!! 🏆\n   🚩        🚩\n   | WINNER |\n   |________|",
 
-                "  💰💰💰💰💰💰💰\n  💰 YOU WIN! 💰\n  💰💰💰💰💰💰💰",
+                // "  💰💰💰💰💰💰💰\n  💰 YOU WIN! 💰\n  💰💰💰💰💰💰💰",
 
-                "      👑🏆👑\n  🎉 VICTORY! 🎉\n      👑🏆👑",
+                // "      👑🏆👑\n  🎉 VICTORY! 🎉\n      👑🏆👑",
 
                 "\x1b[38;2;255;255;255m  ██╗    ██╗██╗████████╗ ██████╗ ██████╗ ██╗   ██╗\n\x1b[38;2;255;200;200m  ██║    ██║██║╚══██╔══╝██╔═══██╗██╔══██╗╚██║ ██╔╝\n\x1b[38;2;255;150;150m  ╚██╗  ██╔╝██║   ██║   ██║   ██║██████╔╝ ╚████╔╝\n\x1b[38;2;255;100;100m   ╚██╗██╔╝ ██║   ██║   ██║   ██║██╔██╔╝   ╚██╔╝\n\x1b[38;2;255;50;50m    ╚███╔╝  ██║   ██║   ╚██████╔╝██║ ███╗   ██║\n\x1b[38;2;255;0;0m      ╚═╝   ╚═╝   ╚═╝    ╚═════╝ ╚═╝ ╚══╝   ╚═╝\x1b[0m"
             };
