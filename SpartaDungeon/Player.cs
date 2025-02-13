@@ -106,6 +106,11 @@ namespace SpartaDungeon
             Console.Write($"체 력 : {data.hp} / {data.maxHp} \n");
             Console.Write($"exp : {data.exp} / 다음레벨까지 남은 경험치: {10 * data.level - data.exp} \n");
             Console.Write($"Gold : {data.gold} G\n\n");
+            // 스킬정보
+            Console.WriteLine();
+            Console.WriteLine("플레이어의 스킬정보");
+            SkillManager.Instance.PrintPlayerSkill();
+            Console.WriteLine();
             // 진행중인 퀘스트정보
             Console.WriteLine("진행중인 퀘스트정보");
             QuestManager.Instance.PrintOngoingQuest();
@@ -113,6 +118,7 @@ namespace SpartaDungeon
             // 완료한 퀘스트정보
             Console.WriteLine("완료한 퀘스트정보");
             QuestManager.Instance.PrintCompletedQuest();
+            Console.WriteLine();
         }
 
         // 무기장착은 플레이어에서 한다
@@ -240,11 +246,11 @@ namespace SpartaDungeon
                 data.hp += 10.0f;
                 data.exp = remainExp;
                 Console.WriteLine($"축하합니다. 레벨이 {data.level}가 되었습니다");
+                // 기술 배우기
+                SkillManager.Instance.UnlockSkill(this);
                 Console.WriteLine($"다음 레벨까지 남은 경험치:{10 * data.level - data.exp}");
                 isLevelUp = data.exp >= 10 * data.level ? true : false;
-
             }
-
         }
     }
 }

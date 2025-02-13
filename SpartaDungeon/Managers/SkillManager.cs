@@ -66,12 +66,12 @@ namespace SpartaDungeon.Managers
             List<object> defaultSkills = new List<object>()
             {
                 /// 추가할 스킬이 있다면 여기에 기록
-                (object) new Skill(1,"알파스트라이크",eClassType.WARRIOR,3,"공격력 * 2 로 하나의 적을 공격합니다.", 2*player.data.attack, 0f, 0f, 10f),
-                (object) new Skill(2,"더블스트라이크",eClassType.WARRIOR,7,"공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다(적이 1명인 경우 1명을 2번 공격).",1.5f*player.data.attack, 0f, 0f, 15f),
-                (object) new Skill(3,"파이어볼",eClassType.MAGE,3,"공격력 * 2 로 하나의 적을 공격합니다.", 2*player.data.attack, 0f, 0f, 10f),
-                (object) new Skill(4,"체력회복",eClassType.MAGE,7,"전체 체력의 절반만큼 체력을 회복합니다.", 0f, 0f, Math.Min(0.5f*player.data.maxHp,player.data.maxHp), 15f),
-                (object) new Skill(5,"아이스애로우",eClassType.MAGE,3,"공격력 * 2 로 하나의 적을 공격합니다.", 2*player.data.attack, 0f, 0f, 10f),
-                (object) new Skill(6,"멀티플샷",eClassType.MAGE,7,"공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다(적이 1명인 경우 1명을 2번 공격).",1.5f*player.data.attack, 0f, 0f, 15f)
+                (object) new Skill(1,"알파스트라이크",eClassType.WARRIOR,3,"공격력 * 2 로 하나의 적을 공격합니다.", 1, 2*player.PlayerAttack(), 0f, 0f, 10f),
+                (object) new Skill(2,"더블스트라이크",eClassType.WARRIOR,7,"공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다(적이 1명인 경우 1명을 2번 공격).", 2, 1.5f*player.PlayerAttack(), 0f, 0f, 15f),
+                (object) new Skill(3,"파이어볼",eClassType.MAGE,3,"공격력 * 2 로 하나의 적을 공격합니다.", 1,  2*player.PlayerAttack(), 0f, 0f, 10f),
+                (object) new Skill(4,"체력회복",eClassType.MAGE,7,"전체 체력의 절반만큼 체력을 회복합니다.",1, 0f, 0f, Math.Min(0.5f*player.data.maxHp,player.data.maxHp), 15f),
+                (object) new Skill(5,"아이스애로우",eClassType.MAGE,3,"공격력 * 2 로 하나의 적을 공격합니다.",1, 2*player.PlayerAttack(), 0f, 0f, 10f),
+                (object) new Skill(6,"멀티플샷",eClassType.MAGE,7,"공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다(적이 1명인 경우 1명을 2번 공격).", 2, 1.5f*player.PlayerAttack(), 0f, 0f, 15f)
             };
             string jsonStr = JsonConvert.SerializeObject(defaultSkills, Formatting.Indented, new JsonSerializerSettings
             {
@@ -139,19 +139,44 @@ namespace SpartaDungeon.Managers
         }
 
         // 플레이어가 특정레벨이 되면 스킬을 해금한다
-        public void UnlockSkill()
+        public void UnlockSkill(Player player)
         {
             // 전체 스킬리스트에서 플레이어의 스킬리스트에 없는것 중
             // 플레이어의 레벨 >= 스킬의 제한레벨인것은
             // 플레이어의 스킬리스트에 저장한다
-
-
+            foreach (Skill skill in allSkillList)
+            {
+                // 플레이어가 배울 수 있는 기술 중에서
+                if (skill.skillData.ClassType == player.data.classType)
+                {
+                    // 플레이어가 배우지 않았고, 레벨 조건을 충족하는 경우에 추가
+                    if (!playerSkillList.Contains(skill) && player.data.level >= skill.skillData.Level)
+                    {
+                        playerSkillList.Add(skill);
+                        Console.WriteLine($"새로운 스킬 {skill.skillData.Name} 를 배웠습니다");
+                    }
+                }
+            }
+        }
+        // 플레이어의 기술 출력
+        public void PrintPlayerSkill()
+        {
+            for (int i = 0; i < playerSkillList.Count; i++)
+            {
+                Console.Write($"{i + 1} | ");
+                Console.Write($"{playerSkillList[i].skillData.Name} | ");
+                Console.Write($"{playerSkillList[i].skillData.Description} \n");
+            }
         }
 
 
-
         // 플레이어가 스킬을 사용한다
+        public void UseSkill(Skill skill)
+        {
+            // 해당 스킬의 Count 만큼 반복 사용한다
 
+
+        }
 
 
     }
