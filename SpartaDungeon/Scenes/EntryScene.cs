@@ -144,6 +144,9 @@ namespace SpartaDungeon.Scenes
                     case 1:
                         player.data.classType = eClassType.WARRIOR;
                         Console.WriteLine("전사를 선택했습니다.\n");
+                        /// 주의: 새로 만드는 경우에만 allSkillList에 추가하기 때문에
+                        /// 불러오는 경우 allSkillList에 다시 추가해줘야한다
+                        SkillManager.Instance.Init();   /// 직업이 정해지면, 직업에 맞는 기본스킬이 정해진다
                         Thread.Sleep(1000);
                         Intro();
                         SceneManager.Instance.LoadScene("town");
@@ -157,6 +160,7 @@ namespace SpartaDungeon.Scenes
                         player.data.maxMp = 200f;
                         player.data.mp = 0f;
                         player.data.defence = 4f;
+                        SkillManager.Instance.Init();  
                         Thread.Sleep(1000);
                         Intro();
                         SceneManager.Instance.LoadScene("town");
@@ -168,6 +172,7 @@ namespace SpartaDungeon.Scenes
                         player.data.maxHp = 90f;
                         player.data.hp = 90f;
                         player.data.defence = 3f;
+                        SkillManager.Instance.Init();   
                         Thread.Sleep(1000);
                         Intro();
                         SceneManager.Instance.LoadScene("town");
