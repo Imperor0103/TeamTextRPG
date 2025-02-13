@@ -107,9 +107,9 @@ namespace SpartaDungeon
         }) { }
         public override void Skill()
         {
-            data.hp = Math.Min(data.hp + 5, data.maxHp);
-            Console.WriteLine("");
-            Console.WriteLine($"{data.name}의 체력이 5 회복되었습니다.");
+            data.hp = Math.Min(data.hp + 10, data.maxHp);
+            Console.WriteLine();
+            Console.WriteLine($"{data.name}의 체력이 10 회복되었습니다.");
         }
     }
     public class Dragon : Monster
@@ -130,11 +130,11 @@ namespace SpartaDungeon
             ascii = @"
                 ^    ^
                / \  //\
-  |\___/|      /   \//  .\
+ |\___/|      /   \//  .\
  /O  O  \__  /    //  | \ \
 /     /  \/_/    //   |  \  \
 @___@'    \/_   //    |   \   \ 
- U |       \/_ //     |    \    \ 
+  U|       \/_ //     |    \    \ 
    |        \///      |     \     \ 
   _|_ /   )  //       |      \     _\
  '/,_ _ _/  ( ; -.    |    _ _\.-~        .-~~~^-.
@@ -178,11 +178,9 @@ namespace SpartaDungeon
         }
         public override void Skill()
         {
-            float activeSkill = data.attack;
             data.attack += 50;
             Console.WriteLine($"{data.name}의 {data.skill}");
             Console.WriteLine($"{data.attack}피해");
-            data.attack = activeSkill;
         }
     }
 }

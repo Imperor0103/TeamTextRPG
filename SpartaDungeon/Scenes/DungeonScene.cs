@@ -203,20 +203,24 @@ namespace SpartaDungeon.Scenes
 
         private void MonsterTurn()
         {
+            float damage;
             Console.WriteLine();
-            float damage = Math.Max(monster.data.attack - player.PlayerDefence(), 1);
-            if (monster.data.mp == monster.data.maxMp)
+            Console.WriteLine("\x1b[38;2;255;0;0mヽ( `皿´ )ﾉ\x1b[0m");
+            if (monster.data.mp >= monster.data.maxMp)
             {
-                Console.WriteLine("\x1b[38;2;255;0;0mヽ( `皿´ )ﾉ\x1b[0m");
+                float monAttack = monster.data.attack;
                 Console.WriteLine($"{monster.data.skill}발동!");
                 monster.Skill();
-                monster.data.mp = 0;
+                damage = Math.Max(monster.data.attack - player.PlayerDefence(), 1);
+                player.data.hp -= damage;
+                monster.data.attack = monAttack;
+                monster.data.mp = monster.data.mp - monster.data.maxMp;
             }
             else
             {
-                player.data.hp -= damage;
-                Console.WriteLine("\x1b[38;2;255;0;0mヽ( `皿´ )ﾉ\x1b[0m");
+                damage = Math.Max(monster.data.attack - player.PlayerDefence(), 1);
                 Console.WriteLine($"{player.data.name}에게 {damage} 피해");
+                player.data.hp -= damage;
             }
             Thread.Sleep(1000);
         }
