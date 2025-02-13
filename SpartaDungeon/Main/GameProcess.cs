@@ -52,12 +52,12 @@ namespace SpartaDungeon.Main
             {
                 skillManager = SkillManager.Instance;
             }
-            // 버퍼 크기와 화면 크기 동기화:
-            // Console.SetWindowSize()와 Console.SetBufferSize()를 사용하여 콘솔의 화면 크기와 버퍼 크기를 맞추면
-            // Console.Clear 호출 후에 스크롤이 내려가지 않는다
-            Console.SetWindowSize(Console.WindowWidth, Console.WindowHeight);
-            /// 콘솔 버퍼의 크기 고정
-            Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
+            //// 버퍼 크기와 화면 크기 동기화:
+            //// Console.SetWindowSize()와 Console.SetBufferSize()를 사용하여 콘솔의 화면 크기와 버퍼 크기를 맞추면
+            //// Console.Clear 호출 후에 스크롤이 내려가지 않는다
+            //Console.SetWindowSize(Console.WindowWidth, Console.WindowHeight);
+            ///// 콘솔 버퍼의 크기 고정
+            //Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
         }
         // 1번만 호출되는 메서드
         public void Start()
