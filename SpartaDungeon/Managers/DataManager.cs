@@ -12,6 +12,7 @@ namespace SpartaDungeon.Managers
         public List<object> ownedList;   // 아이템매니저의 ownedList에 있는 것을 저장
         public List<object> armedList;   // 아이템매니저의 armedList에 있는 것을 저장
         //
+        public List<object> allSkillList;       // 스킬매니저의 allSkillList에 있는 것을 저장
         public List<object> playerSkillList;    // 플레이어가 배운 기술 저장
         //
         public Dictionary<string, object> completedQuestDictionary;    // 클리어한 퀘스트 저장
@@ -29,6 +30,10 @@ namespace SpartaDungeon.Managers
                 armedList = new List<object>();
             }
             //
+            if (allSkillList == null)
+            {
+                allSkillList = new List<object>();
+            }
             if (playerSkillList == null)
             {
                 playerSkillList = new List<object>();
@@ -46,14 +51,15 @@ namespace SpartaDungeon.Managers
             player = new Player();
         }
         // 저장할 때
-        public GameData(int idx, Player p, List<Equipment> owned, List<Equipment> armed, List<Skill> skills, Dictionary<string, Quest> comp, Dictionary<string, Quest> on)
+        public GameData(int idx, Player p, List<Equipment> owned, List<Equipment> armed, List<Skill> allSkills, List<Skill> playerSkills, Dictionary<string, Quest> comp, Dictionary<string, Quest> on)
         {
             fileIndex = idx;
             player = p;
             /// 저장할 때 object로 변환
             ownedList = owned.Cast<object>().ToList();
             armedList = armed.Cast<object>().ToList();
-            playerSkillList = skills.Cast<object>().ToList();
+            allSkillList = allSkills.Cast<object>().ToList();
+            playerSkillList = playerSkills.Cast<object>().ToList();
 
             // completedQuestDictionary와 ongoingQuestDictionary 변환(ChatGPT)
             // kvp: Key Value Pair
@@ -159,7 +165,7 @@ namespace SpartaDungeon.Managers
             Directory.CreateDirectory(saveDirectory);
             return Path.Combine(saveDirectory, $"savefile_{fileIdx}.json");
         }
-        // 폴더에 같은 이름의 세이브파일이 있는지 체크
+        // 폴더에 같은 이름의 세이브파일(savefile_숫자.json파일)이 있는지 체크
         public bool IsSaveFile(int fileIdx)
         {
             return File.Exists(GetFilePath(fileIdx));
@@ -168,8 +174,9 @@ namespace SpartaDungeon.Managers
         {
             // 파일, 슬롯의 인덱스를 받고, 저장한다
             /// 아이템 매니저의 데이터 복사
-            GameData tmpData = new GameData(fileIdx, player, ItemManager.Instance.ownedList, ItemManager.Instance.armedList, SkillManager.Instance.playerSkillList,
-                               QuestManager.Instance.completedQuestDictionary, QuestManager.Instance.ongoingQuestDictionary);
+            GameData tmpData = new GameData(fileIdx, player, ItemManager.Instance.ownedList, ItemManager.Instance.armedList,
+                                             SkillManager.Instance.allSkillList, SkillManager.Instance.playerSkillList,
+                                             QuestManager.Instance.completedQuestDictionary, QuestManager.Instance.ongoingQuestDictionary);
 
             string jsonStr = JsonConvert.SerializeObject(tmpData, new JsonSerializerSettings
             {
@@ -180,7 +187,7 @@ namespace SpartaDungeon.Managers
             });            // SaveFiles에 세이브파일생성
             File.WriteAllText(GetFilePath(fileIdx), jsonStr);
         }
-        // 특정 슬롯에 연결된 세이브파일을 불러온다
+        // 특정 슬롯에 연결된 세이브파일(savefile_숫자.json파일)을 불러온다
         public bool LoadData(int fileIdx)
         {
             /// LoadData는 saveLoadScene에서 호출이 되는 메서드이므로
@@ -188,6 +195,9 @@ namespace SpartaDungeon.Managers
             /// 즉, 여기서 불러온 퀘스트 완료정보를 npc의 퀘스트 완료정보에 대입할 수 있다
             /// (참조오류가 발생하여 직접 대입해서 반영해줘야한다)
 
+            /// 새로 생성하는 경우와 불러오는 경우의 collection의 참조 문제를 해결하기 위해
+            /// 불러올때 존재하는 모든 collection의 Clear를 진행해야한다
+            /// 전제조건: 불러오기를 하기 전에 이미 collection이 생성되어 있어야 한다는점
             ClearCollections();
 
             player = new Player();
@@ -235,7 +245,22 @@ namespace SpartaDungeon.Managers
                 }
                 player.weapon = gameData.player.weapon;
                 player.armor = gameData.player.armor;
-
+                // 모든 스킬을 allSkillList에 추가
+                foreach (var skill in gameData.allSkillList)
+                {
+                    if (skill is Skill sk)
+                    {
+                        SkillManager.Instance.allSkillList.Add(sk);
+                    }
+                }
+                // 플레이어 스킬을 List에 추가
+                foreach (var skill in gameData.playerSkillList)
+                {
+                    if (skill is Skill sk)
+                    {
+                        SkillManager.Instance.playerSkillList.Add(sk);
+                    }
+                }
                 // 퀘스트를 Dictionary에 추가
                 foreach (var pair in gameData.completedQuestDictionary)
                 {
@@ -338,8 +363,9 @@ namespace SpartaDungeon.Managers
         {
             // 데이터매니저가 가진 player를 저장할 새 데이터를 생성
             int arrIdx = fileIndex - 1;
-            GameData newData = new GameData(fileIndex, player, ItemManager.Instance.ownedList, ItemManager.Instance.armedList, SkillManager.Instance.playerSkillList,
-                                QuestManager.Instance.completedQuestDictionary, QuestManager.Instance.ongoingQuestDictionary);
+            GameData newData = new GameData(fileIndex, player, ItemManager.Instance.ownedList, ItemManager.Instance.armedList,
+                                             SkillManager.Instance.allSkillList, SkillManager.Instance.playerSkillList,
+                                            QuestManager.Instance.completedQuestDictionary, QuestManager.Instance.ongoingQuestDictionary);
             // 데이터매니저의 player가 null인 경우에도 newData가 생성되는것에 주의
             // 플레이어가 null이 아닐때에만 저장
             if (newData.player != null)

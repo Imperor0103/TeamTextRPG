@@ -51,6 +51,22 @@ namespace SpartaDungeon.Main
             if (skillManager == null)
             {
                 skillManager = SkillManager.Instance;
+
+                /// 아래의 allSkillList, playerSkillList는
+                /// Init에서 생성하면 안된다. 
+                ///
+                /// 불러올때는 null이라서 불러온 데이터를 저장을 못한다
+                ///
+                /// 따라서 리스트는 SkillManager 초기화 할때 같이 하기로 한다
+
+                if (skillManager.allSkillList == null)
+                {
+                    skillManager.allSkillList = new List<Skill>();
+                }
+                if (skillManager.playerSkillList == null)
+                {
+                    skillManager.playerSkillList = new List<Skill>();
+                }
             }
             //// 버퍼 크기와 화면 크기 동기화:
             //// Console.SetWindowSize()와 Console.SetBufferSize()를 사용하여 콘솔의 화면 크기와 버퍼 크기를 맞추면

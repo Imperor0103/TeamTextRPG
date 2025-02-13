@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SpartaDungeon.Managers;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SpartaDungeon.Scenes
 {
@@ -132,12 +133,20 @@ namespace SpartaDungeon.Scenes
             }
             while (player.data.hp > 0 && monster.data.hp > 0) // 전투 루틴
             {
-                //
-                Console.Clear();
-                Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
-                //
-                MonsterStatus(phase2); // 몬스터 정보
-                PlayerTurn();
+                // 플레이어가 제대로 된 입력을 할때까지 루프를 돌아야한다
+                while (true)
+                {
+                    Console.Clear();
+                    Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+                    //
+                    MonsterStatus(phase2); // 몬스터 정보
+                    bool isValidAction = PlayerTurn();   // 플레이어가 제대로 턴을 마치면 true를 리턴
+                    if (isValidAction)
+                    {
+                        break;
+                    }
+                }
+
                 if (monster.data.hp <= 0) break; // 몬스터가 죽으면 루프 종료
                 if (Phase2(ref phase2)) // 2페이즈에 진압하기 위한 bool값
                 {
@@ -165,24 +174,42 @@ namespace SpartaDungeon.Scenes
             Console.WriteLine($"[체력: {monster.data.hp}][공격력: {monster.data.attack}][방어력: {monster.data.defence}]");
         }
 
-        private void PlayerTurn()
+        // bool값을 리턴하게 수정해서 메서드 이름을 바꾸고 싶었지만, 마땅한 이름이 떠오르지 않는다
+        private bool PlayerTurn()
         {
+            float attackPower;
+            float damage;
+
             Console.WriteLine();
             Console.WriteLine($"플레이어 체력: {player.data.hp}");
-            Console.WriteLine($"{player.data.name}의 턴 (공격하려면 Enter)");
-            Console.ReadLine();
-
-            // 플레이어의 최종 공격력 계산
-            float attackPower = player.PlayerAttack();
-
-            // 피해 계산 (최소 1 보장)
-            float damage = Math.Max(attackPower - monster.data.defence, 1);
+            Console.WriteLine($"{player.data.name}의 턴 (1.일반 공격 | 2.스킬 )");
+            int input = InputManager.Instance.GetValidNumber("원하시는 행동을 입력해주세요", 1, 2);
+            switch (input)
+            {
+                case 1:
+                    // 일반 공격플레이어의 최종 공격력 계산
+                    NormalAttack(out attackPower, out damage);
+                    Thread.Sleep(1000);
+                    return true;    // 올바른 공격을 했으니 true
+                case 2:
+                    bool isSkillUsed = SkillManager.Instance.IsSkillUsed(player);
+                    return isSkillUsed;
+            }
+            // 잘못 입력
+            return false;
+        }
+        // 플레이어의 일반공격
+        public void NormalAttack(out float attackPower, out float damage)
+        {
+            // 일반 공격플레이어의 최종 공격력 계산
+            attackPower = player.PlayerAttack();
+            damage = Math.Max(attackPower - monster.data.defence, 1);
             monster.data.hp -= damage;
-
+            // 피해 계산 (최소 1 보장)
             Console.WriteLine("(。･`з･)ﾉ");
             Console.WriteLine($"{monster.data.name}에게 {damage} 피해!");
-            Thread.Sleep(1000);
         }
+
 
         private bool Phase2(ref bool phase2) // 2페이즈에 진압하기 위한 bool값
         {
