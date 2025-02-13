@@ -8,15 +8,7 @@ namespace SpartaDungeon
 {
     public struct SkillData
     {
-        // 스킬이 가져야 할 것들(SkillData)
-        // name 
-        // hp
-        // mp
-        // level(특정 레벨이 되면 배울 수 있다)
-        // 그 외 추가할 것이 있다면 추가할 것
-        // 
-
-        public int Id { get; set; }   // 스킬의 번호(1~4)
+        public int Id { get; set; }   // 스킬의 번호(1~2)
         public string Name { get; set; }
         public eClassType ClassType { get; set; }    // 배울 수 있는 직업
         public int Level { get; set; }  // 퀘스트 배우는 레벨

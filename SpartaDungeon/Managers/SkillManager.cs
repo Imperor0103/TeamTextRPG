@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -12,10 +13,66 @@ namespace SpartaDungeon.Managers
     public class SkillManager : Singleton<SkillManager>
     {
         // 스킬매니저는 모든 스킬을 관리한다
-        public List<Skill> allSkillList = new List<Skill>();
+        public List<Skill> allSkillList;
 
         // 배열에 직접 저장할 것
-        public List<Skill> playerSkillList = new List<Skill>();
+        public List<Skill> playerSkillList;
+
+        private string questFilePath; // 기본 스킬 데이터 경로
+
+        public void Init()
+        {
+            if (allSkillList == null)
+            {
+                allSkillList = new List<Skill>();
+            }
+            if (playerSkillList == null)
+            {
+                playerSkillList = new List<Skill>();
+            }
+            questFilePath = GetSkillFilePath();
+        }
+        private string GetSkillFilePath()
+        {
+            string exeDirectory = AppDomain.CurrentDomain.BaseDirectory;    // exe파일 생성위치
+            DirectoryInfo directory = new DirectoryInfo(exeDirectory);
+            // 3단계 상위 폴더(프로젝트 폴더)로 이동
+            for (int i = 0; i < 3; i++)
+            {
+                directory = directory.Parent;
+            }
+            // 프로젝트 폴더에 Json 폴더 없으면 생성한다
+            string saveDirectory = Path.Combine(directory.FullName, "Json");
+            Directory.CreateDirectory(saveDirectory);
+            return Path.Combine(saveDirectory, $"skill.json");
+        }
+
+        //private void SaveDefaultSkills(Player player)
+        //{
+        //    List<object> defaultSkills = new List<object>()
+        //    {
+        //        /// 추가할 스킬이 있다면 여기에 기록
+
+
+
+        //        (object) new QuestData { Name = "고블린 5마리 잡기", QuestType = eQuestType.KILL, State = eQuestState.NOTSTARTED, Description = "던전의 고블린을 5마리 처치하세요.", Target = "고블린", Count = 0, IsCleared = false, Ext = 50, Gold = 100, rewardEquipment = null, requiredQuest = "" },
+        //        (object) new QuestData { Name = "소량의 체력 포션 3개 모으기", QuestType = eQuestType.COLLECT, State = eQuestState.NOTSTARTED, Description = "약초상에게 줄 포션 3개를 모아 오세요.", Target = "소량의 체력 포션", Count = 0, IsCleared = false, Ext = 30, Gold = 50, rewardEquipment = null, requiredQuest = "" },
+        //        (object) new QuestData {Name = "드래곤 잡기", QuestType = eQuestType.KILL, State = eQuestState.NOTSTARTED, Description = "마을을 위협하는 드래곤을 처치하세요.", Target = "드래곤", Count = 0, IsCleared = false, Ext = 500, Gold = 1000, rewardEquipment = null, requiredQuest = "고블린 5마리 잡기"}
+        //    };
+        //    string jsonStr = JsonConvert.SerializeObject(defaultQuests, Formatting.Indented, new JsonSerializerSettings
+        //    {
+        //        // 혹시 모를 null 대비
+        //        NullValueHandling = NullValueHandling.Include,  // null값도 불러온다
+        //        MissingMemberHandling = MissingMemberHandling.Ignore,
+
+        //        TypeNameHandling = TypeNameHandling.All  // 다형성 정보 포함하여 직렬화
+        //    });
+        //    // quest.json파일에 저장
+        //    File.WriteAllText(questFilePath, jsonStr);
+        //    Console.WriteLine("기본 퀘스트 데이터 저장 완료!");
+        //    Thread.Sleep(1000);
+        //}
+
 
         public void InitSkill(Player player)
         {

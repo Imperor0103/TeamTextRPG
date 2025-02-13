@@ -27,6 +27,10 @@ namespace SpartaDungeon
         KILL,       // 사냥
         COLLECT,    // 수집
     }
+    /// <summary>
+    /// 다 끝나고 나서 보니까 eQuestState를 사용하지 않고
+    /// bool값 IsCleared만 사용하고 있다...
+    /// </summary>
     public enum eQuestState
     {
         NONE,   // 기본값
