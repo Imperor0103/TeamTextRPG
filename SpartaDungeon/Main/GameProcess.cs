@@ -81,17 +81,13 @@ namespace SpartaDungeon.Main
             isPlaying = true;
             sceneManager.InitFirstScene();
         }
-        public void Loop()
+        public void Update()
         {
             // isPlaying이 false가 되면 게임 종료
             while (isPlaying)
             {
-                Update();
+                sceneManager.Update();
             }
-        }
-        public void Update()
-        {
-            sceneManager.Update();
         }
     }
 }

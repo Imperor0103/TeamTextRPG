@@ -6,7 +6,7 @@
         {
             GameProcess gameProcess = new GameProcess();
             gameProcess.Start();
-            gameProcess.Loop();
+            gameProcess.Update();
         }
     }
 }
