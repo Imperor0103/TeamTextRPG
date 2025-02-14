@@ -1,0 +1,107 @@
+{
+  "$type": "System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib]], System.Private.CoreLib",
+  "$values": [
+    {
+      "$type": "SpartaDungeon.Skill, SpartaDungeon",
+      "skillData": {
+        "$type": "SpartaDungeon.SkillData, SpartaDungeon",
+        "Id": 1,
+        "Name": "알파스트라이크",
+        "ClassType": 1,
+        "SkillType": 0,
+        "Level": 3,
+        "Description": "공격력 * 2 로 하나의 적을 공격합니다.",
+        "Count": 1,
+        "Attack": 28.0,
+        "Defence": 0.0,
+        "Hp": 0.0,
+        "Mp": 10.0
+      }
+    },
+    {
+      "$type": "SpartaDungeon.Skill, SpartaDungeon",
+      "skillData": {
+        "$type": "SpartaDungeon.SkillData, SpartaDungeon",
+        "Id": 2,
+        "Name": "더블스트라이크",
+        "ClassType": 1,
+        "SkillType": 0,
+        "Level": 7,
+        "Description": "공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다(적이 1명인 경우 1명을 2번 공격).",
+        "Count": 2,
+        "Attack": 21.0,
+        "Defence": 0.0,
+        "Hp": 0.0,
+        "Mp": 15.0
+      }
+    },
+    {
+      "$type": "SpartaDungeon.Skill, SpartaDungeon",
+      "skillData": {
+        "$type": "SpartaDungeon.SkillData, SpartaDungeon",
+        "Id": 3,
+        "Name": "파이어볼",
+        "ClassType": 2,
+        "SkillType": 0,
+        "Level": 3,
+        "Description": "공격력 * 2 로 하나의 적을 공격합니다.",
+        "Count": 1,
+        "Attack": 28.0,
+        "Defence": 0.0,
+        "Hp": 0.0,
+        "Mp": 10.0
+      }
+    },
+    {
+      "$type": "SpartaDungeon.Skill, SpartaDungeon",
+      "skillData": {
+        "$type": "SpartaDungeon.SkillData, SpartaDungeon",
+        "Id": 4,
+        "Name": "체력회복",
+        "ClassType": 2,
+        "SkillType": 1,
+        "Level": 7,
+        "Description": "전체 체력의 절반만큼 체력을 회복합니다.",
+        "Count": 1,
+        "Attack": 0.0,
+        "Defence": 0.0,
+        "Hp": 40.0,
+        "Mp": 15.0
+      }
+    },
+    {
+      "$type": "SpartaDungeon.Skill, SpartaDungeon",
+      "skillData": {
+        "$type": "SpartaDungeon.SkillData, SpartaDungeon",
+        "Id": 5,
+        "Name": "아이스애로우",
+        "ClassType": 3,
+        "SkillType": 0,
+        "Level": 3,
+        "Description": "공격력 * 2 로 하나의 적을 공격합니다.",
+        "Count": 1,
+        "Attack": 28.0,
+        "Defence": 0.0,
+        "Hp": 0.0,
+        "Mp": 10.0
+      }
+    },
+    {
+      "$type": "SpartaDungeon.Skill, SpartaDungeon",
+      "skillData": {
+        "$type": "SpartaDungeon.SkillData, SpartaDungeon",
+        "Id": 6,
+        "Name": "멀티플샷",
+        "ClassType": 3,
+        "SkillType": 0,
+        "Level": 7,
+        "Description": "공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다(적이 1명인 경우 1명을 2번 공격).",
+        "Count": 2,
+        "Attack": 21.0,
+        "Defence": 0.0,
+        "Hp": 0.0,
+        "Mp": 15.0
+      }
+    }
+  ]
+}

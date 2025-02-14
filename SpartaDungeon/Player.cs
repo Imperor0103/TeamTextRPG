@@ -25,11 +25,15 @@ namespace SpartaDungeon
     public enum eClassType
     {
         NONE = -1,
-        WARRIOR = 1 << 0,   // 0001
-        MAGE = 1 << 1,      // 0010
-        ARCHER = 1 << 2,    // 0100
+        WARRIOR = 1,   // 
+        MAGE = 2,      // 
+        /// <summary>
+        /// 문제발생... ARCHER가 자꾸 MAGE로 읽는데
+        /// 아무래도 비트시프트연산을 하면 안되는 것 같다
+        /// </summary>
+        ARCHER = 3,    //
         // ALL은 할당 후, and연산 처리 -> 결과가 1개 나오면 그 타입을 출력함
-        ALL = WARRIOR | MAGE | ARCHER  // 0111
+        //ALL = WARRIOR | MAGE | ARCHER  // 0111
     }
 
     public class Player
@@ -106,6 +110,11 @@ namespace SpartaDungeon
             Console.Write($"체 력 : {data.hp} / {data.maxHp} \n");
             Console.Write($"exp : {data.exp} / 다음레벨까지 남은 경험치: {10 * data.level - data.exp} \n");
             Console.Write($"Gold : {data.gold} G\n\n");
+            // 스킬정보
+            Console.WriteLine();
+            Console.WriteLine("플레이어의 스킬정보");
+            SkillManager.Instance.PrintPlayerSkill();
+            Console.WriteLine();
             // 진행중인 퀘스트정보
             Console.WriteLine("진행중인 퀘스트정보");
             QuestManager.Instance.PrintOngoingQuest();
@@ -113,6 +122,7 @@ namespace SpartaDungeon
             // 완료한 퀘스트정보
             Console.WriteLine("완료한 퀘스트정보");
             QuestManager.Instance.PrintCompletedQuest();
+            Console.WriteLine();
         }
 
         // 무기장착은 플레이어에서 한다
@@ -240,11 +250,11 @@ namespace SpartaDungeon
                 data.hp += 10.0f;
                 data.exp = remainExp;
                 Console.WriteLine($"축하합니다. 레벨이 {data.level}가 되었습니다");
+                // 기술 배우기
+                SkillManager.Instance.UnlockSkill(this);    // 레벨이 맞으면 기술을 배운다
                 Console.WriteLine($"다음 레벨까지 남은 경험치:{10 * data.level - data.exp}");
                 isLevelUp = data.exp >= 10 * data.level ? true : false;
-
             }
-
         }
     }
 }

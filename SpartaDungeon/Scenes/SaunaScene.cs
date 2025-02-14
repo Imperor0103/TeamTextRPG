@@ -170,6 +170,7 @@ namespace SpartaDungeon.Scenes
                         Console.WriteLine("휴식이 중단되었습니다.");
                         break;
                     }
+                    Console.OutputEncoding = Encoding.UTF8;
                     player.data.hp = Math.Min(player.data.hp + 1, player.data.maxHp);
                     Console.WriteLine(" ______");
                     Console.WriteLine("|~~~~~~|");

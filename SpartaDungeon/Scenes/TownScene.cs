@@ -57,9 +57,7 @@ namespace SpartaDungeon.Scenes
                 case 0:
                     Console.WriteLine("나가기를 선택했습니다.\n");
                     SceneManager.Instance.LoadScene("entry");
-                    /// 모든 퀘스트정보 초기화(새로 캐릭터 생성할때 기록이 남아있으면 안된다)
-                    QuestManager.Instance.completedQuestDictionary.Clear();
-                    QuestManager.Instance.ongoingQuestDictionary.Clear();
+                    DataManager.Instance.ClearCollections();    /// 모든 collection 초기화
                     return;
                 case 1:
                     Console.WriteLine("상태보기를 선택했습니다.\n");

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,23 +15,50 @@ namespace SpartaDungeon.Managers
     {
         // 스킬매니저는 모든 스킬을 관리한다
         public List<Skill> allSkillList;
-
-        // 배열에 직접 저장할 것
+        // 플레이어가 배운 스킬이 저장된다
         public List<Skill> playerSkillList;
 
-        private string questFilePath; // 기본 스킬 데이터 경로
+        Player player;  // DataManager가 가진 player
+        private string skillFilePath; // 기본 스킬 데이터 경로
 
+        /// <summary>
+        /// LoadSkillData에서 Player의 정보를 필요로 하기 때문에
+        /// 플레이어를 만들고 직업선택이 끝난 다음 호출해야한다
+        /// </summary>
         public void Init()
         {
-            if (allSkillList == null)
+            // DataManager를 먼저 초기화했다
+            /// 
+            player = DataManager.Instance.player;
+            /// 아래의 allSkillList, playerSkillList는
+            /// Init에서 생성하면 안된다. 
+            /// 
+            /// 불러올때는 null이라서 불러온 데이터를 저장을 못한다
+            /// 
+            /// 따라서 리스트는 SkillManager 초기화 할때 같이 하기로 한다
+            //if (allSkillList == null)
+            //{
+            //    allSkillList = new List<Skill>();
+            //}
+            //if (playerSkillList == null)
+            //{
+            //    playerSkillList = new List<Skill>();
+            //}
+
+            skillFilePath = GetSkillFilePath();
+            if (!File.Exists(skillFilePath))
             {
-                allSkillList = new List<Skill>();
+                // 기본 스킬 내용을 json에 저장(최초 1회)
+                // skill.json을 만들고, 이 파일이 없으면 생성한다
+                Console.WriteLine("퀘스트 데이터 파일이 없습니다. 새로 생성합니다.");
+                SaveDefaultSkills(player); // 저장하고
+                LoadSkillData();     // 불러와서 npc의 questList에 대입
             }
-            if (playerSkillList == null)
+            else
             {
-                playerSkillList = new List<Skill>();
+                // skill.json이 있으면 불러와서 대입해야지
+                LoadSkillData();
             }
-            questFilePath = GetSkillFilePath();
         }
         private string GetSkillFilePath()
         {
@@ -47,117 +75,215 @@ namespace SpartaDungeon.Managers
             return Path.Combine(saveDirectory, $"skill.json");
         }
 
-        //private void SaveDefaultSkills(Player player)
-        //{
-        //    List<object> defaultSkills = new List<object>()
-        //    {
-        //        /// 추가할 스킬이 있다면 여기에 기록
-
-
-
-        //        (object) new QuestData { Name = "고블린 5마리 잡기", QuestType = eQuestType.KILL, State = eQuestState.NOTSTARTED, Description = "던전의 고블린을 5마리 처치하세요.", Target = "고블린", Count = 0, IsCleared = false, Ext = 50, Gold = 100, rewardEquipment = null, requiredQuest = "" },
-        //        (object) new QuestData { Name = "소량의 체력 포션 3개 모으기", QuestType = eQuestType.COLLECT, State = eQuestState.NOTSTARTED, Description = "약초상에게 줄 포션 3개를 모아 오세요.", Target = "소량의 체력 포션", Count = 0, IsCleared = false, Ext = 30, Gold = 50, rewardEquipment = null, requiredQuest = "" },
-        //        (object) new QuestData {Name = "드래곤 잡기", QuestType = eQuestType.KILL, State = eQuestState.NOTSTARTED, Description = "마을을 위협하는 드래곤을 처치하세요.", Target = "드래곤", Count = 0, IsCleared = false, Ext = 500, Gold = 1000, rewardEquipment = null, requiredQuest = "고블린 5마리 잡기"}
-        //    };
-        //    string jsonStr = JsonConvert.SerializeObject(defaultQuests, Formatting.Indented, new JsonSerializerSettings
-        //    {
-        //        // 혹시 모를 null 대비
-        //        NullValueHandling = NullValueHandling.Include,  // null값도 불러온다
-        //        MissingMemberHandling = MissingMemberHandling.Ignore,
-
-        //        TypeNameHandling = TypeNameHandling.All  // 다형성 정보 포함하여 직렬화
-        //    });
-        //    // quest.json파일에 저장
-        //    File.WriteAllText(questFilePath, jsonStr);
-        //    Console.WriteLine("기본 퀘스트 데이터 저장 완료!");
-        //    Thread.Sleep(1000);
-        //}
-
-
-        public void InitSkill(Player player)
+        // 플레이어 생성 이후에 호출해야한다
+        // 기본 스킬데이터를 만들어서 저장
+        private void SaveDefaultSkills(Player player)
         {
-            // 선택한 플레이어의 스킬들을 미리 만든다
-            // 예시
-            if (player.data.classType == eClassType.WARRIOR)
+            List<object> defaultSkills = new List<object>()
             {
-                // 스킬 4개 만들기
-                Skill skill_1 = new Skill(1, "백호참", eClassType.WARRIOR, 10, 10, 10, 10, 10);
-                allSkillList.Add(skill_1);
-                // skill_2, skill_3, skill_4도 이런식으로
-
-            }
-            else if (player.data.classType == eClassType.MAGE)
+                /// 추가할 스킬이 있다면 여기에 기록
+                (object) new Skill(1, "알파스트라이크",eClassType.WARRIOR, eSkillType.ATTACK , 3, "공격력 * 2 로 하나의 적을 공격합니다.", 1, 2*player.PlayerAttack(), 0f, 0f, 10f),
+                (object) new Skill(2, "더블스트라이크",eClassType.WARRIOR, eSkillType.ATTACK , 7, "공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다(적이 1명인 경우 1명을 2번 공격).", 2, 1.5f*player.PlayerAttack(), 0f, 0f, 15f),
+                (object) new Skill(3, "파이어볼",eClassType.MAGE, eSkillType.ATTACK , 3, "공격력 * 2 로 하나의 적을 공격합니다.", 1, 2*player.PlayerAttack(), 0f, 0f, 10f),
+                (object) new Skill(4, "체력회복",eClassType.MAGE, eSkillType.HEAL ,7, "전체 체력의 절반만큼 체력을 회복합니다.", 1, 0f, 0f, Math.Min(0.5f*player.data.maxHp,player.data.maxHp), 15f),
+                (object) new Skill(5, "아이스애로우", eClassType.ARCHER, eSkillType.ATTACK, 3, "공격력 * 2 로 하나의 적을 공격합니다.", 1, 2*player.PlayerAttack(), 0f, 0f, 10f),
+                (object) new Skill(6, "멀티플샷", eClassType.ARCHER, eSkillType.ATTACK, 7, "공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다(적이 1명인 경우 1명을 2번 공격).", 2, 1.5f*player.PlayerAttack(), 0f, 0f, 15f)
+            };
+            string jsonStr = JsonConvert.SerializeObject(defaultSkills, Formatting.Indented, new JsonSerializerSettings
             {
-                // 스킬 4개 만들기
+                // 혹시 모를 null 대비
+                NullValueHandling = NullValueHandling.Include,  // null값도 불러온다
+                MissingMemberHandling = MissingMemberHandling.Ignore,
 
+                TypeNameHandling = TypeNameHandling.All  // 다형성 정보 포함하여 직렬화
+            });
+            // quest.json파일에 저장
+            File.WriteAllText(skillFilePath, jsonStr);
+            Console.WriteLine("기본 스킬 데이터 저장 완료!");
+            Thread.Sleep(1000);
+        }
 
-
-            }
-            else if (player.data.classType == eClassType.ARCHER)
+        // skill.json 스킬 내용 불러와서 SkillManager에 대입한다
+        private void LoadSkillData()
+        {
+            // 호출하는 곳에서 파일경로 체크를 했으니 여기서는 하지 않는다
+            try
             {
-                // 스킬 4개 만들기
+                string jsonStr = File.ReadAllText(skillFilePath);
+                List<object>? loadedObjs;
+                if (string.IsNullOrEmpty(jsonStr))
+                {
+                    // 빈 파일 처리
+                    loadedObjs = new List<object>();
+                    return;
+                }
+                loadedObjs = JsonConvert.DeserializeObject<List<object>>(jsonStr, new JsonSerializerSettings
+                {
+                    // 혹시 모를 null 대비
+                    NullValueHandling = NullValueHandling.Include,  // null값도 불러온다
+                    MissingMemberHandling = MissingMemberHandling.Ignore,
 
-
-
+                    TypeNameHandling = TypeNameHandling.All  // 다형성 처리
+                });
+                if (loadedObjs != null)
+                {
+                    foreach (var obj in loadedObjs)
+                    {
+                        if (obj is Skill skill)
+                        {
+                            // 매개변수로 player를 받지 않은건, 현재 스킬 관리를 SkillManager에서 하기 때문
+                            /// 새로 캐릭터를 생성할떄는 Init을 호출하여 allSkillList에 추가하고 있지만
+                            /// 캐릭터를 불러올때 추가하는 allSkillList에 추가하는 것 또한 필요하다
+                            /// 그것은 DataManager의 LoadData에서 한다
+                            allSkillList.Add(skill);   //
+                        }
+                    }
+                }
+                Console.WriteLine($"기본 스킬 데이터 {loadedObjs.Count}개 불러오기 완료!");
+                Thread.Sleep(1000);
+                //
+                Console.Clear();
+                Console.SetCursorPosition(0, 0); /// 커서를 왼쪽 맨 위로 이동
+                //
             }
-        }
-
-        // 이렇게 직접만들지 말고 아래의 메서드를 통해 인덱스에 넣는다
-        //public Skill skill_1 { get; private set; }    // 공격스킬
-        //public Skill skill_2 { get; private set; }    // 공격력상승
-        //public Skill skill_3 { get; private set; }    // 방어력상승
-        //public Skill skill_4 { get; private set; }    // 체력회복
-
-        // 스킬 배우기 메서드
-        public void LearnSkill(Player player, Skill skill)
-        {
-            // 스킬의 직업과 플레이어 직업을 체크 && 레벨체크(플레이어의 레벨 > 스킬레벨)
-            if (player.data.classType == skill.skillData.ClassType &&
-                player.data.level >= skill.skillData.Level)
+            catch (Exception ex)
             {
-                // 스킬의 Id를 비교해서 "Id-1" 인덱스에 집어넣는다
-                // 1번 스킬은 0번 인덱스에 저장
-                playerSkillList[skill.skillData.Id - 1] = skill;
+                // 예외 처리 로직
+                Console.WriteLine($"Error loading skill data: {ex.Message}");
             }
         }
 
-        // 스킬 사용하기 메서드(반환형이 있는것과 없는것을 만든다)
-        public float UseSkill_1(Player player)
+        // 플레이어가 특정레벨이 되면 스킬을 해금한다
+        public void UnlockSkill(Player player)
         {
-            // 마나 소모
-            player.data.mp -= playerSkillList[0].skillData.Mp;
-
-            // 공격한다(데미지를 리턴해서 몬스터한테 주면 그게 공격임)
-            float damage = 0;
-            return damage;
+            // 전체 스킬리스트에서 플레이어의 스킬리스트에 없는것 중
+            // 플레이어의 레벨 >= 스킬의 제한레벨인것은
+            // 플레이어의 스킬리스트에 저장한다
+            foreach (Skill skill in allSkillList)
+            {
+                // 플레이어가 배울 수 있는 기술 중에서
+                if (skill.skillData.ClassType == player.data.classType)
+                {
+                    // 플레이어가 배우지 않았고, 레벨 조건을 충족하는 경우에 추가
+                    if (!playerSkillList.Contains(skill) && player.data.level >= skill.skillData.Level)
+                    {
+                        playerSkillList.Add(skill);
+                        Console.WriteLine($"새로운 스킬 {skill.skillData.Name} 를 배웠습니다");
+                    }
+                }
+            }
         }
-        public void UseSkill_2(Player player)
+        // 플레이어의 기술 출력
+        public void PrintPlayerSkill()
         {
-            // 마나 소모
-            player.data.mp -= playerSkillList[1].skillData.Mp;
-            // 플레이어의 공격력을 "몇초간" 올린다
-            player.data.attack += playerSkillList[1].skillData.Attack;
-            // 플레이어의 공격력을 몇초간 올리는 방법
-
+            if (playerSkillList.Count > 0)
+            {
+                for (int i = 0; i < playerSkillList.Count; i++)
+                {
+                    Console.Write($"{i + 1} | ");
+                    Console.Write($"{playerSkillList[i].skillData.Name} | ");
+                    Console.Write($"{playerSkillList[i].skillData.Description} \n");
+                }
+            }
+            else
+            {
+                Console.Write($"플레이어가 사용할 수 있는 기술이 없습니다.");
+            }
         }
-        public void UseSkill_3(Player player)
+        // 
+        public bool IsSkillUsed(Player player)
         {
-            // 마나 소모
-            player.data.mp -= playerSkillList[2].skillData.Mp;
-            // 플레이어의 방어력을 "몇초간" 올린다
-            player.data.attack += playerSkillList[2].skillData.Defence;
-            // 플레이어의 공격력을 몇초간 올리는 방법
-
+            PrintPlayerSkill();
+            // 1~2 기술선택
+            // 0.나가기           
+            int input = InputManager.Instance.GetValidNumber("사용하고 싶은 기술의 번호를 입력하세요", 0, playerSkillList.Count);
+            if (input == 0)
+            {
+                return false;
+            }
+            else
+            {
+                int arrIndex = input - 1;
+                if (playerSkillList[arrIndex] != null)
+                {
+                    UseSkill(playerSkillList[arrIndex], player, out float dam);
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("다시 입력하십시오");
+                    return false;
+                }
+            }
         }
 
-        public void UseSkill_4(Player player)
+
+        /// <summary>
+        /// 제네릭이 아니라면 out 키워드
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="skill"></param>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        public void UseSkill(Skill skill, Player player, out float damage)
         {
-            // 마나 소모
-            player.data.mp -= playerSkillList[3].skillData.Mp;
-
-            // 플레이의 체력을 회복한다
-            player.data.hp += playerSkillList[0].skillData.Hp;
+            damage = 0f; /// 밖에서 0f로 초기화
+            // 해당 스킬의 Count 만큼 반복 사용한다
+            Console.WriteLine($"{player.data.name}가 {skill.skillData.Name}을 사용했습니다!");
+            if (skill.skillData.SkillType == eSkillType.ATTACK)
+            {
+                damage = skill.skillData.Attack;
+                Console.WriteLine($"적에게 {damage}의 피해를 입혔습니다!");
+                // float를 리턴
+            }
+            else if (skill.skillData.SkillType == eSkillType.HEAL)
+            {
+                // 리턴이 없다
+                Console.WriteLine($"{player.data.name}가 {skill.skillData.Name}을 사용했습니다!");
+                float healAmount = Math.Min(skill.skillData.Hp, player.data.maxMp - player.data.hp);
+                player.data.hp += healAmount;
+                Console.WriteLine($"{player.data.name}가 {healAmount}만큼 체력을 회복했습니다!");
+            }
+            else if (skill.skillData.SkillType == eSkillType.BUFF)
+            {
+                // 리턴이 없다
+                Console.WriteLine($"{player.data.name}가 {skill.skillData.Name}을 사용했습니다!");
+                Console.WriteLine($"{player.data.name}에게 버프 효과가 적용되었습니다!");
+            }
         }
-        // 자료형은 바뀔 수 있음
+
+        /// <summary>
+        /// 제네릭을 활용해서 리턴을 다르게 할 수 있다
+        /// </summary>
+        /// <param name="skill"></param>
+        /// <param name="player"></param>
+        // 플레이어가 스킬을 사용한다
+        public T UseSkill<T>(Skill skill, Player player)
+        {
+            // 해당 스킬의 Count 만큼 반복 사용한다
+            Console.WriteLine($"{player.data.name}가 {skill.skillData.Name}을 사용했습니다!");
+
+            if (skill.skillData.SkillType == eSkillType.ATTACK)
+            {
+                float damage = skill.skillData.Attack;
+                Console.WriteLine($"적에게 {damage}의 피해를 입혔습니다!");
+                // float를 리턴
+                return (T)(object)damage;
+            }
+            else if (skill.skillData.SkillType == eSkillType.HEAL)
+            {
+                float healAmount = Math.Min(skill.skillData.Hp, player.data.maxMp);
+                // 리턴이 없다
+                return default;
+            }
+            else if (skill.skillData.SkillType == eSkillType.BUFF)
+            {
+
+                // 리턴이 없다
+                return default;
+            }
+            return default;
+        }
+
     }
 }

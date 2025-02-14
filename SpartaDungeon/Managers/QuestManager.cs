@@ -88,7 +88,7 @@ namespace SpartaDungeon.Managers
             Console.WriteLine("기본 퀘스트 데이터 저장 완료!");
             Thread.Sleep(1000);
         }
-        // 퀘스트 내용 불러와서 npc에 대입한다
+        // quest.json의 퀘스트 내용 불러와서 npc에 대입한다
         // 저장파일에서 불러온 퀘스트 진행상황, 완료한 퀘스트 처리는 DataManager에서 한다
         private void LoadQuestData(Npc npc)
         {
